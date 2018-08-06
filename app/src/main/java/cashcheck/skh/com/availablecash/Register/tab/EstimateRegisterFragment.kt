@@ -13,8 +13,8 @@ import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Chart.ChartMainActivity
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.databinding.FragmentEstimateRegisterBinding
 import cashcheck.skh.com.availablecash.Util.Const
+import cashcheck.skh.com.availablecash.databinding.FragmentEstimateRegisterBinding
 
 
 /**
@@ -51,6 +51,11 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
             editor?.putInt(Const.EstimateTransportDay, binding.estimateFragEditTransportDay.text.toString().toInt())
             editor?.putInt(Const.EstimateFood, binding.estimateFragEditFood.text.toString().toInt())
             editor?.putInt(Const.EstimateFoodDay, binding.estimateFragEditFoodDay.text.toString().toInt())
+            editor?.putInt(Const.EstimateElectric, binding.estimateFragEditElectric.text.toString().toInt())
+            editor?.putInt(Const.EstimatePhone, binding.estimateFragEditPhonebill.text.toString().toInt())
+            editor?.putInt(Const.EstimateHouse, binding.estimateFragEditHouse.text.toString().toInt())
+            editor?.putInt(Const.EstimateAdjust, binding.estimateFragEditAdjust.text.toString().toInt())
+            editor?.putInt(Const.EstimateEtc, binding.estimateFragEditEtc.text.toString().toInt())
             editor?.apply()
             AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                     .setMessage("등록 되었습니다.")

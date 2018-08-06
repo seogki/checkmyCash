@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentChartMainBinding
@@ -18,7 +19,6 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import cashcheck.skh.com.availablecash.Util.Const
 
 
 /**
@@ -90,7 +90,13 @@ class ChartMainFragment : BaseFragment() {
             val transDay = pref.getInt(Const.EstimateTransportDay, 0)
             val food = pref.getInt(Const.EstimateFood, 0)
             val foodDay = pref.getInt(Const.EstimateFoodDay, 0)
-            val result = (trans * transDay) + (food * foodDay)
+            val electric = pref.getInt(Const.EstimateElectric, 0)
+            val phone = pref.getInt(Const.EstimatePhone, 0)
+            val house = pref.getInt(Const.EstimateHouse, 0)
+            val adjust = pref.getInt(Const.EstimateAdjust, 0)
+            val etc = pref.getInt(Const.EstimateEtc, 0)
+
+            val result = (trans * transDay) + (food * foodDay) + electric + phone + house + adjust + etc
             val data = UtilMethod.currencyFormat(result.toString())
             DLog.e("trans $trans + $transDay + $food + $foodDay + $result + $data")
             binding.chartFragTxtEstimateMoney.text = "" + data + "원"

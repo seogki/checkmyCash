@@ -10,5 +10,10 @@ open class Const {
         val EstimateTransportDay = "EstimateTransportDay"
         val EstimateFood = "EstimateFood"
         val EstimateFoodDay = "EstimateTransportDay"
+        val EstimateElectric = "EstimateElectric"
+        val EstimatePhone = "EstimatePhone"
+        val EstimateHouse = "EstimateHouse"
+        val EstimateAdjust = "EstimateAdjust"
+        val EstimateEtc = "EstimateEtc"
     }
 }
