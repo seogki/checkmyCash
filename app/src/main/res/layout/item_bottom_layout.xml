@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener"
+            />
+
+        <variable
+            name="empty"
+            type="String"
+            />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        app:keyboardDetect="@{empty}"
+        >
+
+        <View
+            android:layout_height="0.3dp"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/darkGrey"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_btn0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/bottom_layout_btn0_txt"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn1_txt"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_text0"
+            style="@style/text10Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="차트"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_layout_btn0_txt"
+            />
+
+
+        <TextView
+            android:id="@+id/bottom_layout_btn1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn2"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn0"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+        </TextView>
+
+
+        <ImageView
+            android:id="@+id/bottom_layout_btn1_txt"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn2_txt"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn0_txt"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_text1"
+            style="@style/text10Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="등록"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn2"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn0"
+            app:layout_constraintTop_toBottomOf="@id/bottom_layout_btn1_txt"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_btn2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn3"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn1"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+        </TextView>
+
+        <ImageView
+            android:id="@+id/bottom_layout_btn2_txt"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn3_txt"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn1_txt"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_text2"
+            style="@style/text10Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="비교"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_layout_btn3_txt"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn1_txt"
+            app:layout_constraintTop_toBottomOf="@id/bottom_layout_btn2_txt"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_btn3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn2"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/bottom_layout_btn3_txt"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn2_txt"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/bottom_layout_text3"
+            style="@style/text10Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="설정"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_layout_btn2_txt"
+            app:layout_constraintTop_toBottomOf="@id/bottom_layout_btn3_txt"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

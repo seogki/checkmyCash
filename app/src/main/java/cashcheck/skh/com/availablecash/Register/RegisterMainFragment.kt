@@ -28,7 +28,6 @@ class RegisterMainFragment : BaseFragment() {
         setTabLayout()
         return binding.root
     }
-
     private fun setTabLayout() {
         val viewPager = binding.registerFragViewpager
         val adapter = TabPagerAdapter(childFragmentManager)

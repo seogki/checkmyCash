@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="grey">#f4f4f4</color>
+    <color name="darkGrey">#8D8D8D</color>
+    <color name="midGrey">#E5E5E5</color>
+    <color name="trans">#3f000000</color>
+    <color name="DarkGreen">#13A9AA</color>
+    <color name="DarkGreenalpha">#7013A9AA</color>
+    <color name="DarkestGreen">#078f87</color>
+    <color name="Neon">#00FF00</color>
+    <color name="Red">#FF0000</color>
+
+    <color name="titleColor">#fff</color>
+    <color name="btn">#131A53</color>
+    <color name="titleReverse">#FF1744</color>
+    <color name="statusbar">#fff</color>
+    <color name="radioBtn">#8E1F2E</color>
+    <color name="belowtitle">#202E92</color>
+    <color name="textColor">#FF8A80</color>
+    <color name="rippleColor">#FF8A80</color>
+    <color name="editBoxColor">#FF8A80</color>
+
+
+
+    <!--기존 #E040FB , #FF4081-->
+</resources>
