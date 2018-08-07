@@ -33,7 +33,6 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_estimate_register, container, false)
         binding.onClickListener = this
-
         return binding.root
     }
 

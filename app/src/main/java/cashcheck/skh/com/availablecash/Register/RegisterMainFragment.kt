@@ -23,7 +23,6 @@ class RegisterMainFragment : BaseFragment() {
     lateinit var binding: FragmentRegisterMainBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_main, container, false)
         setTabLayout()
         return binding.root
@@ -33,7 +32,7 @@ class RegisterMainFragment : BaseFragment() {
         val adapter = TabPagerAdapter(childFragmentManager)
         val tabLayoutList = binding.registerFragTablayout
 
-        adapter.addFragment(NormalRegisterFragment(), "평범")
+        adapter.addFragment(NormalRegisterFragment(), "기본")
         adapter.addFragment(EstimateRegisterFragment(), "대략")
         viewPager.adapter = adapter
         tabLayoutList.setupWithViewPager(viewPager)

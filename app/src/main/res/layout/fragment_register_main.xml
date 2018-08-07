@@ -17,7 +17,6 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -42,17 +41,18 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/titleColor"
                     >
 
                     <TextView
                         android:id="@+id/register_frag_txt_titlebar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/white"
                         android:gravity="center"
                         android:text="등록"
+                        android:textStyle="bold"
                         android:textColor="@color/textColor"
-                        android:textSize="15sp"
+                        android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -80,8 +80,8 @@
                 android:background="@color/white"
                 app:tabGravity="fill"
                 app:tabTextColor="@color/darkGrey"
-                app:tabSelectedTextColor="@color/textColor"
-                app:tabIndicatorColor="@color/textColor"
+                app:tabSelectedTextColor="@color/titleColor"
+                app:tabIndicatorColor="@color/titleColor"
                 app:tabMode="fixed"
                 app:tabPaddingEnd="0dp"
                 app:tabPaddingStart="0dp"

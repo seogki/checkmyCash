@@ -17,7 +17,6 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -42,21 +41,29 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/titleColor"
                     >
 
                     <TextView
-                        android:id="@+id/setting_view_titlebar"
+                        android:id="@+id/chart_frag_txt_titlebar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="설정"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:background="@color/white"
-                        android:layout_height="match_parent"
+                        />
+
+                    <View
                         android:layout_width="match_parent"
-                        android:text="세팅"
-                        android:textColor="@color/textColor"
-                        android:gravity="center"
-                        android:textSize="15sp"
+                        android:layout_height="0.3dp"
+                        android:background="@drawable/titlebar_grey_line"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         />
 
                 </android.support.constraint.ConstraintLayout>

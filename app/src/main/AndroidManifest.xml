@@ -9,22 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomAppTheme">
-        <activity android:name=".Chart.ChartMainActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".Chart.ChartMainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Register.RegisterMainActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".Register.RegisterMainActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Setting.SettingMainActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".Setting.SettingMainActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Compare.CompareMainActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".Compare.CompareMainActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Register.tab.NormalRegisterActivity">
         </activity>
     </application>
 

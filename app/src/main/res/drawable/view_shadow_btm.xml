@@ -7,12 +7,12 @@
             <!-- set the shadow color here -->
             <stroke
                 android:width="3dp"
-                android:color="@color/textColor" />
+                android:color="@color/titleColor" />
 
             <!-- setting the thickness of shadow (positive value will give shadow on that side) -->
 
             <padding
-                android:bottom="3dp"
+                android:bottom="0.5dp"
                 android:left="0.5dp"
                 android:right="0.5dp"
                 android:top="0.5dp" />

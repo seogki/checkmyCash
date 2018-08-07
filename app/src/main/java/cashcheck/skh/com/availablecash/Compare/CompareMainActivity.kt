@@ -2,6 +2,7 @@ package cashcheck.skh.com.availablecash.Compare
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -39,8 +40,8 @@ class CompareMainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setCurrentTab() {
-//        binding.layoutBottomTab.bottomLayoutBtn2Txt.setImageDrawable(ContextCompat.getDrawable(this@SettingMainActivity, R.drawable.icons8_home_24_fill))
-//        binding.layoutBottomTab.bottomLayoutBtn2Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
+        binding.layoutBottomTab.bottomLayoutBtn2Txt.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_insert_chart_black_24))
+        binding.layoutBottomTab.bottomLayoutBtn2Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
         binding.layoutBottomTab.bottomLayoutText2.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
     }
 

@@ -2,6 +2,7 @@ package cashcheck.skh.com.availablecash.Register
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -40,8 +41,8 @@ class RegisterMainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setCurrentTab() {
-//        binding.layoutBottomTab.bottomLayoutBtn1Txt.setImageDrawable(ContextCompat.getDrawable(this@SettingMainActivity, R.drawable.icons8_home_24_fill))
-//        binding.layoutBottomTab.bottomLayoutBtn1Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
+        binding.layoutBottomTab.bottomLayoutBtn1Txt.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_pie_char_24))
+        binding.layoutBottomTab.bottomLayoutBtn1Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
         binding.layoutBottomTab.bottomLayoutText1.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
     }
 

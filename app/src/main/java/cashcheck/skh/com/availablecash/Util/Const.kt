@@ -5,15 +5,15 @@ package cashcheck.skh.com.availablecash.Util
  */
 open class Const {
     companion object {
-        val PreferenceTitle = "Savior"
-        val EstimateTransport = "EstimateTransport"
-        val EstimateTransportDay = "EstimateTransportDay"
-        val EstimateFood = "EstimateFood"
-        val EstimateFoodDay = "EstimateTransportDay"
-        val EstimateElectric = "EstimateElectric"
-        val EstimatePhone = "EstimatePhone"
-        val EstimateHouse = "EstimateHouse"
-        val EstimateAdjust = "EstimateAdjust"
-        val EstimateEtc = "EstimateEtc"
+        const val PreferenceTitle = "Savior"
+        const val EstimateTransport = "EstimateTransport"
+        const val EstimateTransportDay = "EstimateTransportDay"
+        const val EstimateFood = "EstimateFood"
+        const val EstimateFoodDay = "EstimateTransportDay"
+        const val EstimateElectric = "EstimateElectric"
+        const val EstimatePhone = "EstimatePhone"
+        const val EstimateHouse = "EstimateHouse"
+        const val EstimateAdjust = "EstimateAdjust"
+        const val EstimateEtc = "EstimateEtc"
     }
 }

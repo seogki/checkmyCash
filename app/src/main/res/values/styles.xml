@@ -2,23 +2,36 @@
 
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
 
     <style name="CustomAppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <item name="colorPrimaryDark">@color/darkGrey</item>
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <item name="colorPrimaryDark">@color/statusbar</item>
+        <!--<item name="colorAccent">@color/titleColor</item>-->
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--<item name="android:background">@color/white</item>-->
         <item name="android:windowBackground">@color/white</item>
         <!--<item name="android:colorBackground">@color/white</item>-->
+    </style>
+
+    <style name="AppThemeDatePicker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/textColor</item>
+        <!--<item name="android:colorAccent">@color/textColor</item>-->
+        <item name="android:datePickerStyle">@color/titleColor</item>
+    </style>
+
+    <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/titleColor</item>
+        <item name="colorPrimary">@color/titleColor</item>
+        <item name="android:headerBackground">@color/titleColor</item>
+        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
     </style>
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">

@@ -3,15 +3,16 @@ package cashcheck.skh.com.availablecash.Chart
 
 import android.content.Context.MODE_PRIVATE
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.Const
+import cashcheck.skh.com.availablecash.Util.CustomPercentFormatter
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentChartMainBinding
@@ -42,27 +43,41 @@ class ChartMainFragment : BaseFragment() {
 
         val yvalues = mutableListOf<PieEntry>()
 
-        yvalues.add(PieEntry(8f, "1"))
-        yvalues.add(PieEntry(15f, "2"))
-        yvalues.add(PieEntry(12f, "3"))
-        yvalues.add(PieEntry(25f, "4"))
-        yvalues.add(PieEntry(23f, "5"))
-        yvalues.add(PieEntry(17f, "6"))
-
+        yvalues.add(PieEntry(255600F, "식비"))
+        yvalues.add(PieEntry(153200f, "교통비"))
+        yvalues.add(PieEntry(350000f, "월세"))
+        yvalues.add(PieEntry(100000f, "관리비"))
+        yvalues.add(PieEntry(61200f, "공과금"))
+        yvalues.add(PieEntry(85300f, "마트"))
+        yvalues.add(PieEntry(43800f, "카페"))
         val dataSet = PieDataSet(yvalues, "")
 
-        dataSet.sliceSpace = 3F
+        dataSet.sliceSpace = 1F
         dataSet.selectionShift = 5F
-        dataSet.valueTextSize = 11f
+        dataSet.valueTextSize = 10f
+        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+        dataSet.valueLinePart1OffsetPercentage = 100f
+        dataSet.valueLinePart1Length = 0.5f
+        dataSet.valueLinePart2Length = 0.3f
+        dataSet.isValueLineVariableLength = true
+        dataSet.valueFormatter = CustomPercentFormatter()
+        binding.chartFragPiechart.isRotationEnabled = false
+        binding.chartFragPiechart.setTouchEnabled(false)
+        binding.chartFragPiechart.setUsePercentValues(true)
+        binding.chartFragPiechart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
+        binding.chartFragPiechart.setEntryLabelTextSize(9F)
+        binding.chartFragPiechart.setExtraOffsets(23F, 10F, 23F, 10F)
+
 
         val colors = mutableListOf<Int>()
-        colors.add(Color.GRAY)
-        colors.add(Color.BLUE)
-        colors.add(Color.RED)
-        colors.add(Color.GREEN)
-        colors.add(Color.CYAN)
-        colors.add(Color.YELLOW)
-        colors.add(Color.MAGENTA)
+        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightPurple))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightDarkBlue))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightSkyGreen))
 
         dataSet.colors = colors
         dataSet.label = ""

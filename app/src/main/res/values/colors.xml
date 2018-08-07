@@ -15,16 +15,29 @@
     <color name="DarkestGreen">#078f87</color>
     <color name="Neon">#00FF00</color>
     <color name="Red">#FF0000</color>
+    <color name="OrangeYellow">#FFCC00</color>
+    <color name="GuardsmanRed">#CC0000</color>
+    <color name="Purple">#6600CC</color>
+    <color name="lightYellow">#FFD633</color>
+    <color name="lightRed">#FF7F7F</color>
+    <color name="lightPurple">#E899FF</color>
+    <color name="lightOrange">#FFA84B</color>
+    <color name="lightGreen">#65FF8D</color>
+    <color name="lightPink">#FF7FDC</color>
+    <color name="lightBlue">#7ABAFF</color>
+    <color name="lightDarkBlue">#7875FF</color>
+    <color name="lightSkyGreen">#6BFFC4</color>
 
-    <color name="titleColor">#fff</color>
+
+    <color name="titleColor">#CC0000</color>
     <color name="btn">#131A53</color>
     <color name="titleReverse">#FF1744</color>
-    <color name="statusbar">#fff</color>
+    <color name="statusbar">#980000</color>
     <color name="radioBtn">#8E1F2E</color>
     <color name="belowtitle">#202E92</color>
-    <color name="textColor">#FF8A80</color>
-    <color name="rippleColor">#FF8A80</color>
-    <color name="editBoxColor">#FF7065</color>
+    <color name="textColor">#fff</color>
+    <color name="rippleColor">#CC0000</color>
+    <color name="editBoxColor">#AA00FF</color>
 
 
 
