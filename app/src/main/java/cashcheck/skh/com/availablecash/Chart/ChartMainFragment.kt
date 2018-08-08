@@ -1,6 +1,7 @@
 package cashcheck.skh.com.availablecash.Chart
 
 
+import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -11,10 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Util.Const
-import cashcheck.skh.com.availablecash.Util.CustomPercentFormatter
-import cashcheck.skh.com.availablecash.Util.DLog
-import cashcheck.skh.com.availablecash.Util.UtilMethod
+import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentChartMainBinding
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -28,28 +26,36 @@ import com.github.mikephil.charting.data.PieEntry
 class ChartMainFragment : BaseFragment() {
 
     lateinit var binding: FragmentChartMainBinding
+    private lateinit var dbHelper: DBHelper
+    private var totalUsage: Float = 0F
+    private lateinit var map: HashMap<String, String>;
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chart_main, container, false)
-        setPieChart()
+        dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
+        val date = UtilMethod.getCurrentDate().replace("-", "")
+        binding.chartFragTxtMonth.text = "20" + date.substring(0, 2) + "년 " + date.substring(2, 4)+"월 "
+
 
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setPieChart() {
         val chart = binding.chartFragPiechart
         chart.setUsePercentValues(true)
 
         val yvalues = mutableListOf<PieEntry>()
 
-        yvalues.add(PieEntry(255600F, "식비"))
-        yvalues.add(PieEntry(153200f, "교통비"))
-        yvalues.add(PieEntry(350000f, "월세"))
-        yvalues.add(PieEntry(100000f, "관리비"))
-        yvalues.add(PieEntry(61200f, "공과금"))
-        yvalues.add(PieEntry(85300f, "마트"))
-        yvalues.add(PieEntry(43800f, "카페"))
+        for ((key, value) in map) {
+            yvalues.add(PieEntry(value.toFloat(), key))
+            totalUsage = totalUsage.plus(value.toFloat())
+            DLog.e("total $totalUsage")
+        }
+        val moneyResult = UtilMethod.currencyFormat(totalUsage.toInt().toString())
+        binding.chartFragTxtTotalMoney.text = moneyResult + "원"
+
         val dataSet = PieDataSet(yvalues, "")
 
         dataSet.sliceSpace = 1F
@@ -93,8 +99,10 @@ class ChartMainFragment : BaseFragment() {
 
         chart.data = data
         chart.description.isEnabled = false
-        chart.animateXY(1100, 1100)
+        chart.animateXY(1000, 1000)
         chart.invalidate()
+
+
     }
 
     override fun onResume() {
@@ -115,6 +123,29 @@ class ChartMainFragment : BaseFragment() {
             val data = UtilMethod.currencyFormat(result.toString())
             DLog.e("trans $trans + $transDay + $food + $foodDay + $result + $data")
             binding.chartFragTxtEstimateMoney.text = "" + data + "원"
+        }
+
+        val db = dbHelper.readableDatabase
+        if (db != null) {
+            totalUsage = 0F
+            map = HashMap()
+            val currentDate = UtilMethod.getCurrentDate()
+            DLog.e("cur $currentDate")
+            // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+            val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + currentDate + "%'", null)
+            while (cursor.moveToNext()) {
+                val cate = cursor.getString(2)
+                val money = cursor.getString(3)
+                if (map.containsKey(cate)) {
+                    val data = map.getValue(cate).toFloat().plus(money.toFloat())
+                    map.remove(cate)
+                    map[cate] = data.toString()
+                } else {
+                    map[cate] = money
+                }
+            }
+            DLog.e("picMap : $map")
+            setPieChart()
         }
 
     }

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener"
+            />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/custom_cat_dialog"
+        android:padding="2dp"
+        >
+
+        <TextView
+            android:id="@+id/catdlog_txt_trans"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="교통"
+            android:textColor="@color/black"
+            android:background="@drawable/btn_ripple_colored_line"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
+            app:layout_constraintEnd_toStartOf="@+id/catdlog_txt_convi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_convi"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="편의점"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
+            app:layout_constraintEnd_toStartOf="@+id/catdlog_txt_gas"
+            app:layout_constraintStart_toEndOf="@+id/catdlog_txt_trans"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_gas"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="주유"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
+            app:layout_constraintEnd_toStartOf="@+id/catdlog_txt_mart"
+            app:layout_constraintStart_toEndOf="@+id/catdlog_txt_convi"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_mart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="마트"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/catdlog_txt_gas"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_house"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="주거"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_edit_add"
+            app:layout_constraintEnd_toStartOf="@id/catdlog_txt_phonebill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_trans"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_phonebill"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="통신"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_edit_add"
+            app:layout_constraintEnd_toStartOf="@id/catdlog_txt_adjust"
+            app:layout_constraintStart_toEndOf="@id/catdlog_txt_house"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_trans"
+
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_adjust"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="관리"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_edit_add"
+            app:layout_constraintEnd_toStartOf="@id/catdlog_txt_cafe"
+            app:layout_constraintStart_toEndOf="@id/catdlog_txt_phonebill"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_trans"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_cafe"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:gravity="center"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="카페"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_edit_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/catdlog_txt_adjust"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_trans"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_txt_add"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="0.05dp"
+            android:background="@color/titleColor"
+            android:gravity="center"
+            android:text="추가"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_btn_no"
+            app:layout_constraintEnd_toEndOf="@id/catdlog_txt_house"
+            app:layout_constraintStart_toStartOf="@id/catdlog_txt_house"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_house"
+            />
+
+        <EditText
+            android:id="@+id/catdlog_edit_add"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="0.05dp"
+            android:imeOptions="actionNext"
+            android:padding="3dp"
+            android:textColor="@color/white"
+            android:inputType="text"
+            android:background="@color/titleColor"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_btn_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/catdlog_txt_add"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_house"
+            />
+
+
+        <TextView
+            android:id="@+id/catdlog_btn_no"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="취소"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:textColor="@color/Red"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/catdlog_btn_ok"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_edit_add"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="확인"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/catdlog_btn_no"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_edit_add"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -89,7 +89,7 @@
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-
+                        android:id="@+id/normal_atv_btn_done"
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
@@ -178,6 +178,8 @@
                     android:background="@drawable/edittext_round_border_sky"
                     android:paddingEnd="3dp"
                     android:paddingStart="8dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:focusable="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_cat"
                     app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_date"
@@ -208,11 +210,24 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_round_border_orange"
                     android:inputType="number"
-                    android:paddingEnd="3dp"
+                    android:paddingEnd="5dp"
                     android:paddingStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_money"
                     app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_cat"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/normal_atv_img_clear"
+                    app:layout_constraintEnd_toEndOf="@id/normal_atv_edit_money"
+                    app:layout_constraintTop_toTopOf="@id/normal_atv_edit_money"
+                    android:src="@drawable/baseline_close_black_24"
+                    android:padding="8dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    app:layout_constraintBottom_toBottomOf="@id/normal_atv_edit_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
 
             </android.support.constraint.ConstraintLayout>

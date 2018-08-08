@@ -15,5 +15,11 @@ open class Const {
         const val EstimateHouse = "EstimateHouse"
         const val EstimateAdjust = "EstimateAdjust"
         const val EstimateEtc = "EstimateEtc"
+
+
+        /**
+         *  디비명
+         */
+        const val DbName = "PieGraphData"
     }
 }

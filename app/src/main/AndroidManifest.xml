@@ -9,14 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomAppTheme">
-        <activity
-            android:name=".Chart.ChartMainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".Login.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Chart.ChartMainActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Register.RegisterMainActivity"
@@ -30,8 +32,10 @@
             android:name=".Compare.CompareMainActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Register.tab.NormalRegisterActivity">
+        <activity android:name=".Register.tab.NormalRegisterActivity"
+                  android:screenOrientation="portrait">
         </activity>
+
     </application>
 
 </manifest>

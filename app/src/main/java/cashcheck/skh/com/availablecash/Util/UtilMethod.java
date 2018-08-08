@@ -7,6 +7,9 @@ import android.content.ContextWrapper;
 import android.support.annotation.Nullable;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Seogki on 2018. 6. 18..
@@ -23,6 +26,14 @@ public class UtilMethod {
             context = ((ContextWrapper) context).getBaseContext();
         }
         return null;
+    }
+
+    public static String getCurrentDate() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM");
+        String formattedDate = df.format(c);
+
+        return formattedDate;
     }
 
     @SuppressLint("DefaultLocale")

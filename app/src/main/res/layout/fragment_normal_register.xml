@@ -18,7 +18,6 @@
         android:layout_height="match_parent"
         >
 
-
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/normal_frag_piechart"
             android:layout_width="match_parent"
@@ -57,7 +56,7 @@
             android:clipToPadding="false"
             app:backgroundTint="@color/titleColor"
             app:borderWidth="0dp"
-            app:elevation="0dp"
+            app:elevation="7dp"
             android:layout_marginEnd="16dp"
             app:fabSize="auto"
             android:onClick="@{onClickListener::onClick}"
