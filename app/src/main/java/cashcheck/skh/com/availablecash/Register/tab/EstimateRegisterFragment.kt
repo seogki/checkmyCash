@@ -11,12 +11,11 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Chart.ChartMainActivity
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Util.Const
-import cashcheck.skh.com.availablecash.Util.DLog
-import cashcheck.skh.com.availablecash.Util.UtilMethod
+import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentEstimateRegisterBinding
 
 
@@ -33,6 +32,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_estimate_register, container, false)
         binding.onClickListener = this
+        getEditText()
         return binding.root
     }
 
@@ -45,19 +45,51 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
     }
 
 
+    private fun getEditText() {
+        setTextWatcher(binding.estimateFragEditAdjust)
+        setTextWatcher(binding.estimateFragEditElectric)
+        setTextWatcher(binding.estimateFragEditEtc)
+        setTextWatcher(binding.estimateFragEditFood)
+        setTextWatcher(binding.estimateFragEditHouse)
+        setTextWatcher(binding.estimateFragEditPhonebill)
+        setTextWatcher(binding.estimateFragEditTransport)
+
+        setTextWatcherDay(binding.estimateFragEditFoodDay)
+        setTextWatcherDay(binding.estimateFragEditTransportDay)
+    }
+
+
+    private fun setTextWatcher(et: EditText) {
+        et.addTextChangedListener(CustomTextWatcher(et))
+    }
+
+    private fun setTextWatcherDay(et: EditText) {
+        et.addTextChangedListener(CustomTextWatcherDay(et))
+    }
+
+
     private fun savePreference() {
         try {
             val pref = activity?.getSharedPreferences(Const.PreferenceTitle, MODE_PRIVATE)
             val editor = pref?.edit()
-            editor?.putInt(Const.EstimateTransport, binding.estimateFragEditTransport.text.toString().toInt())
-            editor?.putInt(Const.EstimateTransportDay, binding.estimateFragEditTransportDay.text.toString().toInt())
-            editor?.putInt(Const.EstimateFood, binding.estimateFragEditFood.text.toString().toInt())
-            editor?.putInt(Const.EstimateFoodDay, binding.estimateFragEditFoodDay.text.toString().toInt())
-            editor?.putInt(Const.EstimateElectric, binding.estimateFragEditElectric.text.toString().toInt())
-            editor?.putInt(Const.EstimatePhone, binding.estimateFragEditPhonebill.text.toString().toInt())
-            editor?.putInt(Const.EstimateHouse, binding.estimateFragEditHouse.text.toString().toInt())
-            editor?.putInt(Const.EstimateAdjust, binding.estimateFragEditAdjust.text.toString().toInt())
-            editor?.putInt(Const.EstimateEtc, binding.estimateFragEditEtc.text.toString().toInt())
+            editor?.putInt(Const.EstimateTransport
+                    , binding.estimateFragEditTransport.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
+            editor?.putInt(Const.EstimateTransportDay
+                    , binding.estimateFragEditTransportDay.text.toString().replace("일", "").toInt())
+            editor?.putInt(Const.EstimateFood
+                    , binding.estimateFragEditFood.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
+            editor?.putInt(Const.EstimateFoodDay
+                    , binding.estimateFragEditFoodDay.text.toString().replace("일", "").toInt())
+            editor?.putInt(Const.EstimateElectric
+                    , binding.estimateFragEditElectric.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
+            editor?.putInt(Const.EstimatePhone
+                    , binding.estimateFragEditPhonebill.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
+            editor?.putInt(Const.EstimateHouse
+                    , binding.estimateFragEditHouse.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
+            editor?.putInt(Const.EstimateAdjust
+                    , binding.estimateFragEditAdjust.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
+            editor?.putInt(Const.EstimateEtc
+                    , binding.estimateFragEditEtc.text.toString().replace("원", "").replace(",".toRegex(), "").toInt())
             editor?.apply()
             AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                     .setMessage("등록 되었습니다.")
@@ -70,6 +102,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
             alertDialog(context!!, "다시 시도해주시기 바랍니다.")
         }
     }
+
     override fun onResume() {
         super.onResume()
         if (activity != null) {
@@ -87,15 +120,24 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
             val result = (trans * transDay) + (food * foodDay) + electric + phone + house + adjust + etc
             val data = UtilMethod.currencyFormat(result.toString())
             DLog.e("trans $trans + $transDay + $food + $foodDay + $result + $data")
-            binding.estimateFragEditTransport.text = Editable.Factory.getInstance().newEditable(trans.toString())
-            binding.estimateFragEditTransportDay.text = Editable.Factory.getInstance().newEditable(transDay.toString())
-            binding.estimateFragEditFood.text = Editable.Factory.getInstance().newEditable(food.toString())
-            binding.estimateFragEditFoodDay.text = Editable.Factory.getInstance().newEditable(foodDay.toString())
-            binding.estimateFragEditElectric.text = Editable.Factory.getInstance().newEditable(electric.toString())
-            binding.estimateFragEditPhonebill.text = Editable.Factory.getInstance().newEditable(phone.toString())
-            binding.estimateFragEditHouse.text = Editable.Factory.getInstance().newEditable(house.toString())
-            binding.estimateFragEditAdjust.text = Editable.Factory.getInstance().newEditable(adjust.toString())
-            binding.estimateFragEditEtc.text = Editable.Factory.getInstance().newEditable(etc.toString())
+            if (trans != 0)
+                binding.estimateFragEditTransport.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(trans.toString()) + "원")
+            if (transDay != 0)
+                binding.estimateFragEditTransportDay.text = Editable.Factory.getInstance().newEditable(transDay.toString() + "일")
+            if (food != 0)
+                binding.estimateFragEditFood.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(food.toString()) + "원")
+            if (foodDay != 0)
+                binding.estimateFragEditFoodDay.text = Editable.Factory.getInstance().newEditable(foodDay.toString() + "일")
+            if (electric != 0)
+                binding.estimateFragEditElectric.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(electric.toString()) + "원")
+            if (phone != 0)
+                binding.estimateFragEditPhonebill.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(phone.toString()) + "원")
+            if (house != 0)
+                binding.estimateFragEditHouse.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(house.toString()) + "원")
+            if (adjust != 0)
+                binding.estimateFragEditAdjust.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(adjust.toString()) + "원")
+            if (etc != 0)
+                binding.estimateFragEditEtc.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(etc.toString()) + "원")
         }
 
     }

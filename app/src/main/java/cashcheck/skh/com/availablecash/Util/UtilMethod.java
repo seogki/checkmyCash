@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Seogki on 2018. 6. 18..
@@ -30,10 +31,8 @@ public class UtilMethod {
 
     public static String getCurrentDate() {
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("yy-MM");
-        String formattedDate = df.format(c);
-
-        return formattedDate;
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM", Locale.KOREA);
+        return df.format(c);
     }
 
     @SuppressLint("DefaultLocale")

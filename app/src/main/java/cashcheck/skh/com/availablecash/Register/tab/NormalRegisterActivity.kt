@@ -36,15 +36,7 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         val et = binding.normalAtvEditMoney
         et.addTextChangedListener(CustomTextWatcher(et))
-        checkColumn()
         binding.onClickListener = this
-    }
-
-    private fun checkColumn() {
-        val isthere = db.isColumnExists("${Const.DbName}", "days")
-        if (!isthere) {
-            db.checkTable("${Const.DbName}", "days")
-        }
     }
 
     override fun onClick(v: View?) {
@@ -101,7 +93,8 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             myCalendar.set(Calendar.YEAR, selectedyear)
             myCalendar.set(Calendar.MONTH, selectedmonth)
             myCalendar.set(Calendar.DAY_OF_MONTH, selectedday)
-            val myFormat = "yy-MM dd hh:mm:ss" //Change as you need
+            val myFormat = "yy-MM dd HH:mm:ss" //Change as you need
+            //kk or HH
             val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
             binding.normalAtvEditDate.setText(sdf.format(myCalendar.time))
 

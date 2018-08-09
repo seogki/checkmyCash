@@ -27,6 +27,8 @@
     <color name="lightBlue">#7ABAFF</color>
     <color name="lightDarkBlue">#7875FF</color>
     <color name="lightSkyGreen">#6BFFC4</color>
+    <color name="lightRedRipple">#CC0000</color>
+    <color name="lightOrangeRipple">#B25C00</color>
 
 
     <color name="titleColor">#CC0000</color>

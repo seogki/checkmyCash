@@ -10,6 +10,7 @@ import cashcheck.skh.com.availablecash.Base.BaseActivity
 import cashcheck.skh.com.availablecash.Chart.ChartMainActivity
 import cashcheck.skh.com.availablecash.Compare.CompareMainActivity
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.tab.NormalRegisterActivity
 import cashcheck.skh.com.availablecash.Setting.SettingMainActivity
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityRegisterMainBinding
@@ -21,10 +22,11 @@ class RegisterMainActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@RegisterMainActivity, R.layout.activity_register_main)
         binding.layoutBottomTab.onClickListener = this
+        binding.normalAtvFab.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
+        binding.onClickListener = this
         addFragment(R.id.frame_layout, RegisterMainFragment(), false, false, "RegisterMainFragment")
         setCurrentTab()
     }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -36,6 +38,11 @@ class RegisterMainActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.bottom_layout_btn3 -> {
                 beginActivity(Intent(this, SettingMainActivity::class.java))
+            }
+            R.id.normal_atv_fab -> {
+                val i = Intent(this, NormalRegisterActivity::class.java)
+                startActivity(i)
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
             }
         }
     }

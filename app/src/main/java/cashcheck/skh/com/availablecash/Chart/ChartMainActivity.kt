@@ -11,18 +11,23 @@ import cashcheck.skh.com.availablecash.Compare.CompareMainActivity
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.RegisterMainActivity
 import cashcheck.skh.com.availablecash.Setting.SettingMainActivity
+import cashcheck.skh.com.availablecash.Util.Const
+import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityChartMainBinding
 
 class ChartMainActivity : BaseActivity(), View.OnClickListener {
     private var backKeyPressedTime: Long = 0
     lateinit var binding: ActivityChartMainBinding
+    private lateinit var db: DBHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@ChartMainActivity, R.layout.activity_chart_main)
         binding.layoutBottomTab.onClickListener = this
         addFragment(R.id.frame_layout, ChartMainFragment(), false, false, "ChartMainFragment")
+        db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         setCurrentTab()
+        checkColumn()
     }
 
     override fun onClick(v: View?) {
@@ -39,6 +44,14 @@ class ChartMainActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun checkColumn() {
+        val isthere = db.isColumnExists(Const.DbName, "days")
+        if (!isthere) {
+            db.checkTable("${Const.DbName}", "days")
+        }
+    }
+
 
     private fun setCurrentTab() {
         binding.layoutBottomTab.bottomLayoutBtn0Txt.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_home_24))

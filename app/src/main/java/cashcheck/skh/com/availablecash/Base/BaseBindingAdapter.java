@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.TextView;
 
 import cashcheck.skh.com.availablecash.Util.KeyboardUtils;
 import cashcheck.skh.com.availablecash.Util.UtilMethod;
@@ -36,6 +37,43 @@ public class BaseBindingAdapter {
                     view.setVisibility(isVisible ? View.GONE : View.VISIBLE);
                 }
             });
+
+    }
+
+    @BindingAdapter("checkDay")
+    public static void checkDay(final TextView textView, final String days) {
+        Context context = textView.getContext();
+        if (context == null) {
+            return;
+        } else if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            if (activity.isFinishing() || activity.isDestroyed()) {
+                return;
+            }
+        }
+        if (days != null) {
+            String replace = days.replace(" ", "").replace("-", "");
+            String result = replace.substring(4, 6);
+            textView.setText(result + "일");
+        }
+
+    }
+
+    @BindingAdapter("checkMoney")
+    public static void checkMoney(final TextView textView, final String money) {
+        Context context = textView.getContext();
+        if (context == null) {
+            return;
+        } else if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            if (activity.isFinishing() || activity.isDestroyed()) {
+                return;
+            }
+        }
+        if (money != null) {
+            String result = UtilMethod.currencyFormat(money);
+            textView.setText(result + "원");
+        }
 
     }
 }

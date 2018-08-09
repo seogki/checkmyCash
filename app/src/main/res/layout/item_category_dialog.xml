@@ -15,11 +15,26 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="225dp"
         android:layout_margin="16dp"
         android:background="@drawable/custom_cat_dialog"
         android:padding="2dp"
         >
+
+        <TextView
+            android:id="@+id/catdlog_txt_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="분류"
+            android:textColor="@color/white"
+            android:background="@color/statusbar"
+            />
 
         <TextView
             android:id="@+id/catdlog_txt_trans"
@@ -33,7 +48,7 @@
             app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
             app:layout_constraintEnd_toStartOf="@+id/catdlog_txt_convi"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_title"
 
             />
 
@@ -49,7 +64,7 @@
             app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
             app:layout_constraintEnd_toStartOf="@+id/catdlog_txt_gas"
             app:layout_constraintStart_toEndOf="@+id/catdlog_txt_trans"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_title"
 
             />
 
@@ -65,7 +80,7 @@
             app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
             app:layout_constraintEnd_toStartOf="@+id/catdlog_txt_mart"
             app:layout_constraintStart_toEndOf="@+id/catdlog_txt_convi"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_title"
 
             />
 
@@ -81,7 +96,7 @@
             app:layout_constraintBottom_toTopOf="@id/catdlog_txt_house"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/catdlog_txt_gas"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_title"
             />
 
         <TextView
@@ -150,7 +165,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="0.05dp"
-            android:background="@color/titleColor"
+            android:background="@color/statusbar"
             android:gravity="center"
             android:text="추가"
             android:textColor="@color/white"
@@ -170,7 +185,7 @@
             android:padding="3dp"
             android:textColor="@color/white"
             android:inputType="text"
-            android:background="@color/titleColor"
+            android:background="@color/statusbar"
             app:layout_constraintBottom_toTopOf="@id/catdlog_btn_no"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/catdlog_txt_add"

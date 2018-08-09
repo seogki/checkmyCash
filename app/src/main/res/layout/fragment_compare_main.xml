@@ -63,26 +63,28 @@
                         android:id="@+id/compare_frag_img_right"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/btn_ripple_colored_statusbar"
                         android:onClick="@{onClickListener::onClick}"
+                        android:padding="8dp"
                         android:src="@drawable/baseline_keyboard_arrow_right_black_24"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"
-                        android:padding="8dp"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <ImageView
                         android:id="@+id/compare_frag_img_left"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/btn_ripple_colored_statusbar"
                         android:onClick="@{onClickListener::onClick}"
+                        android:padding="8dp"
                         android:src="@drawable/baseline_keyboard_arrow_left_black_24"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:padding="8dp"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <View
@@ -98,6 +100,80 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/compare_frag_nested"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                >
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+
+                    <TextView
+                        android:id="@+id/compare_frag_txt_set1"
+                        style="@style/text16Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/btn_ripple_colored_lightred"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:text="분류 1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/compare_frag_txt_set2"
+                        style="@style/text16Style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/edittext_round_border_orange"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:text="분류 2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/compare_frag_linechart"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/compare_frag_txt_set1"
+                        />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/compare_frag_nested"
+                />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
