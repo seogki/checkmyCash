@@ -54,4 +54,8 @@ dependencies {
     //글라이드 이미지변환
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
+
+    //line chart
+    compile 'com.github.lecho:hellocharts-android:v1.5.8'
 }

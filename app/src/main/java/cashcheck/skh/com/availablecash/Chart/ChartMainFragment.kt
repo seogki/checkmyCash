@@ -99,7 +99,7 @@ class ChartMainFragment : BaseFragment() {
         l.setDrawInside(false)
         l.xEntrySpace = 7f
         l.yEntrySpace = 5f
-
+        chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.description.isEnabled = false
         chart.animateXY(1000, 1000)

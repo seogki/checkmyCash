@@ -161,7 +161,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
-
+        chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
         colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))

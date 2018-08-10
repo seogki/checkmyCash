@@ -31,7 +31,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_transport"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -86,7 +87,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_food"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -141,7 +143,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_electric"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -176,7 +179,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_phonebill"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -210,7 +214,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_house"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -245,7 +250,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_adjust"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -280,7 +286,8 @@
 
                 <TextView
                     android:id="@+id/estimate_frag_txt_etc"
-                    style="@style/text12Style"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"

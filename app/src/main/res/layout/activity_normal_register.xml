@@ -62,18 +62,20 @@
 
                     <ImageView
                         android:id="@+id/chart_actv_img_back"
-                        android:padding="4dp"
-                        android:onClick="@{onClickListener::onClick}"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_marginStart="16dp"
+                        android:background="@drawable/btn_ripple_colored_statusbar"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:padding="4dp"
                         android:src="@drawable/icons8_undo_24"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <TextView
+                        android:id="@+id/normal_atv_btn_done"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -89,7 +91,6 @@
                         android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:id="@+id/normal_atv_btn_done"
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
@@ -176,10 +177,10 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_round_border_sky"
+                    android:focusable="false"
+                    android:onClick="@{onClickListener::onClick}"
                     android:paddingEnd="3dp"
                     android:paddingStart="8dp"
-                    android:onClick="@{onClickListener::onClick}"
-                    android:focusable="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_cat"
                     app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_date"
@@ -210,7 +211,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_round_border_orange"
                     android:inputType="number"
-                    android:paddingEnd="5dp"
+                    android:paddingEnd="8dp"
                     android:paddingStart="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_money"
@@ -220,14 +221,16 @@
 
                 <ImageView
                     android:id="@+id/normal_atv_img_clear"
-                    app:layout_constraintEnd_toEndOf="@id/normal_atv_edit_money"
-                    app:layout_constraintTop_toTopOf="@id/normal_atv_edit_money"
-                    android:src="@drawable/baseline_close_black_24"
-                    android:padding="8dp"
-                    android:onClick="@{onClickListener::onClick}"
-                    app:layout_constraintBottom_toBottomOf="@id/normal_atv_edit_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/btn_ripple_colored_grey"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:padding="5dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/baseline_close_black_24"
+                    app:layout_constraintBottom_toBottomOf="@id/normal_atv_edit_money"
+                    app:layout_constraintEnd_toEndOf="@id/normal_atv_edit_money"
+                    app:layout_constraintTop_toTopOf="@id/normal_atv_edit_money"
                     />
 
             </android.support.constraint.ConstraintLayout>

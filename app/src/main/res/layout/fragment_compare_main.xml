@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="비교"
+                        android:text="라인 그래프"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -133,6 +133,20 @@
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
+                    <Spinner
+                        android:id="@+id/compare_frag_spinner_1"
+                        style="@style/text16Style"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/btn_ripple_colored_lightred"
+                        android:text="분류 1"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@id/compare_frag_txt_set1"
+                        app:layout_constraintEnd_toEndOf="@id/compare_frag_txt_set1"
+                        app:layout_constraintStart_toStartOf="@id/compare_frag_txt_set1"
+                        app:layout_constraintTop_toTopOf="@id/compare_frag_txt_set1"
+                        />
+
                     <TextView
                         android:id="@+id/compare_frag_txt_set2"
                         style="@style/text16Style"
@@ -147,17 +161,95 @@
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/compare_frag_linechart"
+                    <Spinner
+                        android:id="@+id/compare_frag_spinner_2"
+                        style="@style/text16Style"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/edittext_round_border_orange"
+                        android:text="분류 2"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@id/compare_frag_txt_set2"
+                        app:layout_constraintEnd_toEndOf="@id/compare_frag_txt_set2"
+                        app:layout_constraintStart_toStartOf="@id/compare_frag_txt_set2"
+                        app:layout_constraintTop_toTopOf="@id/compare_frag_txt_set2"
+                        />
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/compare_frag_const_linechart"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
+                        android:background="@drawable/view_shadow_btm"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/compare_frag_txt_set1"
-                        />
+                        >
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/compare_frag_linechart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/compare_frag_barchart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/compare_frag_piechart1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/compare_frag_const_piechart2"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/view_shadow_btm"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/compare_frag_const_linechart"
+                        >
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/compare_frag_piechart2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
+                    </android.support.constraint.ConstraintLayout>
 
                 </android.support.constraint.ConstraintLayout>
 
