@@ -12,13 +12,18 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.adapter.NormalRegisterAdapter
+import cashcheck.skh.com.availablecash.Register.model.EventItem
+import cashcheck.skh.com.availablecash.Register.model.HeaderItem
+import cashcheck.skh.com.availablecash.Register.model.ListItem
 import cashcheck.skh.com.availablecash.Register.model.NormalRegisterModel
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentNormalRegisterBinding
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -31,9 +36,12 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
     private lateinit var db: DBHelper
     private lateinit var normalRegisterAdapter: NormalRegisterAdapter
     private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var itemTreeMap: TreeMap<String, MutableList<NormalRegisterModel>>
+    private lateinit var mItems: ArrayList<ListItem>
+    private lateinit var tempMItem: ArrayList<ListItem>
     private lateinit var map: HashMap<String, String>
     private lateinit var tempMap: HashMap<String, String>
-    private lateinit var normalArray: ArrayList<NormalRegisterModel>
+    private lateinit var normalArray: MutableList<NormalRegisterModel>
     private var isRvOn: Boolean = false
     private var dates: String = ""
     fun getDate(v: String) {
@@ -48,6 +56,8 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         binding.onClickListener = this
         db = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         tempMap = HashMap()
+        itemTreeMap = TreeMap()
+        tempMItem = ArrayList()
         dates = UtilMethod.getCurrentDate()
         return binding.root
     }
@@ -65,7 +75,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         binding.normalFragRv.isNestedScrollingEnabled = false
         binding.normalFragRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.normalFragRv.itemAnimator = null
-        binding.normalFragRv.addItemDecoration(GridSpacingItemDecoration(1, 30, false, 0))
+        binding.normalFragRv.addItemDecoration(GridSpacingItemDecoration(1, 40, false, 0))
 
 
         Thread(Runnable {
@@ -75,11 +85,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-//            R.id.normal_frag_fab -> {
-//                val i = Intent(context!!, NormalRegisterActivity::class.java)
-//                startActivity(i)
-//                activity?.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
-//            }
+
         }
     }
 
@@ -91,12 +97,13 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
     private fun checkDiffAndRefresh() {
         val db = db.readableDatabase
         map = HashMap()
-        normalArray = ArrayList()
+        mItems = ArrayList()
+        itemTreeMap = TreeMap()
         DLog.e("cur $dates")
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + dates + "%' ORDER BY date DESC", null)
         while (cursor.moveToNext()) {
-            normalArray.add(NormalRegisterModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
+            setHeaderAndData(NormalRegisterModel(cursor.getString(0), cursor.getString(1).substring(0, 8), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
             val cate = cursor.getString(2)
             val money = cursor.getString(3)
             if (map.containsKey(cate)) {
@@ -106,7 +113,9 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
             } else {
                 map[cate] = money
             }
+
         }
+        DLog.e("data : $itemTreeMap")
 
         if (tempMap != map) {
             tempMap = map
@@ -126,12 +135,45 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    private fun setHeaderAndData(resultModel: NormalRegisterModel) {
+
+
+        if (itemTreeMap.containsKey(resultModel.date)) {
+            val date = resultModel.date
+            val models = itemTreeMap[date+resultModel.days]
+            itemTreeMap.remove(date+resultModel.days)
+
+            models!!.add(resultModel)
+            itemTreeMap[date!!+resultModel.days] = models
+        } else {
+            val model = mutableListOf<NormalRegisterModel>()
+            model.add(resultModel)
+            itemTreeMap[resultModel.date!!+resultModel.days] = model
+        }
+
+    }
+
+    private fun setViewTypeData() {
+
+        val reversed = itemTreeMap.toSortedMap(Collections.reverseOrder())
+
+        mItems = ArrayList()
+
+        for (date in reversed.keys) {
+            val header = HeaderItem(date)
+            mItems.add(header)
+            for (event in reversed[date]!!) {
+                val item = EventItem(event)
+                mItems.add(item)
+            }
+        }
+    }
+
     private fun refresh() {
+        setViewTypeData()
         normalRegisterAdapter.clearItems()
         normalRegisterAdapter.notifyDataSetChanged()
-        normalRegisterAdapter.addItems(normalArray)
-
-
+        normalRegisterAdapter.addItems(mItems)
     }
 
 
@@ -165,25 +207,23 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
 
         val colors = mutableListOf<Int>()
         colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightPurple))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightDarkBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightSkyGreen))
 
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)
 
-        val l = chart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        l.orientation = Legend.LegendOrientation.HORIZONTAL
-        l.setDrawInside(false)
-        l.xEntrySpace = 7f
-        l.yEntrySpace = 5f
+        chart.legend.isEnabled = false
+
+//        val l = chart.legend
+//        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+//        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+//        l.orientation = Legend.LegendOrientation.HORIZONTAL
+//        l.setDrawInside(false)
+//        l.xEntrySpace = 7f
+//        l.yEntrySpace = 5f
 
         chart.data = data
         chart.description.isEnabled = false

@@ -83,7 +83,7 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> : Recycle
         notifyDataSetChanged()
     }
 
-    fun addItems(items: MutableList<T>) {
+    fun addItems(items: ArrayList<T>) {
 
         if (this.arrayList == null) {
             this.arrayList = items

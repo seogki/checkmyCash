@@ -54,7 +54,8 @@ public class BaseBindingAdapter {
         if (days != null) {
             String replace = days.replace(" ", "").replace("-", "");
             String result = replace.substring(4, 6);
-            textView.setText(result + "일");
+            String day = replace.substring(6,9);
+            textView.setText(result + "일 " + day);
         }
 
     }

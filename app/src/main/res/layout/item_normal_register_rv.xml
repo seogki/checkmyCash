@@ -24,10 +24,10 @@
             android:id="@+id/item_cate_view_box"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="11dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/view_shadow_btm_grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:background="@color/white"
             android:letterSpacing="0.15"
             android:text="@{model.category}"
@@ -54,32 +54,32 @@
             tools:text="식비"
             />
 
-        <TextView
-            android:id="@+id/item-cate_txt_days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/edittext_round_border_red"
-            android:letterSpacing="0.25"
-            android:padding="4dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:text="@{model.days}"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/item_cate_view_box"
-            app:layout_constraintStart_toStartOf="@id/item_cate_view_box"
-            app:layout_constraintTop_toTopOf="@id/item_cate_view_box"
-            tools:text="화요일"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/item-cate_txt_days"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="16dp"-->
+            <!--android:background="@drawable/edittext_round_border_red"-->
+            <!--android:letterSpacing="0.25"-->
+            <!--android:padding="4dp"-->
+            <!--android:paddingEnd="8dp"-->
+            <!--android:paddingStart="8dp"-->
+            <!--android:text="@{model.days}"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/item_cate_view_box"-->
+            <!--app:layout_constraintStart_toStartOf="@id/item_cate_view_box"-->
+            <!--app:layout_constraintTop_toTopOf="@id/item_cate_view_box"-->
+            <!--tools:text="화요일"-->
+            <!--/>-->
 
         <TextView
             android:id="@+id/item-cate_txt_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/edittext_round_border_orange"
             android:gravity="center"
             android:letterSpacing="0.25"
@@ -90,45 +90,10 @@
             app:checkMoney="@{model.money}"
             app:layout_constraintBottom_toBottomOf="@id/item_cate_view_box"
             app:layout_constraintEnd_toEndOf="@id/item_cate_view_box"
-            app:layout_constraintStart_toEndOf="@id/item-cate_txt_days"
+            app:layout_constraintStart_toStartOf="@id/item_cate_view_box"
             app:layout_constraintTop_toTopOf="@id/item_cate_view_box"
             tools:text="500,000원"
             />
-
-        <TextView
-            android:id="@+id/item-cate_txt_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center"
-            android:letterSpacing="0.15"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/statusbar"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:checkDay="@{model.date}"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="15일"
-            />
-
-        <!--<TextView-->
-        <!--android:id="@+id/item-cate_txt_date"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:gravity="top"-->
-        <!--android:text="@{model.date}"-->
-        <!--android:textColor="@color/black"-->
-        <!--android:textSize="14sp"-->
-
-        <!--app:layout_constraintBottom_toBottomOf="@id/item_cate_view_box"-->
-        <!--app:layout_constraintEnd_toEndOf="@id/item_cate_view_box"-->
-        <!--app:layout_constraintTop_toBottomOf="@id/item-cate_txt_time"-->
-        <!--tools:text="09:50"-->
-        <!--/>-->
     </android.support.constraint.ConstraintLayout>
 
 </layout>

@@ -14,7 +14,6 @@ import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentChartMainBinding
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -66,7 +65,7 @@ class ChartMainFragment : BaseFragment() {
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.valueLinePart1OffsetPercentage = 90f
-        dataSet.valueLinePart1Length = 0.4f
+        dataSet.valueLinePart1Length = 0.5f
         dataSet.valueLinePart2Length = 0.2f
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
@@ -80,26 +79,23 @@ class ChartMainFragment : BaseFragment() {
 
         val colors = mutableListOf<Int>()
         colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightPurple))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightDarkBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightSkyGreen))
 
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)
 
-        val l = chart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        l.orientation = Legend.LegendOrientation.HORIZONTAL
-        l.setDrawInside(false)
-        l.xEntrySpace = 7f
-        l.yEntrySpace = 5f
-        chart.legend.isWordWrapEnabled = true
+        chart.legend.isEnabled = false
+//        val l = chart.legend
+//        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+//        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+//        l.orientation = Legend.LegendOrientation.HORIZONTAL
+//        l.setDrawInside(false)
+//        l.xEntrySpace = 7f
+//        l.yEntrySpace = 5f
+//        chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.description.isEnabled = false
         chart.animateXY(1000, 1000)

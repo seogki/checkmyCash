@@ -49,40 +49,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="라인 그래프"
+                        android:text="비교"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <ImageView
-                        android:id="@+id/compare_frag_img_right"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/btn_ripple_colored_statusbar"
-                        android:onClick="@{onClickListener::onClick}"
-                        android:padding="8dp"
-                        android:src="@drawable/baseline_keyboard_arrow_right_black_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <ImageView
-                        android:id="@+id/compare_frag_img_left"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/btn_ripple_colored_statusbar"
-                        android:onClick="@{onClickListener::onClick}"
-                        android:padding="8dp"
-                        android:src="@drawable/baseline_keyboard_arrow_left_black_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         />
@@ -98,174 +70,31 @@
 
             </android.support.v7.widget.Toolbar>
 
+            <android.support.design.widget.TabLayout
+                android:id="@+id/compare_frag_tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_centerHorizontal="true"
+                android:background="@color/white"
+                app:tabGravity="fill"
+                app:tabTextColor="@color/darkGrey"
+                app:tabSelectedTextColor="@color/titleColor"
+                app:tabIndicatorColor="@color/titleColor"
+                app:tabMode="fixed"
+                app:tabPaddingEnd="0dp"
+                app:tabPaddingStart="0dp"
+                >
+            </android.support.design.widget.TabLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v4.view.ViewPager
+            android:id="@+id/compare_frag_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/register_frag_tablayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
-
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/compare_frag_nested"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                >
-
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-
-
-                    <TextView
-                        android:id="@+id/compare_frag_txt_set1"
-                        style="@style/text16Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/btn_ripple_colored_lightred"
-                        android:onClick="@{onClickListener::onClick}"
-                        android:text="분류 1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <Spinner
-                        android:id="@+id/compare_frag_spinner_1"
-                        style="@style/text16Style"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/btn_ripple_colored_lightred"
-                        android:text="분류 1"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="@id/compare_frag_txt_set1"
-                        app:layout_constraintEnd_toEndOf="@id/compare_frag_txt_set1"
-                        app:layout_constraintStart_toStartOf="@id/compare_frag_txt_set1"
-                        app:layout_constraintTop_toTopOf="@id/compare_frag_txt_set1"
-                        />
-
-                    <TextView
-                        android:id="@+id/compare_frag_txt_set2"
-                        style="@style/text16Style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/edittext_round_border_orange"
-                        android:onClick="@{onClickListener::onClick}"
-                        android:text="분류 2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
-                    <Spinner
-                        android:id="@+id/compare_frag_spinner_2"
-                        style="@style/text16Style"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/edittext_round_border_orange"
-                        android:text="분류 2"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toBottomOf="@id/compare_frag_txt_set2"
-                        app:layout_constraintEnd_toEndOf="@id/compare_frag_txt_set2"
-                        app:layout_constraintStart_toStartOf="@id/compare_frag_txt_set2"
-                        app:layout_constraintTop_toTopOf="@id/compare_frag_txt_set2"
-                        />
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/compare_frag_const_linechart"
-                        android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/view_shadow_btm"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/compare_frag_txt_set1"
-                        >
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/compare_frag_linechart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            />
-
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/compare_frag_barchart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="8dp"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            />
-
-                        <com.github.mikephil.charting.charts.PieChart
-                            android:id="@+id/compare_frag_piechart1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="8dp"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            />
-                    </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/compare_frag_const_piechart2"
-                        android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/view_shadow_btm"
-                        android:visibility="invisible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/compare_frag_const_linechart"
-                        >
-
-                        <com.github.mikephil.charting.charts.PieChart
-                            android:id="@+id/compare_frag_piechart2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="8dp"
-                            android:visibility="invisible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            />
-                    </android.support.constraint.ConstraintLayout>
-
-                </android.support.constraint.ConstraintLayout>
-
-            </android.support.v4.widget.NestedScrollView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/compare_frag_nested"
-                />
-
-        </android.support.constraint.ConstraintLayout>
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>
