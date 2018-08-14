@@ -56,6 +56,8 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setLineChart() {
+
+
         val chart = binding.compareFragLinechart
         val yValues = mutableListOf<Entry>()
         val xValues = mutableListOf<String>()
@@ -84,7 +86,10 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
 
 
         val xAxis = chart.xAxis
-        xAxis.setLabelCount(8, true)
+
+        if (yValues.size > 6) {
+            xAxis.setLabelCount(8, true)
+        }
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textSize = 7F
         xAxis.granularity = 1F
@@ -123,7 +128,7 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
                 lineMap[date] = money
             }
         }
-        if (lineMap.size == 0) {
+        if (lineMap.size < 1) {
         } else {
             setLineChart()
         }

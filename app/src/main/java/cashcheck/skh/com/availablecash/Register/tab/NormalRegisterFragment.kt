@@ -41,7 +41,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
     private lateinit var tempMItem: ArrayList<ListItem>
     private lateinit var map: HashMap<String, String>
     private lateinit var tempMap: HashMap<String, String>
-    private lateinit var normalArray: MutableList<NormalRegisterModel>
     private var isRvOn: Boolean = false
     private var dates: String = ""
     fun getDate(v: String) {
@@ -113,10 +112,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
             } else {
                 map[cate] = money
             }
-
         }
-        DLog.e("data : $itemTreeMap")
-
         if (tempMap != map) {
             tempMap = map
             if (!isRvOn) {
@@ -137,23 +133,26 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
 
     private fun setHeaderAndData(resultModel: NormalRegisterModel) {
 
+        DLog.e("data Model : $resultModel")
 
         if (itemTreeMap.containsKey(resultModel.date)) {
             val date = resultModel.date
-            val models = itemTreeMap[date+resultModel.days]
-            itemTreeMap.remove(date+resultModel.days)
-
+            val models = itemTreeMap[date]
+            itemTreeMap.remove(date)
+            DLog.e("model : $models")
             models!!.add(resultModel)
-            itemTreeMap[date!!+resultModel.days] = models
+            itemTreeMap[date!!] = models
         } else {
+            val date = resultModel.date
             val model = mutableListOf<NormalRegisterModel>()
             model.add(resultModel)
-            itemTreeMap[resultModel.date!!+resultModel.days] = model
+            itemTreeMap[date!!] = model
         }
 
     }
 
     private fun setViewTypeData() {
+        DLog.e("data : $itemTreeMap")
 
         val reversed = itemTreeMap.toSortedMap(Collections.reverseOrder())
 

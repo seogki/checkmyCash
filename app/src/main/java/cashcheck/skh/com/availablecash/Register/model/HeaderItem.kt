@@ -11,6 +11,5 @@ class HeaderItem(val date: String) : ListItem() {
 
     override val type: Int
         get() = ListItem.TYPE_HEADER
-
 }
 
