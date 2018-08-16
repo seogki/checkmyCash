@@ -53,6 +53,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_normal_register, container, false)
         binding.onClickListener = this
+        binding.normalFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         db = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         tempMap = HashMap()
         itemTreeMap = TreeMap()
@@ -74,7 +75,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         binding.normalFragRv.isNestedScrollingEnabled = false
         binding.normalFragRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.normalFragRv.itemAnimator = null
-        binding.normalFragRv.addItemDecoration(GridSpacingItemDecoration(1, 40, false, 0))
+//        binding.normalFragRv.addItemDecoration(GridSpacingItemDecoration(1, 40, false, 0))
 
 
         Thread(Runnable {
@@ -133,20 +134,17 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
 
     private fun setHeaderAndData(resultModel: NormalRegisterModel) {
 
-        DLog.e("data Model : $resultModel")
+        val dateDays = resultModel.date + resultModel.days
 
-        if (itemTreeMap.containsKey(resultModel.date)) {
-            val date = resultModel.date
-            val models = itemTreeMap[date]
-            itemTreeMap.remove(date)
-            DLog.e("model : $models")
+        if (itemTreeMap.containsKey(dateDays)) {
+            val models = itemTreeMap[dateDays]
+            itemTreeMap.remove(dateDays)
             models!!.add(resultModel)
-            itemTreeMap[date!!] = models
+            itemTreeMap[dateDays] = models
         } else {
-            val date = resultModel.date
             val model = mutableListOf<NormalRegisterModel>()
             model.add(resultModel)
-            itemTreeMap[date!!] = model
+            itemTreeMap[dateDays] = model
         }
 
     }
@@ -155,6 +153,19 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         DLog.e("data : $itemTreeMap")
 
         val reversed = itemTreeMap.toSortedMap(Collections.reverseOrder())
+
+
+        for (i in 0 until reversed.size) {
+            val list = reversed.toList()[i]
+            var totalMoney = 0F
+            for (x in 0 until list.second.size) {
+                totalMoney += list.second[x].money!!.toFloat()
+            }
+            val tempdata = reversed.toList()[i].first
+            val tempModel = reversed.toList()[i].second
+            reversed.remove(tempdata)
+            reversed[tempdata+totalMoney.toInt()] = tempModel
+        }
 
         mItems = ArrayList()
 
@@ -166,6 +177,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
                 mItems.add(item)
             }
         }
+        DLog.e("mitem : ${mItems.toList()}")
     }
 
     private fun refresh() {
@@ -191,9 +203,9 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         dataSet.selectionShift = 5F
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-        dataSet.valueLinePart1OffsetPercentage = 90f
-        dataSet.valueLinePart1Length = 0.4f
-        dataSet.valueLinePart2Length = 0.2f
+        dataSet.valueLinePart1OffsetPercentage = 100f
+        dataSet.valueLinePart1Length = 0.5f
+        dataSet.valueLinePart2Length = 0.1f
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
         chart.isRotationEnabled = false
@@ -215,7 +227,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         val data = PieData(dataSet)
 
         chart.legend.isEnabled = false
-
+        chart.setNoDataText("데이터가 존재하지 않습니다.")
 //        val l = chart.legend
 //        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
 //        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER

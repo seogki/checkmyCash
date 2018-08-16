@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="cashcheck.skh.com.availablecash.Compare.model.ComparePieModel"
+            type="cashcheck.skh.com.availablecash.Compare.model.CompareLineModel"
             />
     </data>
 
@@ -26,10 +26,13 @@
             app:layout_constraintGuide_percent="0.5"
             />
 
-        <View
-            android:layout_width="0.5dp"
+        <TextView
+            android:id="@+id/item_compare_line_view_between"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:background="@color/black"
+            android:gravity="center"
+            android:text=" ~ "
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
             app:layout_constraintStart_toStartOf="@id/guideline"
@@ -37,7 +40,7 @@
             />
 
         <TextView
-            android:id="@+id/item_compare_pie_txt_title"
+            android:id="@+id/item_compare_line_txt_fdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -45,30 +48,30 @@
             android:layout_marginTop="4dp"
             android:gravity="center_vertical"
             android:letterSpacing="0.15"
-            android:text="@{model.cate}"
+            app:setDate="@{model.firstDate}"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="식비"
+            tools:text="18-07"
             />
 
         <TextView
-            android:id="@+id/item_compare_pie_txt_first_money"
+            android:id="@+id/item_compare_line_txt_first_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:gravity="end|center"
             android:letterSpacing="0.15"
+            app:checkMoney="@{model.firstMoney}"
             android:textColor="@color/jaju"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:checkMoney="@{model.first}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline"
 
@@ -82,14 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:gravity="start|center"
             android:letterSpacing="0.15"
+            app:checkMoney="@{model.secondMoney}"
             android:textColor="@color/pink"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:checkMoney="@{model.second}"
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintStart_toEndOf="@id/guideline"
@@ -97,17 +100,23 @@
             tools:text="7,000원"
             />
 
-        <ImageView
-            android:id="@+id/item_compare_pie_img_arrow"
+        <TextView
+            android:id="@+id/item_compare_line_txt_sdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="4dp"
-            android:src="@drawable/baseline_arrow_downward_black_24"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.15"
+            app:setDate="@{model.secondDate}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="18-08"
             />
 
 

@@ -25,7 +25,7 @@ class CustomDateFormatter(xValues: MutableList<String>) : IValueFormatter, IAxis
     override fun getFormattedValue(value: Float, axis: AxisBase): String {
         val index = value.toInt()
         if (index < xValues.size) {
-            if(index == -1)
+            if(index < 0)
                 return ""
             val stringValue = xValues[index]
             var month = ""

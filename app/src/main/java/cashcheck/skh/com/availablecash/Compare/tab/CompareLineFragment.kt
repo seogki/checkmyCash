@@ -4,12 +4,16 @@ package cashcheck.skh.com.availablecash.Compare.tab
 import android.app.DatePickerDialog
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cashcheck.skh.com.availablecash.Compare.model.CompareLineModel
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.adapter.CompareLineAdapter
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentCompareLineBinding
 import com.github.mikephil.charting.components.XAxis
@@ -17,9 +21,9 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.utils.EntryXComparator
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -34,13 +38,35 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
     private var cat1: String = ""
     private var cat2: String = ""
     private lateinit var lineMap: HashMap<String, Float>
-
+    private lateinit var rvArray: ArrayList<CompareLineModel>
+    private lateinit var compareLineAdapter: CompareLineAdapter
+    private lateinit var layoutManager: LinearLayoutManager
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compare_line, container, false)
+        binding.compareFragLinechart.setNoDataText("데이터가 존재하지 않습니다.")
         dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
+
         binding.onClickListener = this
+        setRv()
         return binding.root
+    }
+
+    private fun setRv() {
+        compareLineAdapter = CompareLineAdapter(context!!, ArrayList())
+        layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        layoutManager.isItemPrefetchEnabled = true
+        layoutManager.initialPrefetchItemCount = 4
+        binding.compareFragLineRv.layoutManager = layoutManager
+        binding.compareFragLineRv.isDrawingCacheEnabled = true
+        binding.compareFragLineRv.setItemViewCacheSize(20)
+        binding.compareFragLineRv.isNestedScrollingEnabled = false
+        binding.compareFragLineRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
+        binding.compareFragLineRv.itemAnimator = null
+
+        Handler().postDelayed({
+            binding.compareFragLineRv.adapter = compareLineAdapter
+        }, 100)
     }
 
     override fun onClick(v: View?) {
@@ -62,13 +88,12 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
         val yValues = mutableListOf<Entry>()
         val xValues = mutableListOf<String>()
 
-        for (i in 0 until lineMap.size) {
-            yValues.add(Entry(i.toFloat(), lineMap.toList()[i].second))
-            xValues.add(lineMap.toList()[i].first)
-        }
+        val sortedMap = lineMap.toSortedMap()
 
-        Collections.sort(yValues, EntryXComparator())
-        xValues.sort()
+        for (i in 0 until sortedMap.size) {
+            yValues.add(Entry(i.toFloat(), sortedMap.toList()[i].second))
+            xValues.add(sortedMap.toList()[i].first)
+        }
 
         DLog.e("yvalues : $yValues")
 
@@ -78,8 +103,8 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
         dateSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
         dateSet.valueTextSize = 8F
         dateSet.lineWidth = 1.5F
-        dateSet.valueFormatter = CustomWonFormatter()
-        dateSet.setDrawFilled(false)
+        dateSet.valueFormatter = CustomNoWonFormatter()
+        dateSet.setDrawFilled(true)
         dateSet.axisDependency = YAxis.AxisDependency.LEFT
         dateSet.fillColor = ContextCompat.getColor(context!!, R.color.rippleColor)
         dateSet.mode = LineDataSet.Mode.CUBIC_BEZIER
@@ -87,9 +112,6 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
 
         val xAxis = chart.xAxis
 
-        if (yValues.size > 6) {
-            xAxis.setLabelCount(8, true)
-        }
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textSize = 7F
         xAxis.granularity = 1F
@@ -131,7 +153,41 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
         if (lineMap.size < 1) {
         } else {
             setLineChart()
+            setRvData()
         }
+    }
+
+    private fun setRvData() {
+        rvArray = ArrayList()
+        DLog.e("lineMap : ${lineMap.toList()}")
+        val sortedMap = lineMap.toSortedMap()
+        for (i in 0 until sortedMap.size) {
+
+            if (sortedMap.size == 1) {
+                rvArray.add(CompareLineModel(sortedMap.toList()[i].first
+                        , sortedMap.toList()[i].second.toString()
+                        , ""
+                        , ""
+                        , ""))
+                break
+            }
+            if (i + 1 < sortedMap.size) {
+                rvArray.add(CompareLineModel(sortedMap.toList()[i].first
+                        , sortedMap.toList()[i].second.toString()
+                        , sortedMap.toList()[i + 1].first
+                        , sortedMap.toList()[i + 1].second.toString()
+                        , ""))
+            } else if (i + 1 == sortedMap.size) {
+                rvArray.add(CompareLineModel(sortedMap.toList()[i].first
+                        , sortedMap.toList()[i].second.toString()
+                        , ""
+                        , ""
+                        , ""))
+            }
+        }
+
+        compareLineAdapter.clearItems()
+        compareLineAdapter.addItems(rvArray)
     }
 
     private fun selectDate(v: String) {

@@ -29,6 +29,11 @@
     <color name="lightSkyGreen">#6BFFC4</color>
     <color name="lightRedRipple">#CC0000</color>
     <color name="lightOrangeRipple">#B25C00</color>
+    <color name="green">#01B112</color>
+    <color name="blue">#2D18E8</color>
+    <color name="danhong">#F23920</color>
+    <color name="jaju">#660099</color>
+    <color name="pink">#C71585</color>
 
 
     <color name="titleColor">#CC0000</color>

@@ -31,13 +31,15 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/compare_frag_spinner_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="2dp"
                     android:background="@drawable/btn_ripple_colored_lightred"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/compare_frag_spinner_2"
                     >
 
                     <Spinner
@@ -71,13 +73,14 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/compare_frag_spinner_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="2dp"
                     android:background="@drawable/edittext_round_border_orange"
-
+                    app:layout_constraintStart_toEndOf="@id/compare_frag_spinner_1"
                     app:layout_constraintBottom_toTopOf="@id/compare_frag_const_linechart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -93,6 +96,7 @@
                         android:background="@android:color/transparent"
                         android:popupBackground="@color/lightOrange"
                         android:spinnerMode="dropdown"
+                        android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -113,11 +117,10 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/compare_frag_const_linechart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="250dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/view_shadow_btm"
+                    android:background="@color/white"
+                    android:elevation="3dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/compare_frag_spinner_1"
@@ -131,6 +134,7 @@
                         android:layout_marginEnd="4dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
+
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/compare_frag_piechart2"
                         app:layout_constraintStart_toStartOf="parent"
@@ -153,29 +157,88 @@
 
                 </android.support.constraint.ConstraintLayout>
 
+                <View
+                    android:id="@+id/compare_frag_pie_above_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black"
+                    app:layout_constraintBottom_toTopOf="@id/compare_frag_pie_header"
+                    />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/compare_frag_pie_header"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_const_linechart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    >
+
+                    <TextView
+                        android:id="@+id/compare_frag_pie_first_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.15"
+                        android:paddingBottom="2dp"
+                        android:gravity="center"
+                        android:paddingTop="2dp"
+                        android:textColor="@color/jaju"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/compare_frag_pie_second_title"
+                        />
+
+                    <TextView
+                        android:id="@+id/compare_frag_pie_second_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.15"
+                        android:paddingBottom="2dp"
+                        android:gravity="center"
+                        android:paddingTop="2dp"
+                        android:textColor="@color/pink"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/compare_frag_pie_first_title"
+                        />
+
+                    <View
+                        android:id="@+id/compare_frag_pie_middle_header"
+                        android:layout_width="0.5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/compare_frag_pie_first_title"
+                        app:layout_constraintEnd_toStartOf="@id/compare_frag_pie_second_title"
+                        />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <View
+                    android:id="@+id/compare_frag_pie_below_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_pie_header"
+                    />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/compare_frag_piechart_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/view_shadow_btm"
+
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/compare_frag_const_linechart"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_pie_below_header"
                     />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/compare_frag_piechart_rv"
-                    />
-
 
             </android.support.constraint.ConstraintLayout>
 

@@ -3,6 +3,7 @@ package cashcheck.skh.com.availablecash.Compare.tab
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -11,8 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import cashcheck.skh.com.availablecash.Compare.model.ComparePieModel
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Register.adapter.NormalRegisterAdapter
+import cashcheck.skh.com.availablecash.Register.adapter.ComparePieAdapter
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.CustomComparePercentFormatter
 import cashcheck.skh.com.availablecash.Util.DBHelper
@@ -33,24 +36,42 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentComparePieBinding
     private lateinit var dbHelper: DBHelper
     private lateinit var spinnerArray: MutableList<String>
-    private lateinit var pieMap1: HashMap<String, String>
-    private lateinit var pieMap2: HashMap<String, String>
+    private var pieMap1: HashMap<String, String>? = null
+    private var pieMap2: HashMap<String, String>? = null
+    private lateinit var rvArray: ArrayList<ComparePieModel>
     private lateinit var firstData: String
     private lateinit var secondData: String
-    private lateinit var normalRegisterAdapter: NormalRegisterAdapter
+    private lateinit var comparePieAdapter: ComparePieAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compare_pie, container, false)
         dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
+        binding.compareFragPiechart1.setNoDataText("데이터가 존재하지 않습니다.")
+        binding.compareFragPiechart2.setNoDataText("데이터가 존재하지 않습니다.")
+        binding.compareFragPieHeader.visibility = View.INVISIBLE
         setSpinner()
         setRv()
+
         return binding.root
     }
 
     private fun setRv() {
+        comparePieAdapter = ComparePieAdapter(context!!, ArrayList())
+        layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        layoutManager.isItemPrefetchEnabled = true
+        layoutManager.initialPrefetchItemCount = 4
+        binding.compareFragPiechartRv.layoutManager = layoutManager
+        binding.compareFragPiechartRv.isDrawingCacheEnabled = true
+        binding.compareFragPiechartRv.setItemViewCacheSize(20)
+        binding.compareFragPiechartRv.isNestedScrollingEnabled = false
+        binding.compareFragPiechartRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
+        binding.compareFragPiechartRv.itemAnimator = null
 
+        Handler().postDelayed({
+            binding.compareFragPiechartRv.adapter = comparePieAdapter
+        }, 100)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -62,16 +83,103 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
             R.id.compare_frag_spinner_spinner_1 -> {
                 firstData = binding.compareFragSpinnerSpinner1.selectedItem.toString()
                 if (firstData != "") {
+                    setYearMonth(firstData, binding.compareFragPieFirstTitle)
                     getPieDataFromDB(true)
                 }
             }
             R.id.compare_frag_spinner_spinner_2 -> {
                 secondData = binding.compareFragSpinnerSpinner2.selectedItem.toString()
                 if (secondData != "") {
+                    setYearMonth(secondData, binding.compareFragPieSecondTitle)
                     getPieDataFromDB(false)
+
                 }
             }
         }
+    }
+
+    private fun setYearMonth(date: String, textView: TextView) {
+        val result = date.replace("-", "")
+        val year = result.substring(0, 2)
+        val month = result.substring(2, 4)
+
+        textView.text = "20" + year + "년 " + month + "월"
+    }
+
+    private fun setRvData() {
+        rvArray = ArrayList()
+
+        pieMap1?.let {
+            for ((key, value) in it) {
+                if (value.contains(".")) {
+                    val data = value.replace(".", "").substring(0, value.length - 2)
+                    rvArray.add(ComparePieModel(key, "" + data, "0", "" + data))
+                } else {
+                    rvArray.add(ComparePieModel(key, "" + value, "0", "" + value))
+                }
+            }
+        }
+
+        var isDiff = false
+        var pieMapSize = pieMap2!!.size
+        pieMap2?.let {
+            for (i in 0 until pieMapSize) {
+
+                val key = pieMap2!!.toList()[i].first
+                val value = pieMap2!!.toList()[i].second
+                val data: String
+                data = if (value.contains(".")) {
+                    value.replace(".", "").substring(0, value.length - 2)
+                } else {
+                    value
+                }
+                for (x in 0 until rvArray.size) {
+                    val cate = rvArray[x].cate
+                    if (key == cate) {
+                        val model = rvArray[x]
+                        model.second = data
+                        model.result = "" + model.first?.toInt()?.minus(data.toInt())
+                        pieMapSize -= 1
+                        rvArray.removeAt(x)
+                        rvArray.add(model)
+                        isDiff = false
+                        break
+                    } else {
+                        isDiff = true
+                    }
+                }
+                if (isDiff) {
+                    rvArray.add(ComparePieModel(key, "0", value, "-$value"))
+                    isDiff = false
+                }
+            }
+        }
+
+
+        var firstMoney = 0
+        var secondMoney = 0
+
+        for (models in rvArray) {
+            val x: String = if (models.first!!.contains(".")) {
+                models.first!!.replace(".", "").substring(0, models.first!!.length - 2)
+            } else {
+                models.first!!
+            }
+            val y: String = if (models.second!!.contains(".")) {
+                models.second!!.replace(".", "").substring(0, models.second!!.length - 2)
+            } else {
+                models.second!!
+            }
+            firstMoney += x.toInt()
+            secondMoney += y.toInt()
+        }
+
+        rvArray.add(ComparePieModel("합계", "" + firstMoney, "" + secondMoney, "" + firstMoney.minus(secondMoney)))
+
+        comparePieAdapter.clearItems()
+        binding.compareFragPieHeader.visibility = View.VISIBLE
+        comparePieAdapter.addItems(rvArray)
+
     }
 
     private fun addItemOnSpinner() {
@@ -116,10 +224,6 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
-//        colors.add(ContextCompat.getColor(context!!, R.color.lightPurple))
-//        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-//        colors.add(ContextCompat.getColor(context!!, R.color.lightDarkBlue))
-//        colors.add(ContextCompat.getColor(context!!, R.color.lightSkyGreen))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -134,6 +238,7 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
 //        l.setDrawInside(false)
 //        l.xEntrySpace = 7f
 //        l.yEntrySpace = 5f
+
         chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.description.isEnabled = false
@@ -163,31 +268,31 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
                 when (isFirst) {
                     true -> {
-                        if (pieMap1.containsKey(cate)) {
-                            val d = pieMap1.getValue(cate).toFloat().plus(money.toFloat())
-                            pieMap1.remove(cate)
-                            pieMap1[cate] = d.toString()
+                        if (pieMap1!!.containsKey(cate)) {
+                            val d = pieMap1!!.getValue(cate).toFloat().plus(money.toFloat())
+                            pieMap1!!.remove(cate)
+                            pieMap1!![cate] = d.toString()
                         } else {
-                            pieMap1[cate] = money
+                            pieMap1!![cate] = money
                         }
-                        if (pieMap1.size == 0) {
+                        if (pieMap1!!.size == 0) {
 
                         } else {
-                            setPieChart(binding.compareFragPiechart1, pieMap1)
+                            setPieChart(binding.compareFragPiechart1, pieMap1!!)
                         }
                     }
                     false -> {
-                        if (pieMap2.containsKey(cate)) {
-                            val d = pieMap2.getValue(cate).toFloat().plus(money.toFloat())
-                            pieMap2.remove(cate)
-                            pieMap2[cate] = d.toString()
+                        if (pieMap2!!.containsKey(cate)) {
+                            val d = pieMap2!!.getValue(cate).toFloat().plus(money.toFloat())
+                            pieMap2!!.remove(cate)
+                            pieMap2!![cate] = d.toString()
                         } else {
-                            pieMap2[cate] = money
+                            pieMap2!![cate] = money
                         }
-                        if (pieMap2.size == 0) {
+                        if (pieMap2!!.size == 0) {
 
                         } else {
-                            setPieChart(binding.compareFragPiechart2, pieMap2)
+                            setPieChart(binding.compareFragPiechart2, pieMap2!!)
                         }
                     }
                 }
@@ -195,6 +300,15 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
             }
         }
+
+        if (pieMap1 != null && pieMap2 != null) {
+            setRvData()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setSpinner()
     }
 
     private fun setSpinner() {

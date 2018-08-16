@@ -36,6 +36,7 @@ class ChartMainFragment : BaseFragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chart_main, container, false)
         dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
+        binding.chartFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         val date = UtilMethod.getCurrentDate().replace("-", "")
         binding.chartFragTxtMonth.text = "20" + date.substring(0, 2) + "년 " + date.substring(2, 4) + "월 "
         tempMap = HashMap()
@@ -60,13 +61,15 @@ class ChartMainFragment : BaseFragment() {
 
         val dataSet = PieDataSet(yvalues, "")
 
+
+
         dataSet.sliceSpace = 1F
         dataSet.selectionShift = 5F
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-        dataSet.valueLinePart1OffsetPercentage = 90f
+        dataSet.valueLinePart1OffsetPercentage = 100f
         dataSet.valueLinePart1Length = 0.5f
-        dataSet.valueLinePart2Length = 0.2f
+        dataSet.valueLinePart2Length = 0.1f
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
         chart.isRotationEnabled = false

@@ -56,9 +56,14 @@ public class UtilMethod {
                 + "\n Heap Size Limit:  "
                 + heapSizeLimit
                 + "\n" + nObjects;
+
+
     }
 
     public static String currencyFormat(String amount) {
+        if (amount.isEmpty() || amount.length() == 0) {
+            return "";
+        }
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(Double.parseDouble(amount));
     }

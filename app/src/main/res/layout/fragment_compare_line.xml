@@ -32,70 +32,69 @@
                 <TextView
                     android:id="@+id/compare_frag_txt_set1"
                     style="@style/text16Style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
                     android:background="@drawable/btn_ripple_colored_lightred"
                     android:onClick="@{onClickListener::onClick}"
                     android:text="분류 1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="2dp"
+                    app:layout_constraintEnd_toStartOf="@id/compare_frag_txt_set2"
                     />
 
 
                 <TextView
                     android:id="@+id/compare_frag_txt_set2"
                     style="@style/text16Style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="2dp"
                     android:background="@drawable/edittext_round_border_orange"
                     android:onClick="@{onClickListener::onClick}"
                     android:text="분류 2"
-                    app:layout_constraintBottom_toTopOf="@id/compare_frag_const_linechart"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/compare_frag_txt_set1"
                     />
 
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/compare_frag_const_linechart"
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/compare_frag_linechart"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/view_shadow_btm"
+                    android:elevation="3dp"
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/compare_frag_txt_set1"
-                    >
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/compare_frag_linechart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
+                    />
 
 
-                </android.support.constraint.ConstraintLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/compare_frag_line_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_linechart"
+                    />
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/compare_frag_const_linechart"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_line_rv"
                     />
 
 

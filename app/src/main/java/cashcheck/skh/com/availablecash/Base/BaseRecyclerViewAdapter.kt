@@ -83,7 +83,7 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> : Recycle
         notifyDataSetChanged()
     }
 
-    fun addItems(items: ArrayList<T>) {
+    fun addItems(items: MutableList<T>) {
 
         if (this.arrayList == null) {
             this.arrayList = items
@@ -131,6 +131,7 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> : Recycle
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        DLog.e("bindviewholder called ")
         holder.itemView.setOnTouchListener { v, event ->
             if (onItemTouchLister != null) {
                 onItemTouchLister!!.onItemTouch(v, holder.adapterPosition, event)
