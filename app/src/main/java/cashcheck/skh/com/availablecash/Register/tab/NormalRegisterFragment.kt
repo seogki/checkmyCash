@@ -75,8 +75,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         binding.normalFragRv.isNestedScrollingEnabled = false
         binding.normalFragRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.normalFragRv.itemAnimator = null
-//        binding.normalFragRv.addItemDecoration(GridSpacingItemDecoration(1, 40, false, 0))
-
 
         Thread(Runnable {
             binding.normalFragRv.adapter = normalRegisterAdapter
@@ -177,6 +175,12 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
                 mItems.add(item)
             }
         }
+
+        val firstItem = mItems.first()
+        val result = firstItem.header.toString()
+        mItems.removeAt(0)
+        mItems.add(0,HeaderItem(result+"첫번째"))
+
         DLog.e("mitem : ${mItems.toList()}")
     }
 

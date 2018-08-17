@@ -3,7 +3,10 @@ package cashcheck.skh.com.availablecash.Register.model
 /**
  * Created by Seogki on 2018. 8. 13..
  */
-class HeaderItem(val date: String) : ListItem() {
+class HeaderItem(var date: String) : ListItem() {
+
+    override val header: String
+        get() = date
 
     // here getters and setters
     // for title and so on, built

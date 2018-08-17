@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import cashcheck.skh.com.availablecash.Compare.model.CompareLineModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.adapter.CompareLineAdapter
@@ -46,7 +47,7 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compare_line, container, false)
         binding.compareFragLinechart.setNoDataText("데이터가 존재하지 않습니다.")
         dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
-
+        binding.compareFragLineHeader.visibility = View.INVISIBLE
         binding.onClickListener = this
         setRv()
         return binding.root
@@ -164,30 +165,39 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
         for (i in 0 until sortedMap.size) {
 
             if (sortedMap.size == 1) {
+                val firstdata = sortedMap.toList()[i].second
                 rvArray.add(CompareLineModel(sortedMap.toList()[i].first
-                        , sortedMap.toList()[i].second.toString()
-                        , ""
-                        , ""
+                        , firstdata.toString()
+                        , sortedMap.toList()[i].first
+                        , firstdata.toString()
                         , ""))
                 break
             }
             if (i + 1 < sortedMap.size) {
+                val firstdata = sortedMap.toList()[i].second
+                val seconddata = sortedMap.toList()[i + 1].second
                 rvArray.add(CompareLineModel(sortedMap.toList()[i].first
-                        , sortedMap.toList()[i].second.toString()
+                        , firstdata.toString()
                         , sortedMap.toList()[i + 1].first
-                        , sortedMap.toList()[i + 1].second.toString()
-                        , ""))
+                        , seconddata.toString()
+                        , firstdata.minus(seconddata).toString()))
             } else if (i + 1 == sortedMap.size) {
-                rvArray.add(CompareLineModel(sortedMap.toList()[i].first
-                        , sortedMap.toList()[i].second.toString()
-                        , ""
-                        , ""
-                        , ""))
+
             }
         }
 
+        binding.compareFragLineHeader.visibility = View.VISIBLE
         compareLineAdapter.clearItems()
         compareLineAdapter.addItems(rvArray)
+    }
+
+    private fun setTitleText(date: String, textView: TextView) {
+        val result = date.replace("-", "").replace(" ", "")
+        val year = result.substring(0, 2)
+        val month = result.substring(2, 4)
+        val days = result.substring(4, 6)
+
+        textView.text = "20${year}년 ${month}월 ${days}일"
     }
 
     private fun selectDate(v: String) {
@@ -208,9 +218,11 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
             if (v == "1") {
                 binding.compareFragTxtSet1.text = sdf.format(myCalendar.time)
                 cat1 = binding.compareFragTxtSet1.text.toString()
+                setTitleText(cat1, binding.compareFragLineFirstTitle)
             } else if (v == "2") {
                 binding.compareFragTxtSet2.text = sdf.format(myCalendar.time)
                 cat2 = binding.compareFragTxtSet2.text.toString()
+                setTitleText(cat2, binding.compareFragLineSecondTitle)
             }
             if (cat1 != "" && cat2 != "") {
                 getDataFromDB()

@@ -24,13 +24,20 @@ open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListIt
         holder.setIsRecyclable(true)
         if (type == ListItem.TYPE_EVENT) {
             val data = mitem[holder.adapterPosition] as EventItem
-            if (holder is NormalRegisterViewHolder)
+            if (holder is NormalRegisterViewHolder) {
                 holder.binding.model = data.event
+
+            }
 
         } else {
             val data = mitem[holder.adapterPosition] as HeaderItem
-            if (holder is NormalDateRegisterViewHolder)
+            if (holder is NormalDateRegisterViewHolder) {
                 holder.binding.model = data.date
+                if (data.date.contains("첫번째")) {
+                    holder.binding.itemCateViewAbove.visibility = View.GONE
+                    holder.binding.itemCateViewTop.visibility = View.GONE
+                }
+            }
         }
 
     }

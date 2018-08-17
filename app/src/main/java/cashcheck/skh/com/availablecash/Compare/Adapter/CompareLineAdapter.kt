@@ -2,6 +2,7 @@ package cashcheck.skh.com.availablecash.Register.adapter
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,17 @@ open class CompareLineAdapter(context: Context, arrayList: MutableList<CompareLi
         holder.setIsRecyclable(true)
         val model = getItem(holder.adapterPosition)
         holder.binding.model = model
-
+        when {
+            model!!.result.contains("-") -> {
+                holder.binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
+            }
+            model.result.isEmpty() -> {
+                holder.binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
+            }
+            else -> {
+                holder.binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.green))
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =

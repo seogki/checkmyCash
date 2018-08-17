@@ -6,6 +6,8 @@ package cashcheck.skh.com.availablecash.Register.model
 abstract class ListItem {
 
     abstract val type: Int
+    abstract val header: String?
+//    abstract val event : NormalRegisterModel?
 
     companion object {
 

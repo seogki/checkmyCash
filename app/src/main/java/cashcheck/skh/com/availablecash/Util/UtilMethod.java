@@ -64,7 +64,14 @@ public class UtilMethod {
         if (amount.isEmpty() || amount.length() == 0) {
             return "";
         }
-        DecimalFormat formatter = new DecimalFormat("###,###,###");
-        return formatter.format(Double.parseDouble(amount));
+        if (amount.contains("첫번째")) {
+            String result = amount.replace("첫번째", "");
+            DecimalFormat formatter = new DecimalFormat("###,###,###");
+            return formatter.format(Double.parseDouble(result));
+        } else {
+            DecimalFormat formatter = new DecimalFormat("###,###,###");
+            return formatter.format(Double.parseDouble(amount));
+        }
+
     }
 }

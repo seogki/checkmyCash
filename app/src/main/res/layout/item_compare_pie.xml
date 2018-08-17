@@ -29,7 +29,7 @@
         <View
             android:layout_width="0.5dp"
             android:layout_height="0dp"
-            android:background="@color/black"
+            android:background="@color/midGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guideline"
             app:layout_constraintStart_toStartOf="@id/guideline"

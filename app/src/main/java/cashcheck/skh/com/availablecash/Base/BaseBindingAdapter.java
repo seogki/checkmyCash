@@ -54,8 +54,26 @@ public class BaseBindingAdapter {
         if (days != null) {
             String replace = days.replace(" ", "").replace("-", "");
             String result = replace.substring(4, 6);
+            textView.setText(result);
+        }
+
+    }
+
+    @BindingAdapter("checkDays")
+    public static void checkDays(final TextView textView, final String days) {
+        Context context = textView.getContext();
+        if (context == null) {
+            return;
+        } else if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            if (activity.isFinishing() || activity.isDestroyed()) {
+                return;
+            }
+        }
+        if (days != null) {
+            String replace = days.replace(" ", "").replace("-", "");
             String day = replace.substring(6, 9);
-            textView.setText(result + "일 " + day);
+            textView.setText(day);
         }
 
     }

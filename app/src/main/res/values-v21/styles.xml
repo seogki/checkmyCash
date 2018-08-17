@@ -6,7 +6,6 @@
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
         <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item>
 
     </style>
@@ -34,5 +33,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+
 
 </resources>
