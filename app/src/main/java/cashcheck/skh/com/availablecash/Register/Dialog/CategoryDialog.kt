@@ -1,4 +1,4 @@
-package cashcheck.skh.com.availablecash.Register.tab
+package cashcheck.skh.com.availablecash.Register.Dialog
 
 import android.app.Dialog
 import android.content.Context

@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="cashcheck.skh.com.availablecash.Register.model.NormalRegisterModel"
+            type="cashcheck.skh.com.availablecash.Register.model.EstimateRegisterModel"
             />
 
     </data>
@@ -17,7 +17,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         >
 
         <View
@@ -28,7 +27,7 @@
             />
 
         <TextView
-            android:id="@+id/item_cate_txt_title"
+            android:id="@+id/estimate_cate_txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -36,7 +35,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center_vertical"
             android:letterSpacing="0.15"
-            android:text="@{model.category}"
+            android:text="@{model.cate}"
             android:textColor="@color/lightBlack"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -47,7 +46,7 @@
             />
 
         <TextView
-            android:id="@+id/item-cate_txt_money"
+            android:id="@+id/estimate_cate_txt_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -56,14 +55,14 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:letterSpacing="0.25"
-
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
+            app:checkMoney="@{model.money}"
             android:textColor="@color/Red"
 
             android:textSize="12sp"
             android:textStyle="bold"
-            app:checkMoney="@{model.money}"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,22 +70,22 @@
             />
 
         <!--<View-->
-            <!--android:layout_width="0.5dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:background="@color/midGrey"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--/>-->
+        <!--android:layout_width="0.5dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:background="@color/midGrey"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--/>-->
 
         <!--<View-->
-            <!--android:layout_width="0.5dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:background="@color/midGrey"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--/>-->
+        <!--android:layout_width="0.5dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:background="@color/midGrey"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--/>-->
     </android.support.constraint.ConstraintLayout>
 
 </layout>

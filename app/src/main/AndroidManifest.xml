@@ -32,10 +32,12 @@
             android:name=".Compare.CompareMainActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Register.tab.NormalRegisterActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".Register.tab.Normal.NormalRegisterActivity"
+            android:screenOrientation="portrait">
         </activity>
-
+        <activity android:name=".Register.Update.UpdateRegisterActivity">
+        </activity>
     </application>
 
 </manifest>

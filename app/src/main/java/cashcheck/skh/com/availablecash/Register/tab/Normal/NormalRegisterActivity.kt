@@ -1,4 +1,4 @@
-package cashcheck.skh.com.availablecash.Register.tab
+package cashcheck.skh.com.availablecash.Register.tab.Normal
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -9,9 +9,14 @@ import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import android.widget.Toast
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.Dialog.CategoryDialog
 import cashcheck.skh.com.availablecash.Register.Interface.CategoryDialogInterface
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.CustomTextWatcher
@@ -22,7 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, CategoryDialogInterface {
+class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, CategoryDialogInterface, TextView.OnEditorActionListener {
 
 
     lateinit var binding: ActivityNormalRegisterBinding
@@ -33,10 +38,25 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         binding = DataBindingUtil.setContentView(this, R.layout.activity_normal_register)
         binding.chartActvImgBack.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         binding.normalAtvImgClear.drawable.setColorFilter(ContextCompat.getColor(this, R.color.midGrey), PorterDuff.Mode.SRC_ATOP)
+        binding.normalAtvBtnDone.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         val et = binding.normalAtvEditMoney
+        binding.normalAtvEditMoney.setOnEditorActionListener(this)
         et.addTextChangedListener(CustomTextWatcher(et))
         binding.onClickListener = this
+    }
+
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            return if (binding.normalAtvEditCat.text.toString() != "" && binding.normalAtvEditDate.text.toString() != "" && binding.normalAtvEditMoney.text.toString() != "") {
+                saveInSqlLite()
+                true
+            } else {
+                Toast.makeText(this, "모두 채워주세요", Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
+        return false
     }
 
     override fun onClick(v: View?) {
@@ -62,13 +82,18 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
 
 
     private fun saveInSqlLite() {
-        val date = binding.normalAtvEditDate.text.toString().trim()
-        val category = binding.normalAtvEditCat.text.toString().trim()
-        val money = binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", "")
-        db.insertData(date, category, money, days)
-        DLog.e("insert result : ${db.getResult()}")
-        binding.normalAtvBtnDone.isEnabled = true
-        finish()
+        if (binding.normalAtvEditCat.text.toString() != "" && binding.normalAtvEditDate.text.toString() != "" && binding.normalAtvEditMoney.text.toString() != "") {
+            val date = binding.normalAtvEditDate.text.toString().trim()
+            val category = binding.normalAtvEditCat.text.toString().trim()
+            val money = binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", "")
+            db.insertData(date, category, money, days)
+            DLog.e("insert result : ${db.getResult()}")
+            binding.normalAtvBtnDone.isEnabled = true
+            finish()
+        } else {
+            Toast.makeText(this, "모두 채워주세요", Toast.LENGTH_SHORT).show()
+            binding.normalAtvBtnDone.isEnabled = true
+        }
     }
 
     private fun measureDialogSize() {

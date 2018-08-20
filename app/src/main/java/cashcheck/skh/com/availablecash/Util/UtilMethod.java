@@ -35,6 +35,12 @@ public class UtilMethod {
         return df.format(c);
     }
 
+    public static String getCurrentDateToSec() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM dd HH:mm:ss", Locale.KOREA);
+        return df.format(c);
+    }
+
     @SuppressLint("DefaultLocale")
     public static String getMemoryUsage(int i) {
         String heapSize = String.format("%.3f", (float) (Runtime.getRuntime().totalMemory() / 1024.00 / 1024.00));

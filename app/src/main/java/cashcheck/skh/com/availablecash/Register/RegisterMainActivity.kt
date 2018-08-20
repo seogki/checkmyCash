@@ -10,7 +10,7 @@ import cashcheck.skh.com.availablecash.Base.BaseActivity
 import cashcheck.skh.com.availablecash.Chart.ChartMainActivity
 import cashcheck.skh.com.availablecash.Compare.CompareMainActivity
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Register.tab.NormalRegisterActivity
+import cashcheck.skh.com.availablecash.Register.tab.Normal.NormalRegisterActivity
 import cashcheck.skh.com.availablecash.Setting.SettingMainActivity
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityRegisterMainBinding

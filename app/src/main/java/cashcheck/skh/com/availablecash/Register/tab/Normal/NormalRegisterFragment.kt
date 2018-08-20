@@ -1,4 +1,4 @@
-package cashcheck.skh.com.availablecash.Register.tab
+package cashcheck.skh.com.availablecash.Register.tab.Normal
 
 
 import android.databinding.DataBindingUtil
@@ -11,12 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
+import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Register.adapter.NormalRegisterAdapter
-import cashcheck.skh.com.availablecash.Register.model.EventItem
-import cashcheck.skh.com.availablecash.Register.model.HeaderItem
-import cashcheck.skh.com.availablecash.Register.model.ListItem
-import cashcheck.skh.com.availablecash.Register.model.NormalRegisterModel
+import cashcheck.skh.com.availablecash.Register.adapter.Normal.NormalRegisterAdapter
+import cashcheck.skh.com.availablecash.Register.model.*
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentNormalRegisterBinding
 import com.github.mikephil.charting.data.PieData
@@ -29,7 +27,8 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
+class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecyclerViewAdapter.OnItemClickListener {
+
 
 
     lateinit var binding: FragmentNormalRegisterBinding
@@ -87,6 +86,10 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    override fun onItemClick(view: View, position: Int) {
+
+    }
+
     override fun onResume() {
         super.onResume()
         checkDiffAndRefresh()
@@ -111,6 +114,9 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
             } else {
                 map[cate] = money
             }
+        }
+        if (map.size > 0) {
+            binding.normalFragTxtEmpty.visibility = View.GONE
         }
         if (tempMap != map) {
             tempMap = map
@@ -162,7 +168,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
             val tempdata = reversed.toList()[i].first
             val tempModel = reversed.toList()[i].second
             reversed.remove(tempdata)
-            reversed[tempdata+totalMoney.toInt()] = tempModel
+            reversed[tempdata + totalMoney.toInt()] = tempModel
         }
 
         mItems = ArrayList()
@@ -171,15 +177,15 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
             val header = HeaderItem(date)
             mItems.add(header)
             for (event in reversed[date]!!) {
-                val item = EventItem(event)
-                mItems.add(item)
+                if (event == reversed[date]!!.last()) {
+                    val end = EndItem(event)
+                    mItems.add(end)
+                } else {
+                    val item = EventItem(event)
+                    mItems.add(item)
+                }
             }
         }
-
-        val firstItem = mItems.first()
-        val result = firstItem.header.toString()
-        mItems.removeAt(0)
-        mItems.add(0,HeaderItem(result+"첫번째"))
 
         DLog.e("mitem : ${mItems.toList()}")
     }
@@ -187,6 +193,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
     private fun refresh() {
         setViewTypeData()
         normalRegisterAdapter.clearItems()
+
         normalRegisterAdapter.notifyDataSetChanged()
         normalRegisterAdapter.addItems(mItems)
     }
@@ -208,7 +215,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.valueLinePart1OffsetPercentage = 100f
-        dataSet.valueLinePart1Length = 0.5f
+        dataSet.valueLinePart1Length = 0.3f
         dataSet.valueLinePart2Length = 0.1f
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
@@ -217,6 +224,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
+        chart.holeRadius = 70f
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
 
@@ -231,7 +239,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener {
         val data = PieData(dataSet)
 
         chart.legend.isEnabled = false
-        chart.setNoDataText("데이터가 존재하지 않습니다.")
 //        val l = chart.legend
 //        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
 //        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER

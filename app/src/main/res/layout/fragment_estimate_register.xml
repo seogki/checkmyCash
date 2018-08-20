@@ -29,316 +29,149 @@
                 android:layout_height="match_parent"
                 >
 
-                <TextView
-                    android:id="@+id/estimate_frag_txt_transport"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="교통비"
-
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/estimate_frag_piechart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@drawable/white_bg_btm_corner_only"
+                    android:elevation="3dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UnusedAttribute"
                     />
 
 
+
+                <TextView
+                    android:id="@+id/estimate_txt_estimate_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="이번달 예상금액"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/white_bg_top_corner_only_v2_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/estimate_frag_piechart"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/estimate_frag_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/white_bg_btm_corner_only_smallv2"
+                    android:descendantFocusability="blocksDescendants"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/estimate_txt_estimate_title"
+                    tools:ignore="UnusedAttribute"
+                    />
+
+                <TextView
+                    android:id="@+id/estimate_txt_setCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:letterSpacing="0.15"
+                    android:textSize="11sp"
+                    android:text="@string/estimate_sample"
+                    android:textColor="@color/darkGrey"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/estimate_frag_rv"
+                    />
+
                 <EditText
-                    android:id="@+id/estimate_frag_edit_transport"
-                    style="@style/text12Style"
+                    android:id="@+id/estimate_edit_cate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toStartOf="@id/estimate_frag_edit_transport_day"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/white_bg_top_corner_only_v2"
+                    android:hint="분류"
+                    android:inputType="text"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/darkGrey"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/estimate_edit_money"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_transport"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
+                    app:layout_constraintTop_toBottomOf="@+id/estimate_txt_setCategory"
                     />
 
                 <EditText
-                    android:id="@+id/estimate_frag_edit_transport_day"
-                    style="@style/text12Style"
-                    android:layout_width="80dp"
+                    android:id="@+id/estimate_edit_money"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:gravity="center"
-                    android:hint="몇일"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/white_bg_top_corner_only_v2"
+                    android:hint="원"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/darkGrey"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/estimate_edit_days"
+                    app:layout_constraintStart_toEndOf="@+id/estimate_edit_cate"
+                    app:layout_constraintTop_toBottomOf="@+id/estimate_txt_setCategory"
+                    />
+
+                <EditText
+                    android:id="@+id/estimate_edit_days"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/white_bg_top_corner_only_v2"
+                    android:hint="일"
                     android:inputType="number"
                     android:maxLength="3"
                     android:maxLines="1"
-                    android:padding="12dp"
-                    android:textColorHint="@color/midGrey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_transport"
-                    />
-
-
-                <TextView
-                    android:id="@+id/estimate_frag_txt_food"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/darkGrey"
                     android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="식비"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_edit_transport"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_food"
-                    style="@style/text12Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toStartOf="@id/estimate_frag_edit_food_day"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_food"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_food_day"
-                    style="@style/text12Style"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:gravity="center"
-                    android:hint="몇일"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:maxLines="1"
-                    android:padding="12dp"
-                    android:textColorHint="@color/midGrey"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_food"
+                    app:layout_constraintStart_toEndOf="@+id/estimate_edit_money"
+                    app:layout_constraintTop_toBottomOf="@+id/estimate_txt_setCategory"
                     />
-
-
-                <TextView
-                    android:id="@+id/estimate_frag_txt_electric"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="공과금"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_edit_food"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_electric"
-                    style="@style/text12Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_electric"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
-                    />
-
-
-                <TextView
-                    android:id="@+id/estimate_frag_txt_phonebill"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="통신비"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_edit_electric"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_phonebill"
-                    style="@style/text12Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_phonebill"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
-                    />
-
-                <TextView
-                    android:id="@+id/estimate_frag_txt_house"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="주거비"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_edit_phonebill"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_house"
-                    style="@style/text12Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_house"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
-                    />
-
-
-                <TextView
-                    android:id="@+id/estimate_frag_txt_adjust"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="주유"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_edit_house"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_adjust"
-                    style="@style/text12Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_adjust"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
-                    />
-
-
-                <TextView
-                    android:id="@+id/estimate_frag_txt_etc"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/titleColor"
-                    android:gravity="center_vertical"
-                    android:text="기타"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_edit_adjust"
-                    />
-
-
-                <EditText
-                    android:id="@+id/estimate_frag_edit_etc"
-                    style="@style/text12Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/edittext_round_border_orange"
-                    android:inputType="number"
-                    android:padding="12dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_txt_etc"
-                    tools:text="dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"
-                    />
-
 
                 <Button
-                    android:id="@+id/estimate_frag_btn_register"
-                    style="@style/text12Style"
+                    android:id="@+id/estimate_btn_regi"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/edittext_round_border_darkred"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar"
                     android:onClick="@{onClickListener::onClick}"
                     android:text="저장"
+                    android:elevation="2dp"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/estimate_frag_edit_etc"
+                    app:layout_constraintTop_toBottomOf="@+id/estimate_edit_cate"
+                    tools:ignore="UnusedAttribute"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/estimate_btn_regi"
                     />
 
             </android.support.constraint.ConstraintLayout>

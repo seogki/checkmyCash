@@ -16,10 +16,18 @@ open class Const {
         const val EstimateAdjust = "EstimateAdjust"
         const val EstimateEtc = "EstimateEtc"
 
+        const val EstimateCate = "EstimateCate"
+        const val EstimateMoney = "EstimateMoney"
+        const val EstimateDays = "EstimateDays"
+
+
+        const val EstimateUsage = "EstimateUsage"
 
         /**
          *  디비명
          */
         const val DbName = "PieGraphData"
+        const val DbEstimateName = "EstimateDBData"
+
     }
 }

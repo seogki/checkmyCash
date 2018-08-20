@@ -13,5 +13,6 @@ abstract class ListItem {
 
         val TYPE_HEADER = 0
         val TYPE_EVENT = 1
+        val TYPE_END = 2
     }
 }

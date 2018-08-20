@@ -15,8 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Register.tab.EstimateRegisterFragment
-import cashcheck.skh.com.availablecash.Register.tab.NormalRegisterFragment
+import cashcheck.skh.com.availablecash.Register.tab.Estimate.EstimateRegisterFragment
+import cashcheck.skh.com.availablecash.Register.tab.Normal.NormalRegisterFragment
 import cashcheck.skh.com.availablecash.Util.TabPagerAdapter
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentRegisterMainBinding

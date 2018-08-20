@@ -1,4 +1,4 @@
-package cashcheck.skh.com.availablecash.Register.adapter
+package cashcheck.skh.com.availablecash.Register.adapter.Normal
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView

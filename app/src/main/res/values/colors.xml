@@ -7,7 +7,7 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="grey">#f4f4f4</color>
-    <color name="darkGrey">#8D8D8D</color>
+    <color name="darkGrey">#B2B2B2</color>
     <color name="midGrey">#E5E5E5</color>
     <color name="trans">#3f000000</color>
     <color name="DarkGreen">#13A9AA</color>
@@ -34,6 +34,7 @@
     <color name="danhong">#F23920</color>
     <color name="jaju">#660099</color>
     <color name="pink">#C71585</color>
+    <color name="lightBlack">#262626</color>
 
 
     <color name="titleColor">#CC0000</color>

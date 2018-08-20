@@ -98,7 +98,7 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
 
         DLog.e("yvalues : $yValues")
 
-        val dateSet = LineDataSet(yValues, "")
+        val dateSet = LineDataSet(yValues, "금액")
 
         dateSet.color = ContextCompat.getColor(context!!, R.color.statusbar)
         dateSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)

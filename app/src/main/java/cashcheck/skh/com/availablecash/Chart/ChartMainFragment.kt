@@ -3,6 +3,7 @@ package cashcheck.skh.com.availablecash.Chart
 
 import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
+import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -37,8 +38,6 @@ class ChartMainFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chart_main, container, false)
         dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         binding.chartFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
-        val date = UtilMethod.getCurrentDate().replace("-", "")
-        binding.chartFragTxtMonth.text = "20" + date.substring(0, 2) + "년 " + date.substring(2, 4) + "월 "
         tempMap = HashMap()
 
         return binding.root
@@ -68,7 +67,7 @@ class ChartMainFragment : BaseFragment() {
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.valueLinePart1OffsetPercentage = 100f
-        dataSet.valueLinePart1Length = 0.5f
+        dataSet.valueLinePart1Length = 0.3f
         dataSet.valueLinePart2Length = 0.1f
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
@@ -78,7 +77,7 @@ class ChartMainFragment : BaseFragment() {
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
-
+        chart.holeRadius = 70f
 
         val colors = mutableListOf<Int>()
         colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
@@ -130,16 +129,7 @@ class ChartMainFragment : BaseFragment() {
         super.onResume()
         if (activity != null) {
             val pref = activity!!.getSharedPreferences(Const.PreferenceTitle, MODE_PRIVATE)
-            val trans = pref.getInt(Const.EstimateTransport, 0)
-            val transDay = pref.getInt(Const.EstimateTransportDay, 0)
-            val food = pref.getInt(Const.EstimateFood, 0)
-            val foodDay = pref.getInt(Const.EstimateFoodDay, 0)
-            val electric = pref.getInt(Const.EstimateElectric, 0)
-            val phone = pref.getInt(Const.EstimatePhone, 0)
-            val house = pref.getInt(Const.EstimateHouse, 0)
-            val adjust = pref.getInt(Const.EstimateAdjust, 0)
-            val etc = pref.getInt(Const.EstimateEtc, 0)
-            estimateUsage = (trans * transDay) + (food * foodDay) + electric + phone + house + adjust + etc
+            estimateUsage = pref.getInt(Const.EstimateUsage, 0)
             val data = UtilMethod.currencyFormat(estimateUsage.toString())
             binding.chartFragTxtEstimateMoney.text = "" + data + "원"
 
@@ -150,32 +140,37 @@ class ChartMainFragment : BaseFragment() {
 
         val db = dbHelper.readableDatabase
         if (db != null) {
-
-            map = HashMap()
-            val currentDate = UtilMethod.getCurrentDate()
-            DLog.e("cur $currentDate")
-            // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-            val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + currentDate + "%' ORDER BY date DESC", null)
-            while (cursor.moveToNext()) {
-                val cate = cursor.getString(2)
-                val money = cursor.getString(3)
-                if (map.containsKey(cate)) {
-                    val data = map.getValue(cate).toFloat().plus(money.toFloat())
-                    map.remove(cate)
-                    map[cate] = data.toString()
-                } else {
-                    map[cate] = money
+            var cursor: Cursor? = null
+            try {
+                map = HashMap()
+                val currentDate = UtilMethod.getCurrentDate()
+                DLog.e("cur $currentDate")
+                // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+                cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + currentDate + "%' ORDER BY date DESC", null)
+                while (cursor.moveToNext()) {
+                    val cate = cursor.getString(2)
+                    val money = cursor.getString(3)
+                    if (map.containsKey(cate)) {
+                        val data = map.getValue(cate).toFloat().plus(money.toFloat())
+                        map.remove(cate)
+                        map[cate] = data.toString()
+                    } else {
+                        map[cate] = money
+                    }
                 }
-            }
-            if (tempMap != map) {
-                tempMap = map
-                totalUsage = 0F
-                setPieChart()
-            } else {
+                if (tempMap != map) {
+                    tempMap = map
+                    totalUsage = 0F
+                    setPieChart()
+                } else {
 
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                cursor?.close()
             }
         }
-
     }
 
 

@@ -1,4 +1,4 @@
-package cashcheck.skh.com.availablecash.Register.adapter
+package cashcheck.skh.com.availablecash.Register.adapter.Normal
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.model.EndItem
 import cashcheck.skh.com.availablecash.Register.model.EventItem
 import cashcheck.skh.com.availablecash.Register.model.HeaderItem
 import cashcheck.skh.com.availablecash.Register.model.ListItem
@@ -29,14 +30,16 @@ open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListIt
 
             }
 
-        } else {
+        } else if (type == ListItem.TYPE_HEADER) {
             val data = mitem[holder.adapterPosition] as HeaderItem
             if (holder is NormalDateRegisterViewHolder) {
                 holder.binding.model = data.date
-                if (data.date.contains("첫번째")) {
-                    holder.binding.itemCateViewAbove.visibility = View.GONE
-                    holder.binding.itemCateViewTop.visibility = View.GONE
-                }
+            }
+        } else {
+            val data = mitem[holder.adapterPosition] as EndItem
+            if (holder is NormalEndRegisterViewHolder) {
+                holder.binding.model = data.event
+
             }
         }
 
@@ -51,12 +54,19 @@ open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListIt
 
         val view: View
 
-        return if (viewType == ListItem.TYPE_EVENT) {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv, parent, false)
-            NormalRegisterViewHolder(view)
-        } else {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv_header, parent, false)
-            NormalDateRegisterViewHolder(view)
+        return when (viewType) {
+            ListItem.TYPE_EVENT -> {
+                view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv, parent, false)
+                NormalRegisterViewHolder(view)
+            }
+            ListItem.TYPE_HEADER -> {
+                view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv_header, parent, false)
+                NormalDateRegisterViewHolder(view)
+            }
+            else -> {
+                view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv_end, parent, false)
+                NormalEndRegisterViewHolder(view)
+            }
         }
 
 

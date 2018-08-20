@@ -1,6 +1,7 @@
 package cashcheck.skh.com.availablecash.Compare.tab
 
 
+import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.Handler
@@ -184,7 +185,7 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun addItemOnSpinner() {
         val spinnerAdapter = ArrayAdapter<String>(context, R.layout.item_spinner, spinnerArray)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner)
         binding.compareFragSpinnerSpinner1.adapter = spinnerAdapter
         binding.compareFragSpinnerSpinner2.adapter = spinnerAdapter
         binding.compareFragSpinnerSpinner1.onItemSelectedListener = this
@@ -241,6 +242,8 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         chart.legend.isWordWrapEnabled = true
         chart.data = data
+        chart.holeRadius = 0F
+        chart.isDrawHoleEnabled = false
         chart.description.isEnabled = false
         chart.animateXY(1000, 1000)
         chart.invalidate()
@@ -249,60 +252,68 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun getPieDataFromDB(isFirst: Boolean) {
         val db = dbHelper.readableDatabase
         val data: String
-        if (db != null) {
+        var cursor: Cursor? = null
+        try {
+            if (db != null) {
 
-            if (isFirst) {
-                pieMap1 = HashMap()
-                data = firstData
-            } else {
-                pieMap2 = HashMap()
-                data = secondData
-            }
-            val result = data.substring(0, 6)
-            DLog.e("cur $result")
-            // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-            val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + result + "%' ORDER BY date DESC", null)
-            while (cursor.moveToNext()) {
-                val cate = cursor.getString(2)
-                val money = cursor.getString(3)
-
-                when (isFirst) {
-                    true -> {
-                        if (pieMap1!!.containsKey(cate)) {
-                            val d = pieMap1!!.getValue(cate).toFloat().plus(money.toFloat())
-                            pieMap1!!.remove(cate)
-                            pieMap1!![cate] = d.toString()
-                        } else {
-                            pieMap1!![cate] = money
-                        }
-                        if (pieMap1!!.size == 0) {
-
-                        } else {
-                            setPieChart(binding.compareFragPiechart1, pieMap1!!)
-                        }
-                    }
-                    false -> {
-                        if (pieMap2!!.containsKey(cate)) {
-                            val d = pieMap2!!.getValue(cate).toFloat().plus(money.toFloat())
-                            pieMap2!!.remove(cate)
-                            pieMap2!![cate] = d.toString()
-                        } else {
-                            pieMap2!![cate] = money
-                        }
-                        if (pieMap2!!.size == 0) {
-
-                        } else {
-                            setPieChart(binding.compareFragPiechart2, pieMap2!!)
-                        }
-                    }
+                if (isFirst) {
+                    pieMap1 = HashMap()
+                    data = firstData
+                } else {
+                    pieMap2 = HashMap()
+                    data = secondData
                 }
-
-
+                val result = data.substring(0, 6)
+                DLog.e("cur $result")
+                // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+                cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + result + "%' ORDER BY date DESC", null)
+                while (cursor.moveToNext()) {
+                    val cate = cursor.getString(2)
+                    val money = cursor.getString(3)
+                    addDateToFromCursor(cate, money, isFirst)
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
         }
 
         if (pieMap1 != null && pieMap2 != null) {
             setRvData()
+        }
+    }
+
+    private fun addDateToFromCursor(cate: String, money: String, isFirst: Boolean) {
+        when (isFirst) {
+            true -> {
+                if (pieMap1!!.containsKey(cate)) {
+                    val d = pieMap1!!.getValue(cate).toFloat().plus(money.toFloat())
+                    pieMap1!!.remove(cate)
+                    pieMap1!![cate] = d.toString()
+                } else {
+                    pieMap1!![cate] = money
+                }
+                if (pieMap1!!.size == 0) {
+
+                } else {
+                    setPieChart(binding.compareFragPiechart1, pieMap1!!)
+                }
+            }
+            false -> {
+                if (pieMap2!!.containsKey(cate)) {
+                    val d = pieMap2!!.getValue(cate).toFloat().plus(money.toFloat())
+                    pieMap2!!.remove(cate)
+                    pieMap2!![cate] = d.toString()
+                } else {
+                    pieMap2!![cate] = money
+                }
+                if (pieMap2!!.size == 0) {
+
+                } else {
+                    setPieChart(binding.compareFragPiechart2, pieMap2!!)
+                }
+            }
         }
     }
 
@@ -312,23 +323,30 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setSpinner() {
-        val db = dbHelper.readableDatabase
-        spinnerArray = ArrayList()
-        spinnerArray.add("")
-        val cursor = db.rawQuery("SELECT date FROM ${Const.DbName} ORDER BY date DESC", null)
-        while (cursor.moveToNext()) {
-            val date = cursor.getString(0).substring(0, 6)
-            if (spinnerArray.contains(date)) {
-                spinnerArray.remove(date)
-                spinnerArray.add(date)
-            } else {
-                spinnerArray.add(date)
+        var cursor: Cursor? = null
+        try {
+            val db = dbHelper.readableDatabase
+            spinnerArray = ArrayList()
+            spinnerArray.add("")
+            cursor = db.rawQuery("SELECT date FROM ${Const.DbName} ORDER BY date DESC", null)
+            while (cursor.moveToNext()) {
+                val date = cursor.getString(0).substring(0, 6)
+                if (spinnerArray.contains(date)) {
+                    spinnerArray.remove(date)
+                    spinnerArray.add(date)
+                } else {
+                    spinnerArray.add(date)
+                }
             }
-        }
-        DLog.e("setSpinner : $spinnerArray")
+            DLog.e("setSpinner : $spinnerArray")
 
-        spinnerArray.sort()
-        addItemOnSpinner()
+            spinnerArray.sort()
+            addItemOnSpinner()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
+        }
     }
 
 }// Required empty public constructor
