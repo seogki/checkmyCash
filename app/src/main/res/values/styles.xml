@@ -29,6 +29,7 @@
 
     <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/titleColor</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="colorPrimary">@color/titleColor</item>
         <item name="android:headerBackground">@color/titleColor</item>
         <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
@@ -36,6 +37,8 @@
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+
     </style>
 
     <style name="text10Style">

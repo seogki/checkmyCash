@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Compare.model.CompareLineModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.adapter.CompareLineAdapter
@@ -30,7 +31,7 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class CompareLineFragment : Fragment(), View.OnClickListener {
+class CompareLineFragment : BaseFragment(), View.OnClickListener {
 
 
     private lateinit var binding: FragmentCompareLineBinding
@@ -212,7 +213,7 @@ class CompareLineFragment : Fragment(), View.OnClickListener {
             myCalendar.set(Calendar.YEAR, selectedyear)
             myCalendar.set(Calendar.MONTH, selectedmonth)
             myCalendar.set(Calendar.DAY_OF_MONTH, selectedday)
-            val myFormat = "yy-MM dd" //Change as you need
+            val myFormat = "yy-MM-dd" //Change as you need
             //kk or HH
             val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
             if (v == "1") {

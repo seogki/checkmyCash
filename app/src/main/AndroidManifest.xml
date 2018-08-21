@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".Register.Update.UpdateRegisterActivity">
         </activity>
+        <activity android:name=".Register.Modify.ModifyRegisterActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -11,10 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Compare.tab.CompareLineFragment
+import cashcheck.skh.com.availablecash.Compare.tab.CompareMonthFragment
 import cashcheck.skh.com.availablecash.Compare.tab.ComparePieFragment
+import cashcheck.skh.com.availablecash.Compare.tab.CompareWeekFragment
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Util.Const
-import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.TabPagerAdapter
 import cashcheck.skh.com.availablecash.databinding.FragmentCompareMainBinding
 
@@ -22,10 +22,9 @@ import cashcheck.skh.com.availablecash.databinding.FragmentCompareMainBinding
 /**
  * A simple [Fragment] subclass.
  */
-class CompareMainFragment : BaseFragment(){
+class CompareMainFragment : BaseFragment() {
 
     lateinit var binding: FragmentCompareMainBinding
-    private lateinit var dbHelper: DBHelper
     private lateinit var adapter: TabPagerAdapter
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
@@ -33,18 +32,19 @@ class CompareMainFragment : BaseFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compare_main, container, false)
-        dbHelper = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         setTabLayout()
         return binding.root
     }
 
-    private fun setTabLayout(){
+    private fun setTabLayout() {
         viewPager = binding.compareFragViewpager
         adapter = TabPagerAdapter(childFragmentManager)
         tabLayout = binding.compareFragTablayout
-
-        adapter.addFragment(CompareLineFragment(), "라인 그래프")
-        adapter.addFragment(ComparePieFragment(), "파이 그래프")
+        viewPager.offscreenPageLimit = 2
+        adapter.addFragment(CompareWeekFragment(), "주별")
+        adapter.addFragment(CompareMonthFragment(), "월별")
+        adapter.addFragment(CompareLineFragment(), "라인")
+        adapter.addFragment(ComparePieFragment(), "파이")
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
     }

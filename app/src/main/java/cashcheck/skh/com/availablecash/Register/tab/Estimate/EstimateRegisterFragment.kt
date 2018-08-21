@@ -1,13 +1,13 @@
 package cashcheck.skh.com.availablecash.Register.tab.Estimate
 
 
-import android.app.AlertDialog
 import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.Toast
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.Interface.OnNormalRegisterDeleteListener
 import cashcheck.skh.com.availablecash.Register.adapter.Estimate.EstimateRegisterAdapter
 import cashcheck.skh.com.availablecash.Register.model.EstimateRegisterModel
 import cashcheck.skh.com.availablecash.Util.*
@@ -28,11 +29,12 @@ import com.github.mikephil.charting.data.PieEntry
 /**
  * A simple [Fragment] subclass.
  */
-class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
+class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalRegisterDeleteListener {
 
 
     lateinit var binding: FragmentEstimateRegisterBinding
     private lateinit var map: HashMap<String, String>
+    private lateinit var tempMap: HashMap<String, String>
     private lateinit var estimateRegisterAdapter: EstimateRegisterAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var mItems: ArrayList<EstimateRegisterModel>
@@ -43,11 +45,17 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_estimate_register, container, false)
         binding.onClickListener = this
+        tempMap = HashMap()
         db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
         setRv()
         getDbData()
         getEditText()
         return binding.root
+    }
+
+    override fun onCompleteDelete(done: String?) {
+        if (done == "done")
+            getDbData()
     }
 
     private fun getDbData() {
@@ -78,11 +86,9 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
                 }
             }
 
-            if (map.size > 0) {
-                mItems.add(EstimateRegisterModel("last", UtilMethod.getCurrentDateToSec(),"합계", totalUsage.toString()))
-                saveTotalInSharedPreference()
-                setPieChart()
-            }
+            if (map.size > 0)
+                checkTempMap()
+
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -90,6 +96,17 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
             cursor?.close()
         }
 
+    }
+
+    private fun checkTempMap() {
+        if (tempMap != map) {
+            tempMap = map
+            mItems.add(EstimateRegisterModel("last", UtilMethod.getCurrentDateToSec(), "합계", totalUsage.toString()))
+            saveTotalInSharedPreference()
+            setPieChart()
+        } else {
+
+        }
     }
 
     private fun saveTotalInSharedPreference() {
@@ -109,12 +126,14 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
 
     private fun setRv() {
         estimateRegisterAdapter = EstimateRegisterAdapter(context!!, ArrayList())
+        estimateRegisterAdapter.onNormalRegisterDeleteListener = this
         layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.initialPrefetchItemCount = 4
         binding.estimateFragRv.layoutManager = layoutManager
         binding.estimateFragRv.isDrawingCacheEnabled = true
         binding.estimateFragRv.setItemViewCacheSize(20)
+        binding.estimateFragRv.setHasFixedSize(true)
         binding.estimateFragRv.isNestedScrollingEnabled = false
         binding.estimateFragRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.estimateFragRv.itemAnimator = null
@@ -206,6 +225,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
                 val money = binding.estimateEditMoney.text.toString().replace(",".toRegex(), "").replace("원", "")
                 val days = binding.estimateEditDays.text.toString().replace("일", "")
                 db.insertData(UtilMethod.getCurrentDateToSec(), cate, money, days)
+
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setMessage("등록 되었습니다.")
                         .setPositiveButton("확인", { dialog, _ ->
@@ -225,6 +245,11 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener {
             Toast.makeText(context, "모두 채워주세요", Toast.LENGTH_SHORT).show()
             binding.estimateBtnRegi.isEnabled = true
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getDbData()
     }
 
 }// Required empty public constructor

@@ -29,5 +29,15 @@ open class Const {
         const val DbName = "PieGraphData"
         const val DbEstimateName = "EstimateDBData"
 
+
+        /**
+         *  모델
+         */
+        const val ItemId = "RVItemId"
+        const val ItemCategory = "RVItemCategory"
+        const val ItemMoney = "RVItemMoney"
+        const val ItemDate = "RVItemDate"
+        const val ItemDBNAME = "RVItemDB"
+
     }
 }

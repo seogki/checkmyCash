@@ -25,10 +25,16 @@ class DBHelper(c: Context, name: String, factory: SQLiteDatabase.CursorFactory? 
         db.close()
     }
 
-    fun deleteData(date: String, cate: String, money: String) {
+    fun updateData(id: String, cate: String, money: String) {
+        val db = writableDatabase
+        db.execSQL("UPDATE ${Const.DbName} SET categories='$cate', money='$money' WHERE _id=$id")
+        db.close()
+    }
+
+    fun deleteData(id: String) {
         val db = writableDatabase
 
-        db.execSQL("DELETE FROM ${Const.DbName} WHERE item='$date';")
+        db.execSQL("DELETE FROM ${Const.DbName} WHERE _id=$id;")
         db.close()
 
     }

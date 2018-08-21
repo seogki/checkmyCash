@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Compare.model.ComparePieModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.adapter.ComparePieAdapter
@@ -31,7 +32,7 @@ import com.github.mikephil.charting.data.PieEntry
 /**
  * A simple [Fragment] subclass.
  */
-class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
 
 
     private lateinit var binding: FragmentComparePieBinding
@@ -231,15 +232,6 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val data = PieData(dataSet)
 
         chart.legend.isEnabled = false
-
-//        val l = chart.legend
-//        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-//        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-//        l.orientation = Legend.LegendOrientation.HORIZONTAL
-//        l.setDrawInside(false)
-//        l.xEntrySpace = 7f
-//        l.yEntrySpace = 5f
-
         chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.holeRadius = 0F
@@ -330,7 +322,7 @@ class ComparePieFragment : Fragment(), AdapterView.OnItemSelectedListener {
             spinnerArray.add("")
             cursor = db.rawQuery("SELECT date FROM ${Const.DbName} ORDER BY date DESC", null)
             while (cursor.moveToNext()) {
-                val date = cursor.getString(0).substring(0, 6)
+                val date = cursor.getString(0).substring(0, 5)
                 if (spinnerArray.contains(date)) {
                     spinnerArray.remove(date)
                     spinnerArray.add(date)

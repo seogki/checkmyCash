@@ -3,7 +3,10 @@ package cashcheck.skh.com.availablecash.Register.tab.Normal
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -114,11 +117,12 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         var mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH)
 
         val mDatePicker = DatePickerDialog(this, R.style.MyDatePickerDialogTheme, DatePickerDialog.OnDateSetListener { _, selectedyear, selectedmonth, selectedday ->
+
             val myCalendar = Calendar.getInstance()
             myCalendar.set(Calendar.YEAR, selectedyear)
             myCalendar.set(Calendar.MONTH, selectedmonth)
             myCalendar.set(Calendar.DAY_OF_MONTH, selectedday)
-            val myFormat = "yy-MM dd HH:mm:ss" //Change as you need
+            val myFormat = "yy-MM-dd" //Change as you need
             //kk or HH
             val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
             binding.normalAtvEditDate.setText(sdf.format(myCalendar.time))
@@ -129,7 +133,13 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             dayIntToString(myCalendar.get(Calendar.DAY_OF_WEEK) - 1)
 
         }, mYear, mMonth, mDay)
-        mDatePicker.show()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mDatePicker.show()
+        } else {
+            mDatePicker.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            mDatePicker.show()
+        }
+
     }
 
     private fun dayIntToString(i: Int) {

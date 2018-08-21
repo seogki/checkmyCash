@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.Interface.OnNormalRegisterDeleteListener
 import cashcheck.skh.com.availablecash.Register.model.EndItem
 import cashcheck.skh.com.availablecash.Register.model.EventItem
 import cashcheck.skh.com.availablecash.Register.model.HeaderItem
@@ -19,7 +20,7 @@ import cashcheck.skh.com.availablecash.Register.model.ListItem
 open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListItem>) : BaseRecyclerViewAdapter<ListItem, RecyclerView.ViewHolder>(context, arrayList) {
 
     private var mitem = arrayList
-
+    lateinit var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener
     override fun onBindView(holder: RecyclerView.ViewHolder, position: Int) {
         val type = getItemViewType(position)
         holder.setIsRecyclable(true)
@@ -55,17 +56,18 @@ open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListIt
         val view: View
 
         return when (viewType) {
-            ListItem.TYPE_EVENT -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv, parent, false)
-                NormalRegisterViewHolder(view)
-            }
             ListItem.TYPE_HEADER -> {
                 view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv_header, parent, false)
                 NormalDateRegisterViewHolder(view)
             }
+            ListItem.TYPE_EVENT -> {
+                view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv, parent, false)
+                NormalRegisterViewHolder(view, onNormalRegisterDeleteListener)
+            }
+
             else -> {
                 view = LayoutInflater.from(parent.context).inflate(R.layout.item_normal_register_rv_end, parent, false)
-                NormalEndRegisterViewHolder(view)
+                NormalEndRegisterViewHolder(view, onNormalRegisterDeleteListener)
             }
         }
 

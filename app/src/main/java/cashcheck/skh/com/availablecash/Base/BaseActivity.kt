@@ -48,6 +48,7 @@ open class BaseActivity : AppCompatActivity() {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NO_ANIMATION)
         startActivity(intent)
+//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     fun AppCompatActivity.redirectRegisterMainActivity() {
@@ -92,13 +93,13 @@ open class BaseActivity : AppCompatActivity() {
                 .show()
     }
 
-    fun alertDialog(msg: String) {
-        AlertDialog.Builder(this@BaseActivity, R.style.MyDialogTheme)
-                .setMessage("나중에 다시 시도해주시기 바랍니다.")
-                .setPositiveButton("확인", { dialog, _ ->
-                    dialog.dismiss()
-                }).setNegativeButton(null, null)
-                .show()
-    }
+//    fun alertDialog(msg: String) {
+//        AlertDialog.Builder(this@BaseActivity, R.style.MyDialogTheme)
+//                .setMessage("나중에 다시 시도해주시기 바랍니다.")
+//                .setPositiveButton("확인", { dialog, _ ->
+//                    dialog.dismiss()
+//                }).setNegativeButton(null, null)
+//                .show()
+//    }
 
 }

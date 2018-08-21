@@ -25,12 +25,18 @@ class EstimateDBHelper(c: Context, name: String, factory: SQLiteDatabase.CursorF
         db.close()
     }
 
-    fun deleteData(date: String, cate: String, money: String) {
+    fun deleteData(id: String) {
         val db = writableDatabase
 
-        db.execSQL("DELETE FROM ${Const.DbEstimateName} WHERE item='$date';")
+        db.execSQL("DELETE FROM ${Const.DbEstimateName} WHERE _id=$id;")
         db.close()
 
+    }
+
+    fun updateData(id: String, cate: String, money: String) {
+        val db = writableDatabase
+        db.execSQL("UPDATE ${Const.DbEstimateName} SET categories='$cate', money='$money' WHERE _id=$id")
+        db.close()
     }
 
     fun checkTable(table: String, column: String) {

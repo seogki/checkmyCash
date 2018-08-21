@@ -21,27 +21,19 @@
         tools:ignore="UnusedAttribute"
         >
 
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0.5dp"-->
-        <!--android:background="@color/midGrey"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--/>-->
-
-
         <TextView
             android:id="@+id/item_cate_txt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/view_round_black"
             android:gravity="center"
             android:letterSpacing="0.05"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:layout_marginStart="16dp"
+            android:paddingStart="4dp"
             android:textColor="@color/statusbar"
-            android:background="@drawable/view_round_black"
             android:textSize="24sp"
             android:textStyle="bold"
             app:checkDay="@{model}"
@@ -57,8 +49,8 @@
             android:id="@+id/item-cate_txt_days"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="4dp"
             android:layout_marginBottom="2.5dp"
+            android:layout_marginStart="4dp"
             android:gravity="bottom"
             android:letterSpacing="0.15"
             android:textColor="@color/darkGrey"
@@ -92,26 +84,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="5,000원"
             />
-
-
-
-
-        <!--<View-->
-            <!--android:layout_width="0.5dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:background="@color/midGrey"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--/>-->
-        <!--<View-->
-            <!--android:layout_width="0.5dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:background="@color/midGrey"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--/>-->
 
     </android.support.constraint.ConstraintLayout>
 

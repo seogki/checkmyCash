@@ -18,7 +18,7 @@ class CustomDateFormatter(xValues: MutableList<String>) : IValueFormatter, IAxis
         val stringValue = entry.x.toString()
         val month = stringValue.substring(0, 2)
         val days = stringValue.substring(2, 4)
-        return "${month}-${days}"
+        return "$month-$days"
     }
 
     // IAxisValueFormatter
@@ -28,8 +28,8 @@ class CustomDateFormatter(xValues: MutableList<String>) : IValueFormatter, IAxis
             if(index < 0)
                 return ""
             val stringValue = xValues[index]
-            var month = ""
-            var days = ""
+            val month: String
+            val days: String
             if (stringValue.length == 4) {
                 month = stringValue.substring(0, 2)
                 days = stringValue.substring(2, 4)
@@ -37,7 +37,7 @@ class CustomDateFormatter(xValues: MutableList<String>) : IValueFormatter, IAxis
                 month = stringValue.substring(0, 1)
                 days = stringValue.substring(1, 3)
             }
-            return "${month}-${days}"
+            return "$month-$days"
         }
         return ""
     }

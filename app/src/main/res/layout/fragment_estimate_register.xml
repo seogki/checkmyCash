@@ -66,7 +66,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
-                    android:background="@drawable/white_bg_btm_corner_only_smallv2"
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +90,7 @@
                 <EditText
                     android:id="@+id/estimate_edit_cate"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -110,7 +109,7 @@
                 <EditText
                     android:id="@+id/estimate_edit_money"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="8dp"
@@ -130,7 +129,7 @@
                 <EditText
                     android:id="@+id/estimate_edit_days"
                     android:layout_width="70dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginTop="8dp"

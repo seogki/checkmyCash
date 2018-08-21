@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.Interface.OnNormalRegisterDeleteListener
 import cashcheck.skh.com.availablecash.Register.adapter.Normal.NormalRegisterAdapter
 import cashcheck.skh.com.availablecash.Register.model.*
 import cashcheck.skh.com.availablecash.Util.*
@@ -27,8 +28,7 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecyclerViewAdapter.OnItemClickListener {
-
+class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecyclerViewAdapter.OnItemClickListener, OnNormalRegisterDeleteListener {
 
 
     lateinit var binding: FragmentNormalRegisterBinding
@@ -47,11 +47,17 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         checkDiffAndRefresh()
     }
 
+    override fun onCompleteDelete(done: String?) {
+        if (done == "done")
+            checkDiffAndRefresh()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_normal_register, container, false)
         binding.onClickListener = this
+
         binding.normalFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         db = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         tempMap = HashMap()
@@ -63,6 +69,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
 
     private fun setRv() {
         normalRegisterAdapter = NormalRegisterAdapter(context!!, ArrayList())
+        normalRegisterAdapter.onNormalRegisterDeleteListener = this
         layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.initialPrefetchItemCount = 4
@@ -70,6 +77,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         binding.normalFragRv.isDrawingCacheEnabled = true
         binding.normalFragRv.setItemViewCacheSize(20)
         binding.normalFragRv.setHasFixedSize(true)
+
         normalRegisterAdapter.setHasStableIds(true)
         binding.normalFragRv.isNestedScrollingEnabled = false
         binding.normalFragRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
@@ -87,7 +95,9 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
     }
 
     override fun onItemClick(view: View, position: Int) {
-
+//        for(view in view){
+//
+//        }
     }
 
     override fun onResume() {
@@ -117,6 +127,8 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         }
         if (map.size > 0) {
             binding.normalFragTxtEmpty.visibility = View.GONE
+        } else {
+            binding.normalFragTxtEmpty.visibility = View.VISIBLE
         }
         if (tempMap != map) {
             tempMap = map
