@@ -34,6 +34,18 @@ public class UtilMethod {
         SimpleDateFormat df = new SimpleDateFormat("yy-MM", Locale.KOREA);
         return df.format(c);
     }
+    public static String getCurrentMonth() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
+        return df.format(c);
+    }
+
+    public static String getCurrentYear() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy", Locale.KOREA);
+        return df.format(c);
+    }
+
 
     public static String getCurrentDateToSec() {
         Date c = Calendar.getInstance().getTime();

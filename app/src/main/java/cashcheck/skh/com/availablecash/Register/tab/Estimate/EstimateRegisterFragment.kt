@@ -42,9 +42,9 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private lateinit var db: EstimateDBHelper
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_estimate_register, container, false)
         binding.onClickListener = this
+        binding.estimateFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         tempMap = HashMap()
         db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
         setRv()
@@ -86,8 +86,13 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                 }
             }
 
-            if (map.size > 0)
+            if (map.size > 0) {
+                binding.estimateTxtEmpty.visibility = View.GONE
                 checkTempMap()
+            } else {
+                estimateRegisterAdapter.clearItems()
+                binding.estimateTxtEmpty.visibility = View.VISIBLE
+            }
 
 
         } catch (e: Exception) {
@@ -120,6 +125,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun setRvData() {
         if (mItems.size > 0) {
             estimateRegisterAdapter.clearItems()
+            estimateRegisterAdapter.notifyDataSetChanged()
             estimateRegisterAdapter.addItems(mItems)
         }
     }
@@ -130,6 +136,8 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.initialPrefetchItemCount = 4
+        binding.estimateFragRv.setHasFixedSize(true)
+        estimateRegisterAdapter.setHasStableIds(true)
         binding.estimateFragRv.layoutManager = layoutManager
         binding.estimateFragRv.isDrawingCacheEnabled = true
         binding.estimateFragRv.setItemViewCacheSize(20)

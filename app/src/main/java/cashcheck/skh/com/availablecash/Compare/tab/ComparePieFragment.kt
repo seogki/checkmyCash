@@ -21,7 +21,6 @@ import cashcheck.skh.com.availablecash.Register.adapter.ComparePieAdapter
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.CustomComparePercentFormatter
 import cashcheck.skh.com.availablecash.Util.DBHelper
-import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.FragmentComparePieBinding
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -63,17 +62,16 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
         comparePieAdapter = ComparePieAdapter(context!!, ArrayList())
         layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         layoutManager.isItemPrefetchEnabled = true
-        layoutManager.initialPrefetchItemCount = 4
+        layoutManager.initialPrefetchItemCount = 2
         binding.compareFragPiechartRv.layoutManager = layoutManager
         binding.compareFragPiechartRv.isDrawingCacheEnabled = true
-        binding.compareFragPiechartRv.setItemViewCacheSize(20)
+        binding.compareFragPiechartRv.setItemViewCacheSize(10)
         binding.compareFragPiechartRv.isNestedScrollingEnabled = false
-        binding.compareFragPiechartRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.compareFragPiechartRv.itemAnimator = null
 
         Handler().postDelayed({
             binding.compareFragPiechartRv.adapter = comparePieAdapter
-        }, 100)
+        }, 10)
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -255,10 +253,9 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
                     pieMap2 = HashMap()
                     data = secondData
                 }
-                val result = data.substring(0, 6)
-                DLog.e("cur $result")
+//                val result = data.substring(0, 5)
                 // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-                cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + result + "%' ORDER BY date DESC", null)
+                cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + data + "%' ORDER BY date DESC", null)
                 while (cursor.moveToNext()) {
                     val cate = cursor.getString(2)
                     val money = cursor.getString(3)
@@ -310,8 +307,8 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onResume() {
-        super.onResume()
         setSpinner()
+        super.onResume()
     }
 
     private fun setSpinner() {
@@ -330,7 +327,6 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
                     spinnerArray.add(date)
                 }
             }
-            DLog.e("setSpinner : $spinnerArray")
 
             spinnerArray.sort()
             addItemOnSpinner()

@@ -23,8 +23,9 @@ import cashcheck.skh.com.availablecash.databinding.ItemEstimateBinding
 class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateRegisterModel>) : BaseRecyclerViewAdapter<EstimateRegisterModel, EstimateRegisterAdapter.EstimateRegisterViewHolder>(context, arraylist) {
 
     lateinit var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener
+    private var arr = arraylist
     override fun onBindView(holder: EstimateRegisterViewHolder, position: Int) {
-        holder.setIsRecyclable(true)
+        holder.setIsRecyclable(false)
         val model = getItem(holder.adapterPosition)
         holder.binding.model = model
     }
@@ -32,6 +33,11 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_estimate, parent, false)
         return EstimateRegisterViewHolder(view, onNormalRegisterDeleteListener)
+    }
+
+    override fun getItemId(position: Int): Long {
+        val id = arr[position]
+        return id.date!!.hashCode().toLong()
     }
 
 
@@ -44,8 +50,8 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
 
         init {
             super.itemView
-            db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
             binding = DataBindingUtil.bind(itemView)
+            db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
             binding.onClickListener = this
         }
 
@@ -64,7 +70,7 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
                 }
                 R.id.item_cate_sub_img_clear -> {
                     deleteData()
-                    isExpend = false
+
                 }
                 R.id.item_cate_sub_img_edit -> {
                     beginActivity()
@@ -82,8 +88,10 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
                         binding.model?.num?.let { db.deleteData(it) }
                         onNormalRegisterDeleteListener.onCompleteDelete("done")
                         binding.estimateCateConst2.visibility = View.GONE
+                        isExpend = false
                     }).setNegativeButton("취소", { dialog, _ ->
                         dialog.dismiss()
+                        isExpend = true
                     })
                     .show()
 

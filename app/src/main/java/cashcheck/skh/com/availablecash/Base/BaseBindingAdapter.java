@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import cashcheck.skh.com.availablecash.Util.KeyboardUtils;
 import cashcheck.skh.com.availablecash.Util.UtilMethod;
 
@@ -115,19 +117,35 @@ public class BaseBindingAdapter {
         }
 
     }
+
     @BindingAdapter("setMonth")
     public static void setMonth(final TextView textView, final String date) {
         String month = "";
         String days = "";
-        String result = date.replace("-","").replace(" ","");
+        String result = date.replace("-", "").replace(" ", "");
         if (result.length() == 4) {
             month = result.substring(0, 2);
             days = result.substring(2, 4);
-            textView.setText("20"+month + "년 " + days+"월");
+            textView.setText("20" + month + "년 " + days + "월");
         } else if (result.length() == 3) {
             month = result.substring(0, 1);
             days = result.substring(1, 3);
-            textView.setText("20"+month + "년 " + days+"월");
+            textView.setText("20" + month + "년 " + days + "월");
+        } else {
+            textView.setText("");
+        }
+
+    }
+
+    @BindingAdapter("setYear")
+    public static void setYear(final TextView textView, final String date) {
+        String month;
+        String days;
+        String result = date.replace("-", "").replace(" ", "");
+        if (!Objects.equals(result, "")) {
+            month = result.substring(2, 4);
+            days = result.substring(4, 6);
+            textView.setText(month + "월 " + days + "일");
         } else {
             textView.setText("");
         }

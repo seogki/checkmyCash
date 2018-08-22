@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener"
+            />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/custom_cat_dialog"
+        android:padding="2dp"
+        >
+
+        <TextView
+            android:id="@+id/catdlog_txt_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="분류"
+            android:textColor="@color/white"
+            android:background="@color/statusbar"
+            />
+
+        <ScrollView
+            android:id="@+id/catdlog_rv_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/catdlog_txt_title"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_edit_add"
+            >
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/catdlog_rv"
+
+            />
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/catdlog_txt_add"
+            android:layout_width="85dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="0.05dp"
+            android:background="@color/statusbar"
+            android:gravity="center"
+            android:text="추가"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_btn_ok"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/catdlog_edit_add"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="0.05dp"
+            android:imeOptions="actionNext"
+            android:padding="3dp"
+            android:textColor="@color/white"
+            android:inputType="text"
+            android:background="@color/statusbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/catdlog_txt_add"
+            app:layout_constraintBottom_toTopOf="@id/catdlog_btn_ok"
+            />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_btn_no"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="취소"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:textColor="@color/Red"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/catdlog_btn_ok"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/catdlog_btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="확인"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:background="@drawable/btn_ripple_colored_line"
+            android:onClick="@{onClickListener::onClick}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/catdlog_btn_no"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

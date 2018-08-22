@@ -27,21 +27,59 @@
             />
 
         <TextView
-            android:id="@+id/item_rv_week_title"
+            android:id="@+id/item_rv_week_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:gravity="center_vertical"
-            android:letterSpacing="0.15"
+            android:letterSpacing="0.05"
             android:textColor="@color/lightBlack"
             android:textSize="14sp"
+            app:setYear="@{model.first}"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="2018-08"
+            tools:text="18-08-09"
+            />
+
+        <TextView
+            android:id="@+id/item_rv_week_between"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.15"
+            android:text="~"
+            android:textColor="@color/lightBlack"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_rv_week_first"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/item_rv_week_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.05"
+            android:textColor="@color/lightBlack"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:setYear="@{model.last}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_rv_week_between"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="18-08-15"
             />
 
         <TextView
@@ -56,6 +94,7 @@
             android:letterSpacing="0.25"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
+            app:checkMoney="@{model.total}"
             android:textColor="@color/Red"
             android:textSize="12sp"
             android:textStyle="bold"

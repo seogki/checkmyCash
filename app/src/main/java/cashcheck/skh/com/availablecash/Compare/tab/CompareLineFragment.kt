@@ -58,17 +58,16 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener {
         compareLineAdapter = CompareLineAdapter(context!!, ArrayList())
         layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
         layoutManager.isItemPrefetchEnabled = true
-        layoutManager.initialPrefetchItemCount = 4
+        layoutManager.initialPrefetchItemCount = 2
         binding.compareFragLineRv.layoutManager = layoutManager
         binding.compareFragLineRv.isDrawingCacheEnabled = true
-        binding.compareFragLineRv.setItemViewCacheSize(20)
+        binding.compareFragLineRv.setItemViewCacheSize(10)
         binding.compareFragLineRv.isNestedScrollingEnabled = false
-        binding.compareFragLineRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.compareFragLineRv.itemAnimator = null
 
         Handler().postDelayed({
             binding.compareFragLineRv.adapter = compareLineAdapter
-        }, 100)
+        }, 10)
     }
 
     override fun onClick(v: View?) {

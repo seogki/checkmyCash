@@ -28,7 +28,14 @@ open class Const {
          */
         const val DbName = "PieGraphData"
         const val DbEstimateName = "EstimateDBData"
+        const val DbDialog = "CategoryDialog"
 
+        /**
+         * Dialog
+         */
+
+        const val prefDB = "prefDB"
+        const val DialogDone = "DialogDone"
 
         /**
          *  모델

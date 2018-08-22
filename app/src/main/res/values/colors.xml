@@ -13,7 +13,7 @@
     <color name="DarkGreen">#13A9AA</color>
     <color name="DarkGreenalpha">#7013A9AA</color>
     <color name="DarkestGreen">#078f87</color>
-    <color name="Neon">#00FF00</color>
+    <color name="Neon">#00CC00</color>
     <color name="Red">#FF0000</color>
     <color name="OrangeYellow">#FFCC00</color>
     <color name="GuardsmanRed">#CC0000</color>
@@ -34,7 +34,7 @@
     <color name="danhong">#F23920</color>
     <color name="jaju">#660099</color>
     <color name="pink">#C71585</color>
-    <color name="lightBlack">#262626</color>
+    <color name="lightBlack">#4C4C4C</color>
 
 
     <color name="titleColor">#CC0000</color>

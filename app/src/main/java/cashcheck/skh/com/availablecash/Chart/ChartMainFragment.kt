@@ -15,6 +15,7 @@ import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentChartMainBinding
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -89,15 +90,15 @@ class ChartMainFragment : BaseFragment() {
         dataSet.label = ""
         val data = PieData(dataSet)
 
-        chart.legend.isEnabled = false
-//        val l = chart.legend
-//        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-//        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-//        l.orientation = Legend.LegendOrientation.HORIZONTAL
-//        l.setDrawInside(false)
-//        l.xEntrySpace = 7f
-//        l.yEntrySpace = 5f
-//        chart.legend.isWordWrapEnabled = true
+//        chart.legend.isEnabled = false
+        val l = chart.legend
+        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.setDrawInside(false)
+        l.xEntrySpace = 7f
+        l.yEntrySpace = 5f
+        chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.description.isEnabled = false
         chart.animateXY(1000, 1000)
@@ -116,7 +117,7 @@ class ChartMainFragment : BaseFragment() {
                 binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
             }
             resultUsage > 0 -> {
-                binding.chartFragTxtTotalresultMoney.text = moneys + "원 당신은 저축왕이군요!"
+                binding.chartFragTxtTotalresultMoney.text = moneys + "원!!! 축하합니다!"
                 binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Neon))
             }
             else -> {
@@ -145,7 +146,6 @@ class ChartMainFragment : BaseFragment() {
                 map = HashMap()
                 val currentDate = UtilMethod.getCurrentDate()
                 DLog.e("cur $currentDate")
-                // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
                 cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + currentDate + "%' ORDER BY date DESC", null)
                 while (cursor.moveToNext()) {
                     val cate = cursor.getString(2)

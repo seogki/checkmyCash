@@ -16,15 +16,20 @@ import cashcheck.skh.com.availablecash.databinding.ItemRvMonthBinding
  */
 class CompareMonthAdapter(context: Context, arraylist: MutableList<CompareMonthModel>) : BaseRecyclerViewAdapter<CompareMonthModel, CompareMonthAdapter.CompareMonthViewHolder>(context, arraylist) {
 
-
+    private var arr = arraylist
     override fun onBindView(holder: CompareMonthViewHolder, position: Int) {
-        holder.setIsRecyclable(true)
+        holder.setIsRecyclable(false)
         holder.binding.model = getItem(holder.adapterPosition)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rv_month, parent, false)
         return CompareMonthViewHolder(view)
+    }
+
+    override fun getItemId(position: Int): Long {
+        val id = arr[position]
+        return id.months.hashCode().toLong()
     }
 
     inner class CompareMonthViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {

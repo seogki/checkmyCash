@@ -3,8 +3,8 @@ package cashcheck.skh.com.availablecash.Register.Interface
 /**
  * Created by Seogki on 2018. 8. 8..
  */
-interface CategoryDialogInterface{
-    fun getTextFromDialog(text: String)
+interface DialogInterface{
+    fun getTextFromAdapter(text: String)
 
-
+    fun getPosFromAdapter(pos: Int)
 }

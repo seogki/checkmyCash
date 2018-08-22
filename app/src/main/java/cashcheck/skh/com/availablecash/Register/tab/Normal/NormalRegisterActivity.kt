@@ -19,7 +19,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import cashcheck.skh.com.availablecash.R
-import cashcheck.skh.com.availablecash.Register.Dialog.CategoryDialog
+import cashcheck.skh.com.availablecash.Register.Dialog.CategoryDialogV2
 import cashcheck.skh.com.availablecash.Register.Interface.CategoryDialogInterface
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.CustomTextWatcher
@@ -103,9 +103,9 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         val metrics = resources.displayMetrics
         val width = metrics.widthPixels
         val height = metrics.heightPixels
-        val d = CategoryDialog(this, this)
+        val d = CategoryDialogV2(this, this)
         d.show()
-        d.window.setLayout((6 * width) / 7, (4 * height) / 14)
+        d.window.setLayout((6 * width) / 7, (3 * height) / 4)
     }
 
     @SuppressLint("SimpleDateFormat")

@@ -59,6 +59,34 @@
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
+                    <ImageView
+                        android:id="@+id/compare_frag_img_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:src="@drawable/baseline_keyboard_arrow_right_black_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/btn_ripple_colored_statusbar"
+                        android:padding="8dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/compare_frag_img_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:background="@drawable/btn_ripple_colored_statusbar"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:src="@drawable/baseline_keyboard_arrow_left_black_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:padding="8dp"
+                        />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"

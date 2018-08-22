@@ -30,19 +30,36 @@
                 >
 
 
+                <TextView
+                    android:id="@+id/frag_compare_pie_txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="파이 그래프"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/white_bg_top_corner_only_v2_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/compare_frag_const_linechart"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-
-                    android:background="@drawable/white_bg_btm_corner_only"
-                    android:elevation="3dp"
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_pie_txt_title"
                     >
-
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/compare_frag_piechart1"
                         android:layout_width="0dp"
@@ -77,7 +94,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+
                     android:id="@+id/compare_frag_const_const"
                     app:layout_constraintTop_toBottomOf="@id/compare_frag_const_linechart"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +107,7 @@
                         android:layout_height="45dp"
                         android:layout_marginEnd="2dp"
                         android:layout_marginStart="8dp"
-                        android:background="@drawable/edittext_round_border_jaju"
+                        android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar"
                         app:layout_constraintEnd_toStartOf="@id/compare_frag_spinner_2"
                         app:layout_constraintStart_toStartOf="parent"
                         >
@@ -104,7 +121,7 @@
                             android:layout_marginStart="4dp"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:popupBackground="@color/jaju"
+                            android:popupBackground="@color/statusbar"
                             android:spinnerMode="dropdown"
                             android:textAlignment="center"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +149,7 @@
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="2dp"
-                        android:background="@drawable/edittext_round_border_pink"
+                        android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/compare_frag_spinner_1"
                         app:layout_constraintTop_toTopOf="parent"
@@ -147,7 +164,7 @@
                             android:layout_marginStart="4dp"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:popupBackground="@color/pink"
+                            android:popupBackground="@color/statusbar"
                             android:spinnerMode="dropdown"
                             android:textAlignment="center"
                             app:layout_constraintBottom_toBottomOf="parent"

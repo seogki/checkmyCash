@@ -29,27 +29,45 @@
                 android:layout_height="match_parent"
                 >
 
+                <TextView
+                    android:id="@+id/frag_compare_line_txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/white_bg_top_corner_only_v2_line"
+                    android:gravity="center"
+                    android:text="라인 그래프"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/compare_frag_linechart"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:elevation="3dp"
-                    android:background="@drawable/white_bg_btm_corner_only"
+
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_line_txt_title"
                     />
 
                 <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
                     android:id="@+id/compare_frag_line_const_const"
-                    app:layout_constraintTop_toBottomOf="@id/compare_frag_linechart"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_linechart"
                     >
 
                     <TextView
@@ -57,18 +75,17 @@
                         style="@style/text16Style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="1dp"
                         android:layout_marginStart="8dp"
+                        android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar"
                         android:gravity="center"
-                        android:background="@drawable/edittext_round_border_jaju"
                         android:onClick="@{onClickListener::onClick}"
                         android:text="분류 1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginEnd="1dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/compare_frag_txt_set2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
 
@@ -76,81 +93,80 @@
                         android:id="@+id/compare_frag_txt_set2"
                         style="@style/text16Style"
                         android:layout_width="0dp"
-                        android:gravity="center"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:background="@drawable/edittext_round_border_pink"
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="1dp"
+                        android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar"
+                        android:gravity="center"
+
                         android:onClick="@{onClickListener::onClick}"
                         android:text="분류 2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/compare_frag_txt_set1"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                 </android.support.constraint.ConstraintLayout>
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/compare_frag_line_header"
-                    app:layout_constraintTop_toBottomOf="@+id/compare_frag_line_const_const"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/white_bg_top_corner_only"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/white_bg_top_corner_only"
+                    app:layout_constraintTop_toBottomOf="@+id/compare_frag_line_const_const"
 
                     >
-
 
 
                     <TextView
                         android:id="@+id/compare_frag_line_first_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:letterSpacing="0.15"
                         android:paddingBottom="2dp"
-                        android:gravity="center"
                         android:paddingTop="2dp"
                         android:textColor="@color/jaju"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/compare_frag_line_second_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <TextView
                         android:id="@+id/compare_frag_line_second_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:letterSpacing="0.15"
                         android:paddingBottom="2dp"
-                        android:gravity="center"
                         android:paddingTop="2dp"
                         android:textColor="@color/pink"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/compare_frag_line_first_title"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <TextView
                         android:id="@+id/compare_frag_line_middle_header"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:text="~"
                         android:gravity="center"
+                        android:text="~"
                         android:textColor="@color/black"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/compare_frag_line_first_title"
                         app:layout_constraintEnd_toStartOf="@id/compare_frag_line_second_title"
+                        app:layout_constraintStart_toEndOf="@id/compare_frag_line_first_title"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <View
@@ -168,12 +184,12 @@
                     android:id="@+id/compare_frag_line_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/white_bg_btm_corner_only_small"
-                    app:layout_constraintTop_toBottomOf="@id/compare_frag_line_header"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/compare_frag_line_header"
                     />
 
                 <View
