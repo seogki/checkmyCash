@@ -233,6 +233,56 @@
                     app:layout_constraintTop_toTopOf="@id/normal_atv_edit_money"
                     />
 
+                <TextView
+                    android:id="@+id/normal_atv_txt_ill"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edittext_round_border_yellow"
+                    android:gravity="center"
+                    android:text="횟수"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_money"
+                    />
+
+                <EditText
+                    android:id="@+id/normal_atv_edit_ill"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edittext_round_border_yellow"
+                    android:inputType="number"
+                    android:paddingEnd="8dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:paddingStart="8dp"
+                    android:imeOptions="actionDone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_ill"
+                    app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_money"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/normal_atv_img_clear_ill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_ripple_colored_grey"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:padding="5dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/baseline_close_black_24"
+                    app:layout_constraintBottom_toBottomOf="@id/normal_atv_edit_ill"
+                    app:layout_constraintEnd_toEndOf="@id/normal_atv_edit_ill"
+                    app:layout_constraintTop_toTopOf="@id/normal_atv_edit_ill"
+                    />
+
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>

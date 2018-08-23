@@ -43,7 +43,7 @@ class NormalRegisterViewHolder(itemView: View?, private var onNormalRegisterDele
             }
             R.id.item_cate_sub_img_clear -> {
                 deleteData()
-                isExpend = false
+
             }
             R.id.item_cate_sub_img_edit -> {
                 beginActivity()
@@ -61,8 +61,10 @@ class NormalRegisterViewHolder(itemView: View?, private var onNormalRegisterDele
                     binding.model?.id?.let { db.deleteData(it) }
                     onNormalRegisterDeleteListener.onCompleteDelete("done")
                     binding.itemCateSubConst.visibility = View.GONE
+                    isExpend = false
                 }).setNegativeButton("취소", { dialog, _ ->
                     dialog.dismiss()
+                    isExpend = true
                 })
                 .show()
 

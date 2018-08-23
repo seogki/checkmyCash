@@ -105,6 +105,7 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
             i.putExtra(Const.ItemCategory, model.cate)
             i.putExtra(Const.ItemMoney, model.money)
             i.putExtra(Const.ItemDate, model.date)
+            i.putExtra(Const.ItemDays, model.days)
             i.putExtra(Const.ItemDBNAME, Const.DbEstimateName)
             context!!.startActivity(i)
             binding.estimateCateConst2.visibility = View.GONE

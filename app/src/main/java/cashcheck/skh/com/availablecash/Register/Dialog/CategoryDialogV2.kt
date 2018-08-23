@@ -12,9 +12,12 @@ import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.Interface.CategoryDialogInterface
@@ -28,11 +31,11 @@ import cashcheck.skh.com.availablecash.databinding.ItemCategoryDialogv2Binding
 /**
  * Created by Seogki on 2018. 8. 7..
  */
-class CategoryDialogV2(context: Context, private var listener: CategoryDialogInterface) : Dialog(context), View.OnClickListener, DialogInterface {
+class CategoryDialogV2(context: Context, private var listener: CategoryDialogInterface) : Dialog(context), View.OnClickListener, DialogInterface, TextView.OnEditorActionListener {
 
 
     lateinit var binding: ItemCategoryDialogv2Binding
-    private var mcontext: Context = context
+    private var mContext: Context = context
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var mItem: ArrayList<String>
     private lateinit var dialogDBHelper: DialogDBHelper
@@ -42,20 +45,33 @@ class CategoryDialogV2(context: Context, private var listener: CategoryDialogInt
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         setCanceledOnTouchOutside(false)
-        binding = DataBindingUtil.inflate(LayoutInflater.from(mcontext), R.layout.item_category_dialogv2, null, false)
-        dialogDBHelper = DialogDBHelper(mcontext.applicationContext, "${Const.DbDialog}.db", null, 1)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.item_category_dialogv2, null, false)
+        binding.catdlogEditAdd.setOnEditorActionListener(this)
+        dialogDBHelper = DialogDBHelper(mContext.applicationContext, "${Const.DbDialog}.db", null, 1)
         mItem = ArrayList()
         setItem()
         setContentView(binding.root)
         setRv()
         binding.onClickListener = this
-        DLog.e("owner : $ownerActivity")
+    }
+
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            return if (binding.catdlogEditAdd.text.toString() != "") {
+                onSaveDbAndEnd(binding.catdlogEditAdd.text.toString())
+                true
+            } else {
+                Toast.makeText(mContext, "모두 채워주세요", Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
+        return false
     }
 
     private fun setItem() {
 
 
-        val pref = mcontext.getSharedPreferences(Const.prefDB, MODE_PRIVATE)
+        val pref = mContext.getSharedPreferences(Const.prefDB, MODE_PRIVATE)
 
         val isSet = pref.getBoolean(Const.DbDialog, false)
         if (isSet) {
@@ -101,18 +117,16 @@ class CategoryDialogV2(context: Context, private var listener: CategoryDialogInt
 
     override fun getTextFromAdapter(text: String) {
         if (text.isNotEmpty()) {
-            insertDb(text)
-            listener.getTextFromDialog(text)
-            dismiss()
+            onSaveDbAndEnd(text)
         }
     }
 
 
     private fun setRv() {
-        layoutManager = GridLayoutManager(mcontext, 4, LinearLayoutManager.VERTICAL, false)
+        layoutManager = GridLayoutManager(mContext, 4, LinearLayoutManager.VERTICAL, false)
         layoutManager.isItemPrefetchEnabled = true
         binding.catdlogRv.layoutManager = layoutManager
-        categoryDialogAdapter = CategoryDialogAdapter(mcontext, mItem)
+        categoryDialogAdapter = CategoryDialogAdapter(mContext, mItem)
         categoryDialogAdapter.categoryDialogInterface = this
         binding.catdlogRv.setHasFixedSize(true)
         Handler().postDelayed({
@@ -130,15 +144,19 @@ class CategoryDialogV2(context: Context, private var listener: CategoryDialogInt
             R.id.catdlog_btn_ok -> {
                 val data = binding.catdlogEditAdd.text.toString()
                 if (data.isNotEmpty()) {
-                    insertDb(data)
-                    listener.getTextFromDialog(data)
-                    dismiss()
+                    onSaveDbAndEnd(data)
                 } else {
                     Toast.makeText(context, "선택하거나 추가 해주세요!", Toast.LENGTH_SHORT).show()
                 }
             }
 
         }
+    }
+
+    private fun onSaveDbAndEnd(data: String){
+        insertDb(data)
+        listener.getTextFromDialog(data)
+        dismiss()
     }
 
 

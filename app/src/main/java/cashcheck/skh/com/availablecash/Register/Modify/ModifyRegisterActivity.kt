@@ -29,11 +29,14 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
         binding = DataBindingUtil.setContentView(this, R.layout.activity_modify_register)
         binding.chartActvImgBack.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         binding.normalAtvImgClear.drawable.setColorFilter(ContextCompat.getColor(this, R.color.midGrey), PorterDuff.Mode.SRC_ATOP)
+        binding.normalAtvImgClearIll.drawable.setColorFilter(ContextCompat.getColor(this, R.color.midGrey), PorterDuff.Mode.SRC_ATOP)
         estimateDBHelper = EstimateDBHelper(applicationContext, "${Const.DbEstimateName}.db", null, 1)
         dbHelper = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         val et = binding.normalAtvEditMoney
         binding.normalAtvEditMoney.setOnEditorActionListener(this)
+        binding.normalAtvEditIll.setOnEditorActionListener(this)
         et.addTextChangedListener(CustomTextWatcher(et))
+        binding.normalAtvEditIll.addTextChangedListener(CustomTextWatcherDay(binding.normalAtvEditIll))
         getDataFromIntent()
         binding.onClickListener = this
     }
@@ -45,10 +48,24 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
         val money = i.getStringExtra(Const.ItemMoney)
         val date = i.getStringExtra(Const.ItemDate)
         dbname = i.getStringExtra(Const.ItemDBNAME)
+        val days = i.getStringExtra(Const.ItemDays)
+
+
+        if(dbname == Const.DbName){
+            binding.normalAtvEditIll.visibility = View.GONE
+            binding.normalAtvImgClearIll.visibility = View.GONE
+            binding.normalAtvTxtIll.visibility = View.GONE
+            binding.normalAtvEditMoney.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(money) + "원")
+        } else {
+            val moneyResult = money.toInt().div(days.toInt())
+            binding.normalAtvEditIll.text = Editable.Factory.getInstance().newEditable(days + "일")
+            binding.normalAtvEditMoney.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(moneyResult.toString()) + "원")
+        }
 
         binding.normalAtvEditDate.text = Editable.Factory.getInstance().newEditable(date)
         binding.normalAtvEditCat.text = Editable.Factory.getInstance().newEditable(cate)
-        binding.normalAtvEditMoney.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(money) + "원")
+
+
     }
 
     override fun onClick(v: View?) {
@@ -63,17 +80,32 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
             R.id.normal_atv_img_clear -> {
                 binding.normalAtvEditMoney.text.clear()
             }
+            R.id.normal_atv_img_clear_ill -> {
+                binding.normalAtvEditIll.text.clear()
+            }
         }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            return if (binding.normalAtvEditCat.text.toString() != "" && binding.normalAtvEditDate.text.toString() != "" && binding.normalAtvEditMoney.text.toString() != "") {
-                checkEmptyAndSave()
-                true
-            } else {
-                Toast.makeText(this, "모두 채워주세요", Toast.LENGTH_SHORT).show()
-                true
+        when (v?.id) {
+            R.id.normal_atv_edit_money -> {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if(dbname == Const.DbName){
+                        checkEmptyAndSave()
+                        return true
+                    } else if(dbname == Const.DbEstimateName){
+                        binding.normalAtvEditIll.requestFocus()
+                        return true
+                    }
+
+                }
+            }
+            R.id.normal_atv_edit_ill -> {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    checkEmptyAndSave()
+                    return true
+                }
+
             }
         }
         return false
@@ -81,27 +113,39 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
 
 
     private fun checkEmptyAndSave() {
-        if (binding.normalAtvEditCat.text.toString() != "" && binding.normalAtvEditDate.text.toString() != "" && binding.normalAtvEditMoney.text.toString() != "") {
-            when (dbname) {
-                Const.DbName -> {
-                    dbHelper.updateData(id
-                            , binding.normalAtvEditCat.text.toString()
-                            , binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", ""))
-                    finish()
-                    binding.normalAtvBtnDone.isEnabled = true
-                }
-                Const.DbEstimateName -> {
-                    estimateDBHelper.updateData(id
-                            , binding.normalAtvEditCat.text.toString()
-                            , binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", ""))
-                    finish()
-                    binding.normalAtvBtnDone.isEnabled = true
-                }
+        if (dbname == Const.DbName) {
+            if (binding.normalAtvEditCat.text.toString() != ""
+                    && binding.normalAtvEditDate.text.toString() != ""
+                    && binding.normalAtvEditMoney.text.toString() != "") {
+
+                dbHelper.updateData(id
+                        , binding.normalAtvEditCat.text.toString()
+                        , binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", ""))
+                finish()
+                binding.normalAtvBtnDone.isEnabled = true
+            } else {
+                Toast.makeText(this, "모두 채워주세요", Toast.LENGTH_SHORT).show()
+                binding.normalAtvBtnDone.isEnabled = true
+            }
+        } else if (dbname == Const.DbEstimateName) {
+            if (binding.normalAtvEditCat.text.toString() != ""
+                    && binding.normalAtvEditDate.text.toString() != ""
+                    && binding.normalAtvEditMoney.text.toString() != ""
+                    && binding.normalAtvEditIll.text.toString() != ""
+                    && binding.normalAtvEditIll.text.toString() != "일") {
+
+                estimateDBHelper.updateData(id
+                        , binding.normalAtvEditCat.text.toString()
+                        , binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", "")
+                        , binding.normalAtvEditIll.text.toString().replace("일",""))
+                finish()
+                binding.normalAtvBtnDone.isEnabled = true
+            } else {
+                Toast.makeText(this, "모두 채워주세요", Toast.LENGTH_SHORT).show()
+                binding.normalAtvBtnDone.isEnabled = true
             }
 
-        } else {
-            Toast.makeText(this, "모두 채워주세요", Toast.LENGTH_SHORT).show()
-            binding.normalAtvBtnDone.isEnabled = true
+
         }
     }
 }

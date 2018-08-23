@@ -16,7 +16,6 @@ import cashcheck.skh.com.availablecash.Compare.model.CompareMonthModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DBHelper
-import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentCompareMonthBinding
 
@@ -31,6 +30,9 @@ class CompareMonthFragment : BaseFragment() {
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var monthArray: MutableList<String>
     private var monthUsage = 0
+    private var isCreated: Boolean = false
+    private var totalUsage = 0
+    private var mostUsage = 0
     private lateinit var tempItem: ArrayList<CompareMonthModel>
     private lateinit var mItems: ArrayList<CompareMonthModel>
     private lateinit var dbHelper: DBHelper
@@ -53,7 +55,8 @@ class CompareMonthFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        getDateFromDB()
+        if (isCreated)
+            getDateFromDB()
     }
 
     private fun setRv() {
@@ -83,7 +86,6 @@ class CompareMonthFragment : BaseFragment() {
             monthArray = ArrayList()
             cursor = db.rawQuery("SELECT date FROM ${Const.DbName} ORDER BY date DESC", null)
             while (cursor.moveToNext()) {
-                DLog.e("sub ${year.substring(2, 4)} + ${cursor.getString(0).substring(0, 2)}")
                 if (year.substring(2, 4) == cursor.getString(0).substring(0, 2)) {
                     val date = cursor.getString(0).substring(0, 5)
                     if (monthArray.contains(date)) {
@@ -125,6 +127,7 @@ class CompareMonthFragment : BaseFragment() {
             }
             if (mItems != tempItem) {
                 tempItem = mItems
+                getTotalAndMostUsage(mItems)
                 onAddItem()
             }
             if (mItems.size > 0) {
@@ -141,6 +144,70 @@ class CompareMonthFragment : BaseFragment() {
 
         }
 
+
+    }
+
+    private fun getTotalAndMostUsage(mItems: ArrayList<CompareMonthModel>) {
+        totalUsage = 0
+        mostUsage = 0
+        val arr = ArrayList<Int>()
+        var tempModel: CompareMonthModel? = null
+        for (item in mItems) {
+            totalUsage += item.total.toInt()
+            arr.add(item.total.toInt())
+        }
+
+        if (arr.isNotEmpty()) {
+            mostUsage = arr.max()!!
+            for (i in mItems) {
+                if (mostUsage == i.total.toInt())
+                    tempModel = i
+            }
+
+            setTotalAndMostUsage(tempModel, mostUsage, totalUsage)
+        } else {
+            setTextView(""
+                    ,""
+                    ,"",
+                    ""
+                    ,""
+                    ,16)
+        }
+
+    }
+
+    private fun setTotalAndMostUsage(tempModel: CompareMonthModel?, mostUsage: Int, totalUsage: Int) {
+        var month = tempModel?.months?.substring(3, 5)
+        if (month?.substring(0, 1) == "0") {
+            month = month.substring(1, 2)
+        }
+        setTextView("20${tempModel?.months?.substring(0, 2)}년 합계"
+                ,"${UtilMethod.currencyFormat(totalUsage.toString())}원"
+                ,"가장 많은 소비를 한 달",
+                "${month}월"
+                ,"${UtilMethod.currencyFormat(mostUsage.toString())}원"
+                ,18)
+
+        if (!isCreated)
+            isCreated = true
+    }
+    private fun setTextView(allYear: String, allMoney: String, mostMonth: String, month: String, mostMoney: String, font: Int){
+//        if(font == 18){
+//            binding.fragCompareMonthTxtAlltotal.textSize = 18F
+//            binding.fragCompareMonthTxtAlltotal.typeface = Typeface.DEFAULT_BOLD
+//            binding.fragCompareMonthTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.lightBlack))
+//        } else {
+//
+//            binding.fragCompareMonthTxtAlltotal.textSize = 16F
+//            binding.fragCompareMonthTxtAlltotal.typeface = Typeface.DEFAULT
+//            binding.fragCompareMonthTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+//        }
+
+        binding.fragCompareMonthTxtAlltotal.text = allYear
+        binding.fragCompareMonthTxtAlltotalMoney.text = allMoney
+        binding.fragCompareMonthTxtMosttotal.text = mostMonth
+        binding.fragCompareMonthTxtMosttotalMonth.text = month
+        binding.fragCompareMonthTxtMosttotalMoney.text = mostMoney
 
     }
 

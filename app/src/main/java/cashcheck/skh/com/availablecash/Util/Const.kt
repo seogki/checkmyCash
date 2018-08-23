@@ -45,6 +45,7 @@ open class Const {
         const val ItemMoney = "RVItemMoney"
         const val ItemDate = "RVItemDate"
         const val ItemDBNAME = "RVItemDB"
+        const val ItemDays = "RVItemDays"
 
     }
 }

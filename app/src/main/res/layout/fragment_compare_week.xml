@@ -30,7 +30,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/white_bg_top_corner_only_v2_line"
                     android:gravity="center"
-                    android:text="주별 합계"
+                    android:text="주별 통계"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +50,76 @@
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_week_txt_title"
                     />
 
+
+
+
+
+                <TextView
+                    android:id="@+id/frag_compare_week_txt_alltotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightBlack"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_rv"
+                    />
+
+                <TextView
+                    android:id="@+id/frag_compare_week_txt_alltotal_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/statusbar"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_alltotal"
+                    />
+
+                <TextView
+                    android:id="@+id/frag_compare_week_txt_mosttotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/lightBlack"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_alltotal_money"
+                    />
+
+                <TextView
+                    android:id="@+id/frag_compare_week_txt_mosttotal_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/statusbar"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_mosttotal"
+                    />
+
+                <TextView
+                    android:id="@+id/frag_compare_week_txt_mosttotal_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/statusbar"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_mosttotal_month"
+                    />
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>

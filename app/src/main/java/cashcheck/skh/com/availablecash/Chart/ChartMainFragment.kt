@@ -98,7 +98,7 @@ class ChartMainFragment : BaseFragment() {
         l.setDrawInside(false)
         l.xEntrySpace = 7f
         l.yEntrySpace = 5f
-        chart.legend.isWordWrapEnabled = true
+//        chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.description.isEnabled = false
         chart.animateXY(1000, 1000)
@@ -117,7 +117,7 @@ class ChartMainFragment : BaseFragment() {
                 binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
             }
             resultUsage > 0 -> {
-                binding.chartFragTxtTotalresultMoney.text = moneys + "원!!! 축하합니다!"
+                binding.chartFragTxtTotalresultMoney.text = moneys + "원! 축하합니다!!!"
                 binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Neon))
             }
             else -> {

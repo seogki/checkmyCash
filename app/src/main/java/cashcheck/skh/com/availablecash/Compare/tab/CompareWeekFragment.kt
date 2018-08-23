@@ -36,6 +36,9 @@ class CompareWeekFragment : BaseFragment() {
     private lateinit var mItems: MutableList<CompareWeekModel>
     private lateinit var tempItem: MutableList<CompareWeekModel>
     private lateinit var dbHelper: DBHelper
+    private var isCreated: Boolean = false
+    private var weekTotalUsage = 0
+    private var mostUsage = 0
     private var weekUsage = 0
     private var fragDate: String? = null
 
@@ -56,7 +59,8 @@ class CompareWeekFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        getWeekFromDB()
+        if (isCreated)
+            getWeekFromDB()
     }
 
     private fun setRv() {
@@ -95,7 +99,10 @@ class CompareWeekFragment : BaseFragment() {
                 model.total = weekUsage.toString()
             }
             if (tempItem != item) {
+                weekTotalUsage = 0
+                mostUsage = 0
                 tempItem = item.asReversed()
+
                 setItem(tempItem)
             }
 
@@ -106,9 +113,71 @@ class CompareWeekFragment : BaseFragment() {
         }
     }
 
+    private fun getTotalAndMostUsage(tempItem: MutableList<CompareWeekModel>) {
+        val arr = ArrayList<Int>()
+        var mostItem: CompareWeekModel? = null
+        for (item in tempItem) {
+            weekTotalUsage += item.total.toInt()
+            arr.add(item.total.toInt())
+        }
+        mostUsage = arr.max()!!
+        for (item in tempItem) {
+            if (mostUsage == item.total.toInt()) {
+                mostItem = item
+            }
+        }
+        DLog.e("mostUsage : $mostUsage")
+
+        setTotalAndMostUsage(tempItem.size, mostUsage, weekTotalUsage, mostItem)
+    }
+
+    private fun setTotalAndMostUsage(size: Int, mostUsage: Int, weekTotalUsage: Int, mostItem: CompareWeekModel?) {
+        if (weekTotalUsage != 0) {
+            setTextOfTotal("$size 주 합계"
+                    , "${UtilMethod.currencyFormat(weekTotalUsage.toString())}원"
+                    , "가장 많은 소비를 한 주"
+                    , "${replaceDate(mostItem?.first)} ~ ${replaceDate(mostItem?.last)}"
+                    , "${UtilMethod.currencyFormat(mostUsage.toString())}원")
+
+
+        } else {
+            setTextOfTotal("데이터가 존재하지 않습니다", "", "", "", "")
+        }
+        if (!isCreated)
+            isCreated = true
+    }
+
+    private fun replaceDate(date: String?): String {
+        val month: String
+        val days: String
+        val done: String
+        val result = date?.replace("-", "")?.replace(" ", "")
+        if (result != "") {
+            month = result!!.substring(2, 4)
+            days = result.substring(4, 6)
+            done = month + "월 " + days + "일"
+        } else {
+            done = ""
+        }
+
+        return done
+    }
+
+
+    private fun setTextOfTotal(allTotal: String, allMoney: String, mostTotal: String, mostMonth: String, mostMoney: String) {
+
+        binding.fragCompareWeekTxtAlltotal.text = allTotal
+        binding.fragCompareWeekTxtAlltotalMoney.text = allMoney
+        binding.fragCompareWeekTxtMosttotal.text = mostTotal
+        binding.fragCompareWeekTxtMosttotalMonth.text = mostMonth
+        binding.fragCompareWeekTxtMosttotalMoney.text = mostMoney
+    }
+
     private fun setItem(mItems: MutableList<CompareWeekModel>) {
         compareWeekAdapter.clearItems()
         compareWeekAdapter.addItems(mItems)
+
+        getTotalAndMostUsage(mItems)
     }
 
 
@@ -135,7 +204,6 @@ class CompareWeekFragment : BaseFragment() {
 
                 cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
                 val start = cal.time
-                DLog.e("start $start")
                 cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
                 val firstDate = cal.time
                 val first = df.format(firstDate)

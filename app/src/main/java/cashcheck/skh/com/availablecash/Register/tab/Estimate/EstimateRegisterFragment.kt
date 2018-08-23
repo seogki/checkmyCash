@@ -9,10 +9,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
@@ -29,7 +32,7 @@ import com.github.mikephil.charting.data.PieEntry
 /**
  * A simple [Fragment] subclass.
  */
-class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalRegisterDeleteListener {
+class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalRegisterDeleteListener, TextView.OnEditorActionListener {
 
 
     lateinit var binding: FragmentEstimateRegisterBinding
@@ -44,6 +47,9 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_estimate_register, container, false)
         binding.onClickListener = this
+        binding.estimateEditCate.setOnEditorActionListener(this)
+        binding.estimateEditMoney.setOnEditorActionListener(this)
+        binding.estimateEditDays.setOnEditorActionListener(this)
         binding.estimateFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         tempMap = HashMap()
         db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
@@ -57,6 +63,28 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         if (done == "done")
             getDbData()
     }
+
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+            when(v?.id){
+                R.id.estimate_edit_cate -> {
+                    if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                        binding.estimateEditMoney.requestFocus()
+                    }
+                }
+                R.id.estimate_edit_money -> {
+                    if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                        binding.estimateEditDays.requestFocus()
+                    }
+                }
+                R.id.estimate_edit_days -> {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        savePreference()
+                    }
+                }
+            }
+        return false
+    }
+
 
     private fun getDbData() {
         val database = db.readableDatabase
@@ -75,7 +103,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
                 totalUsage += money.toInt().times(days.toInt())
 
-                mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString()))
+                mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString(),days))
 
                 if (map.containsKey(cate)) {
                     val data = map.getValue(cate).toInt().plus(money.toInt().times(days.toInt()))
@@ -227,7 +255,10 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
 
     private fun savePreference() {
-        if (binding.estimateEditCate.text.toString() != "" && binding.estimateEditMoney.text.toString().length > 1 && binding.estimateEditDays.text.toString() != "0일") {
+        if (binding.estimateEditCate.text.toString() != ""
+                && binding.estimateEditMoney.text.toString().length > 1
+                && binding.estimateEditDays.text.toString() != ""
+                && binding.estimateEditDays.text.toString() != "일") {
             try {
                 val cate = binding.estimateEditCate.text.toString()
                 val money = binding.estimateEditMoney.text.toString().replace(",".toRegex(), "").replace("원", "")

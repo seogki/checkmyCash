@@ -115,6 +115,7 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         var mYear = mcurrentDate.get(Calendar.YEAR)
         var mMonth = mcurrentDate.get(Calendar.MONTH)
         var mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH)
+        var text: String? = null
 
         val mDatePicker = DatePickerDialog(this, R.style.MyDatePickerDialogTheme, DatePickerDialog.OnDateSetListener { _, selectedyear, selectedmonth, selectedday ->
 
@@ -125,20 +126,31 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             val myFormat = "yy-MM-dd" //Change as you need
             //kk or HH
             val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
+            text = sdf.format(myCalendar.time)
             binding.normalAtvEditDate.setText(sdf.format(myCalendar.time))
-
+            binding.normalAtvEditCat.performClick()
             mDay = selectedday
             mMonth = selectedmonth
             mYear = selectedyear
             dayIntToString(myCalendar.get(Calendar.DAY_OF_WEEK) - 1)
 
         }, mYear, mMonth, mDay)
+
+
+//        mDatePicker.setButton(DialogInterface.BUTTON_POSITIVE, "확인") { dialog, which ->
+//            if (which == DialogInterface.BUTTON_POSITIVE) {
+//                binding.normalAtvEditDate.setText(text)
+//
+//            }
+//        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mDatePicker.show()
         } else {
             mDatePicker.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             mDatePicker.show()
         }
+
 
     }
 

@@ -33,9 +33,9 @@ class EstimateDBHelper(c: Context, name: String, factory: SQLiteDatabase.CursorF
 
     }
 
-    fun updateData(id: String, cate: String, money: String) {
+    fun updateData(id: String, cate: String, money: String, ill: String) {
         val db = writableDatabase
-        db.execSQL("UPDATE ${Const.DbEstimateName} SET categories='$cate', money='$money' WHERE _id=$id")
+        db.execSQL("UPDATE ${Const.DbEstimateName} SET categories='$cate', money='$money', days='$ill' WHERE _id=$id")
         db.close()
     }
 
