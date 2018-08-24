@@ -17,7 +17,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/white_bg_top_corner_only"
+        android:background="@color/white"
         tools:ignore="UnusedAttribute"
         >
 

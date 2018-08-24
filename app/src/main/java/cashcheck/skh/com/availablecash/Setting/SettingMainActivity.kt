@@ -13,6 +13,9 @@ import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.RegisterMainActivity
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivitySettingMainBinding
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 
 class SettingMainActivity : BaseActivity(), View.OnClickListener {
 
@@ -25,6 +28,21 @@ class SettingMainActivity : BaseActivity(), View.OnClickListener {
         binding.layoutBottomTab.onClickListener = this
         addFragment(R.id.frame_layout, SettingMainFragment(), false, false, "SettingMainFragment")
         setCurrentTab()
+        abADs()
+    }
+    private fun abADs() {
+
+        val mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.admob_banner_setting)
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+        binding.adView.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
     }
 
     override fun onClick(v: View?) {

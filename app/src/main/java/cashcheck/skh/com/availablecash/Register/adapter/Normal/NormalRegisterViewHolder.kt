@@ -55,6 +55,7 @@ class NormalRegisterViewHolder(itemView: View?, private var onNormalRegisterDele
     private fun deleteData() {
 
         AlertDialog.Builder(context, R.style.MyDialogTheme)
+                .setTitle("데이터 삭제")
                 .setMessage("정말로 지우시겠습니까?")
                 .setPositiveButton("확인", { dialog, _ ->
                     dialog.dismiss()

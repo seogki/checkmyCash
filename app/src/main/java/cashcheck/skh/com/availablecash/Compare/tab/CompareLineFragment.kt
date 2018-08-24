@@ -139,7 +139,8 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener {
     private fun getDataFromDB() {
         val db = dbHelper.readableDatabase
         lineMap = HashMap()
-        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date BETWEEN '" + cat1 + " 00:00:00" + "' AND '" + cat2 + " 23:59:59" + "' ORDER BY date DESC", null)
+//        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date BETWEEN '" + cat1 + " 00:00:00" + "' AND '" + cat2 + " 23:59:59" + "' ORDER BY date DESC", null)
+        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date BETWEEN '" + cat1 + "' AND '" + cat2 + "' ORDER BY date DESC", null)
         while (cursor.moveToNext()) {
             val date = cursor.getString(1).replace("-".toRegex(), "").replace(" ", "").substring(2, 6)
             val money = cursor.getString(3).toFloat()

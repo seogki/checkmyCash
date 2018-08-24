@@ -213,7 +213,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
-        chart.holeRadius = 70f
+        chart.holeRadius = 85f
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
 

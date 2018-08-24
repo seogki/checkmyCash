@@ -11,6 +11,17 @@
 
         >
 
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/layout_bottom_tab"
+            android:layout_centerHorizontal="true"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="@string/admob_banner_compare"/>
+
+
 
         <include
             android:id="@+id/layout_bottom_tab"
@@ -27,7 +38,7 @@
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/layout_bottom_tab"
+            android:layout_above="@+id/adView"
             >
 
         </FrameLayout>

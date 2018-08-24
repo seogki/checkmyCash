@@ -3,5 +3,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="admob_id">ca-app-pub-2973552036061869~4348557676</string>
+    <string name="admob_banner_main">ca-app-pub-2973552036061869/4761806439</string>
+    <string name="admob_banner_compare">ca-app-pub-2973552036061869/7247017900</string>
+    <string name="admob_banner_register">ca-app-pub-2973552036061869/8885718423</string>
+    <string name="admob_banner_setting">ca-app-pub-2973552036061869/1966771062</string>
     <string name="estimate_sample">한달치로 계산 가능합니다.\n예) 교통, 2,500원, 30일 \n예) 월세, 400,000원, 1일</string>
 </resources>

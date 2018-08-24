@@ -77,6 +77,56 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                >
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <Button
+                        android:id="@+id/setting_frag_btn_clear_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="데이터 삭제"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:textColor="@color/black"
+                        android:background="@drawable/rv_end_ripple_corner_btm"
+                        />
+
+                    <View
+                        android:id="@+id/setting_frag_view_clear"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/midGrey"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_btn_clear_data"
+                        />
+                    <Button
+                        android:id="@+id/setting_frag_btn_ask_developer"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="문의 하기"
+                        android:onClick="@{onClickListener::onClick}"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_clear"
+                        android:textColor="@color/black"
+                        android:background="@drawable/rv_end_ripple_corner_btm"
+                        />
+
+                    <View
+                        android:id="@+id/setting_frag_view_ask"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/midGrey"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_btn_ask_developer"
+                        />
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v4.widget.NestedScrollView>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.CoordinatorLayout>

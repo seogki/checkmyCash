@@ -4,9 +4,11 @@ package cashcheck.skh.com.availablecash.Compare.tab
 import android.annotation.SuppressLint
 import android.database.Cursor
 import android.databinding.DataBindingUtil
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -134,14 +136,15 @@ class CompareWeekFragment : BaseFragment() {
     private fun setTotalAndMostUsage(size: Int, mostUsage: Int, weekTotalUsage: Int, mostItem: CompareWeekModel?) {
         if (weekTotalUsage != 0) {
             setTextOfTotal("$size 주 합계"
-                    , "${UtilMethod.currencyFormat(weekTotalUsage.toString())}원"
-                    , "가장 많은 소비를 한 주"
-                    , "${replaceDate(mostItem?.first)} ~ ${replaceDate(mostItem?.last)}"
-                    , "${UtilMethod.currencyFormat(mostUsage.toString())}원")
+                    ,"${UtilMethod.currencyFormat(weekTotalUsage.toString())}원"
+                    ,"가장 많은 소비를 한 주"
+                    ,"${replaceDate(mostItem?.first)} ~ ${replaceDate(mostItem?.last)}"
+                    ,"${UtilMethod.currencyFormat(mostUsage.toString())}원"
+                    ,18)
 
 
         } else {
-            setTextOfTotal("데이터가 존재하지 않습니다", "", "", "", "")
+            setTextOfTotal("데이터가 존재하지 않습니다","","","","",16)
         }
         if (!isCreated)
             isCreated = true
@@ -164,7 +167,17 @@ class CompareWeekFragment : BaseFragment() {
     }
 
 
-    private fun setTextOfTotal(allTotal: String, allMoney: String, mostTotal: String, mostMonth: String, mostMoney: String) {
+    private fun setTextOfTotal(allTotal: String, allMoney: String, mostTotal: String, mostMonth: String, mostMoney: String, font: Int) {
+        if(font == 18){
+            binding.fragCompareWeekTxtAlltotal.textSize = 18F
+            binding.fragCompareWeekTxtAlltotal.typeface = Typeface.DEFAULT_BOLD
+            binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.lightBlack))
+        } else {
+
+            binding.fragCompareWeekTxtAlltotal.textSize = 16F
+            binding.fragCompareWeekTxtAlltotal.typeface = Typeface.DEFAULT
+            binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+        }
 
         binding.fragCompareWeekTxtAlltotal.text = allTotal
         binding.fragCompareWeekTxtAlltotalMoney.text = allMoney

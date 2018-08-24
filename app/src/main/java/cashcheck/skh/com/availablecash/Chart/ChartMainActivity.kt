@@ -15,6 +15,11 @@ import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityChartMainBinding
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+
+
 
 class ChartMainActivity : BaseActivity(), View.OnClickListener {
     private var backKeyPressedTime: Long = 0
@@ -26,8 +31,24 @@ class ChartMainActivity : BaseActivity(), View.OnClickListener {
         binding.layoutBottomTab.onClickListener = this
         addFragment(R.id.frame_layout, ChartMainFragment(), false, false, "ChartMainFragment")
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
+        abADs()
         setCurrentTab()
         checkColumn()
+    }
+
+    private fun abADs() {
+
+        val mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = getString(R.string.admob_banner_main)
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+        binding.adView.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
     }
 
     override fun onClick(v: View?) {

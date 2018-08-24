@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
-import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.Interface.OnNormalRegisterDeleteListener
 import cashcheck.skh.com.availablecash.Register.adapter.Normal.NormalRegisterAdapter
@@ -28,7 +27,7 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecyclerViewAdapter.OnItemClickListener, OnNormalRegisterDeleteListener {
+class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalRegisterDeleteListener {
 
 
     lateinit var binding: FragmentNormalRegisterBinding
@@ -44,6 +43,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
     private var dates: String = ""
     fun getDate(v: String) {
         dates = v
+        binding.chartFragTxtTitle.text = "20${dates.substring(0,2)}년 ${dates.substring(3,5)}월"
         checkDiffAndRefresh()
     }
 
@@ -64,6 +64,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         itemTreeMap = TreeMap()
         tempMItem = ArrayList()
         dates = UtilMethod.getCurrentDate()
+        binding.chartFragTxtTitle.text = "20${dates.substring(0,2)}년 ${dates.substring(3,5)}월"
         return binding.root
     }
 
@@ -94,12 +95,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         }
     }
 
-    override fun onItemClick(view: View, position: Int) {
-//        for(view in view){
-//
-//        }
-    }
-
     override fun onResume() {
         super.onResume()
         checkDiffAndRefresh()
@@ -111,6 +106,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         mItems = ArrayList()
         itemTreeMap = TreeMap()
         DLog.e("cur $dates")
+
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + dates + "%' ORDER BY date DESC", null)
         while (cursor.moveToNext()) {
@@ -236,7 +232,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, BaseRecycle
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
-        chart.holeRadius = 70f
+        chart.holeRadius = 85f
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
 

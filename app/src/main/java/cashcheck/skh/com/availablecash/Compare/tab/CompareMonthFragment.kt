@@ -170,8 +170,7 @@ class CompareMonthFragment : BaseFragment() {
                     ,""
                     ,"",
                     ""
-                    ,""
-                    ,16)
+                    ,"")
         }
 
     }
@@ -185,23 +184,12 @@ class CompareMonthFragment : BaseFragment() {
                 ,"${UtilMethod.currencyFormat(totalUsage.toString())}원"
                 ,"가장 많은 소비를 한 달",
                 "${month}월"
-                ,"${UtilMethod.currencyFormat(mostUsage.toString())}원"
-                ,18)
+                ,"${UtilMethod.currencyFormat(mostUsage.toString())}원")
 
         if (!isCreated)
             isCreated = true
     }
-    private fun setTextView(allYear: String, allMoney: String, mostMonth: String, month: String, mostMoney: String, font: Int){
-//        if(font == 18){
-//            binding.fragCompareMonthTxtAlltotal.textSize = 18F
-//            binding.fragCompareMonthTxtAlltotal.typeface = Typeface.DEFAULT_BOLD
-//            binding.fragCompareMonthTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.lightBlack))
-//        } else {
-//
-//            binding.fragCompareMonthTxtAlltotal.textSize = 16F
-//            binding.fragCompareMonthTxtAlltotal.typeface = Typeface.DEFAULT
-//            binding.fragCompareMonthTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
-//        }
+    private fun setTextView(allYear: String, allMoney: String, mostMonth: String, month: String, mostMoney: String){
 
         binding.fragCompareMonthTxtAlltotal.text = allYear
         binding.fragCompareMonthTxtAlltotalMoney.text = allMoney

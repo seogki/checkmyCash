@@ -42,18 +42,33 @@
                     android:elevation="3dp"
                     tools:ignore="UnusedAttribute"
                     />
+                <TextView
+                    android:id="@+id/chart_frag_txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/white_bg_top_corner_only_v2_line"
+                    android:gravity="center"
+                    android:text="2018년 8월"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/normal_frag_piechart"
+                    />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/normal_frag_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/normal_frag_piechart"
+                    app:layout_constraintTop_toBottomOf="@id/chart_frag_txt_title"
                     tools:ignore="UnusedAttribute"
                     />
 
@@ -73,7 +88,7 @@
                     android:textColor="@color/darkGrey"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/normal_frag_piechart"
+                    app:layout_constraintTop_toBottomOf="@id/chart_frag_txt_title"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

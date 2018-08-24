@@ -78,7 +78,7 @@ class ChartMainFragment : BaseFragment() {
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
-        chart.holeRadius = 70f
+        chart.holeRadius = 85f
 
         val colors = mutableListOf<Int>()
         colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
