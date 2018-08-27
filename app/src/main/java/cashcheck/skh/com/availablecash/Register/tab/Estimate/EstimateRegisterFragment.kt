@@ -4,6 +4,7 @@ package cashcheck.skh.com.availablecash.Register.tab.Estimate
 import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -118,6 +119,10 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                 binding.estimateTxtEmpty.visibility = View.GONE
                 checkTempMap()
             } else {
+                setPieChart()
+                totalUsage = 0
+                binding.estimateFragPiechart.centerText =""
+                saveTotalInSharedPreference()
                 estimateRegisterAdapter.clearItems()
                 binding.estimateTxtEmpty.visibility = View.VISIBLE
             }
@@ -134,7 +139,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun checkTempMap() {
         if (tempMap != map) {
             tempMap = map
-            mItems.add(EstimateRegisterModel("last", UtilMethod.getCurrentDateToSec(), "합계", totalUsage.toString()))
+//            mItems.add(EstimateRegisterModel("last", UtilMethod.getCurrentDateToSec(), "합계", totalUsage.toString()))
             saveTotalInSharedPreference()
             setPieChart()
         } else {
@@ -213,12 +218,16 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
-        chart.holeRadius = 85f
+        chart.holeRadius = 70f
+        chart.setHoleColor( Color.argb(0,0,0,0))
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
-
+        chart.setCenterTextColor(ContextCompat.getColor(context!!,R.color.statusbar))
+        chart.centerText = UtilMethod.currencyFormat(totalUsage.toString())+"원"
+        chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.rippleColor))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
@@ -233,7 +242,6 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.description.isEnabled = false
         chart.animateXY(1000, 1000)
         chart.invalidate()
-
         setRvData()
     }
 

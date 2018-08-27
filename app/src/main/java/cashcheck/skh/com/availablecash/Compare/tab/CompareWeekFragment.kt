@@ -217,6 +217,7 @@ class CompareWeekFragment : BaseFragment() {
 
                 cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
                 val start = cal.time
+                DLog.e("start $start")
                 cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
                 val firstDate = cal.time
                 val first = df.format(firstDate)

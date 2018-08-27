@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="cashcheck.skh.com.availablecash.Register.Modify.ModifyRegisterActivity"
     >
 
@@ -282,6 +283,18 @@
                     app:layout_constraintEnd_toEndOf="@id/normal_atv_edit_ill"
                     app:layout_constraintTop_toTopOf="@id/normal_atv_edit_ill"
                     />
+
+                <com.google.android.gms.ads.AdView
+
+                    android:id="@+id/adView"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/normal_atv_edit_ill"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/admob_banner_register"/>
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>

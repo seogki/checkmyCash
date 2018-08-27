@@ -26,13 +26,7 @@ class RegisterMainActivity : BaseActivity(), View.OnClickListener {
         binding.onClickListener = this
         addFragment(R.id.frame_layout, RegisterMainFragment(), false, false, "RegisterMainFragment")
         setCurrentTab()
-//        abADs()
     }
-
-//    private fun abADs(){
-//        val adRequest = AdRequest.Builder().build()
-//        binding.adView.loadAd(adRequest)
-//    }
 
     override fun onClick(v: View?) {
         when (v?.id) {

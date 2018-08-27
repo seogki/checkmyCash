@@ -14,6 +14,9 @@ import android.widget.Toast
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.ActivityModifyRegisterBinding
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 
 class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -24,6 +27,7 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
     private var days: String = ""
     private lateinit var estimateDBHelper: EstimateDBHelper
     private lateinit var dbHelper: DBHelper
+    private var adView: AdView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_modify_register)
@@ -33,12 +37,44 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
         estimateDBHelper = EstimateDBHelper(applicationContext, "${Const.DbEstimateName}.db", null, 1)
         dbHelper = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         val et = binding.normalAtvEditMoney
+        adView = binding.adView
+        abADs()
         binding.normalAtvEditMoney.setOnEditorActionListener(this)
         binding.normalAtvEditIll.setOnEditorActionListener(this)
         et.addTextChangedListener(CustomTextWatcher(et))
         binding.normalAtvEditIll.addTextChangedListener(CustomTextWatcherDay(binding.normalAtvEditIll))
         getDataFromIntent()
         binding.onClickListener = this
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adView?.destroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        adView?.pause()
+    }
+
+    private fun abADs() {
+
+//        val mInterstitialAd = InterstitialAd(this)
+//        mInterstitialAd.adUnitId = getString(R.string.admob_banner_compare)
+//        mInterstitialAd.loadAd(AdRequest.Builder().build())
+
+        val adRequest = AdRequest.Builder().build()
+        adView?.loadAd(adRequest)
+        adView?.adListener = object : AdListener() {
+            override fun onAdClosed() {
+//                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
     }
 
     private fun getDataFromIntent() {

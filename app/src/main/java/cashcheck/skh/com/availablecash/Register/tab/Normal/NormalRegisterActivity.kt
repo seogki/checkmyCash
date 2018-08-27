@@ -26,6 +26,9 @@ import cashcheck.skh.com.availablecash.Util.CustomTextWatcher
 import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityNormalRegisterBinding
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,6 +39,7 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
     lateinit var binding: ActivityNormalRegisterBinding
     private lateinit var db: DBHelper
     private var days: String = ""
+    private var adView: AdView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_normal_register)
@@ -44,9 +48,41 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         binding.normalAtvBtnDone.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         val et = binding.normalAtvEditMoney
+        adView = binding.adView
+        abADs()
         binding.normalAtvEditMoney.setOnEditorActionListener(this)
         et.addTextChangedListener(CustomTextWatcher(et))
         binding.onClickListener = this
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adView?.destroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        adView?.pause()
+    }
+
+    private fun abADs() {
+
+//        val mInterstitialAd = InterstitialAd(this)
+//        mInterstitialAd.adUnitId = getString(R.string.admob_banner_compare)
+//        mInterstitialAd.loadAd(AdRequest.Builder().build())
+
+        val adRequest = AdRequest.Builder().build()
+        adView?.loadAd(adRequest)
+        adView?.adListener = object : AdListener() {
+            override fun onAdClosed() {
+//                mInterstitialAd.loadAd(AdRequest.Builder().build())
+            }
+        }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -115,7 +151,6 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
         var mYear = mcurrentDate.get(Calendar.YEAR)
         var mMonth = mcurrentDate.get(Calendar.MONTH)
         var mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH)
-        var text: String? = null
 
         val mDatePicker = DatePickerDialog(this, R.style.MyDatePickerDialogTheme, DatePickerDialog.OnDateSetListener { _, selectedyear, selectedmonth, selectedday ->
 
@@ -126,7 +161,7 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             val myFormat = "yy-MM-dd" //Change as you need
             //kk or HH
             val sdf = SimpleDateFormat(myFormat, Locale.KOREA)
-            text = sdf.format(myCalendar.time)
+
             binding.normalAtvEditDate.setText(sdf.format(myCalendar.time))
             binding.normalAtvEditCat.performClick()
             mDay = selectedday
@@ -135,14 +170,6 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             dayIntToString(myCalendar.get(Calendar.DAY_OF_WEEK) - 1)
 
         }, mYear, mMonth, mDay)
-
-
-//        mDatePicker.setButton(DialogInterface.BUTTON_POSITIVE, "확인") { dialog, which ->
-//            if (which == DialogInterface.BUTTON_POSITIVE) {
-//                binding.normalAtvEditDate.setText(text)
-//
-//            }
-//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mDatePicker.show()

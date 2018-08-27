@@ -53,6 +53,13 @@ public class UtilMethod {
         return df.format(c);
     }
 
+
+    public static String getExcelDate() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yy_MM_dd_HH_mm_ss", Locale.KOREA);
+        return df.format(c);
+    }
+
     @SuppressLint("DefaultLocale")
     public static String getMemoryUsage(int i) {
         String heapSize = String.format("%.3f", (float) (Runtime.getRuntime().totalMemory() / 1024.00 / 1024.00));

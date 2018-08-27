@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -78,13 +79,15 @@ class ChartMainFragment : BaseFragment() {
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
-        chart.holeRadius = 85f
-
+        chart.holeRadius = 70f
+        chart.setHoleColor( Color.argb(0,0,0,0))
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.rippleColor))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
+
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -121,7 +124,8 @@ class ChartMainFragment : BaseFragment() {
                 binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Neon))
             }
             else -> {
-
+                binding.chartFragTxtTotalresultMoney.text = moneys + "원"
+                binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.darkGrey))
             }
         }
     }
@@ -133,10 +137,7 @@ class ChartMainFragment : BaseFragment() {
             estimateUsage = pref.getInt(Const.EstimateUsage, 0)
             val data = UtilMethod.currencyFormat(estimateUsage.toString())
             binding.chartFragTxtEstimateMoney.text = "" + data + "원"
-
-            if (totalUsage != 0F) {
-                getResultUsage()
-            }
+            getResultUsage()
         }
 
         val db = dbHelper.readableDatabase

@@ -1,9 +1,11 @@
 package cashcheck.skh.com.availablecash.Setting
 
+import android.Manifest
 import android.app.ActivityManager
 import android.content.Context.ACTIVITY_SERVICE
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +13,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Util.Const
+import cashcheck.skh.com.availablecash.Util.DLog
+import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentSettingMainBinding
-
-
+import com.ajts.androidmads.library.SQLiteToExcel
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 
 
 class SettingMainFragment : BaseFragment(), View.OnClickListener {
@@ -63,7 +69,50 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener {
                         }).setNegativeButton(null, null)
                         .show()
             }
+            R.id.setting_frag_btn_excel_data -> {
+//                setDBtoExcel()
+                TedPermission.with(context)
+                        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .setPermissionListener(object : PermissionListener {
+                            override fun onPermissionGranted() {
+                                Handler().postDelayed({
+                                    setDBtoExcel()
+                                }, 10)
+                            }
+
+                            override fun onPermissionDenied(deniedPermissions: java.util.ArrayList<String>) {
+
+                            }
+                        }).check()
+
+            }
         }
+    }
+
+    private fun setDBtoExcel(){
+        val date = "가계부_"+ UtilMethod.getExcelDate()+".xls"
+        val sql = SQLiteToExcel(context,"${Const.DbName}.db")
+        DLog.e("excel start")
+        sql.exportSingleTable(Const.DbName,date,object: SQLiteToExcel.ExportListener{
+            override fun onError(e: java.lang.Exception?) {
+                Toast.makeText(context!!,"오류가 발생하였습니다.",Toast.LENGTH_SHORT)
+            }
+
+            override fun onStart() {
+
+            }
+
+            override fun onCompleted(filePath: String?) {
+                AlertDialog.Builder(context!!, R.style.MyDialogTheme)
+                        .setMessage("$filePath\n에 파일이 저장되었습니다.")
+                        .setPositiveButton("확인", { dialog, _ ->
+                            dialog.dismiss()
+
+                        }).setNegativeButton(null, null)
+                        .show()
+            }
+
+        })
     }
 
 }// Required empty public constructor

@@ -2,6 +2,7 @@ package cashcheck.skh.com.availablecash.Register.tab.Normal
 
 
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -34,6 +35,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private lateinit var db: DBHelper
     private lateinit var normalRegisterAdapter: NormalRegisterAdapter
     private lateinit var layoutManager: LinearLayoutManager
+    private var monthTotal = 0
     private lateinit var itemTreeMap: TreeMap<String, MutableList<NormalRegisterModel>>
     private lateinit var mItems: ArrayList<ListItem>
     private lateinit var tempMItem: ArrayList<ListItem>
@@ -111,6 +113,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + dates + "%' ORDER BY date DESC", null)
         while (cursor.moveToNext()) {
             setHeaderAndData(NormalRegisterModel(cursor.getString(0), cursor.getString(1).substring(0, 8), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
+            monthTotal += cursor.getString(3).toInt()
             val cate = cursor.getString(2)
             val money = cursor.getString(3)
             if (map.containsKey(cate)) {
@@ -124,6 +127,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         if (map.size > 0) {
             binding.normalFragTxtEmpty.visibility = View.GONE
         } else {
+            binding.normalFragPiechart.centerText = ""
             binding.normalFragTxtEmpty.visibility = View.VISIBLE
         }
         if (tempMap != map) {
@@ -201,7 +205,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private fun refresh() {
         setViewTypeData()
         normalRegisterAdapter.clearItems()
-
         normalRegisterAdapter.notifyDataSetChanged()
         normalRegisterAdapter.addItems(mItems)
     }
@@ -229,15 +232,21 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         dataSet.valueFormatter = CustomPercentFormatter()
         chart.isRotationEnabled = false
         chart.setTouchEnabled(false)
+        chart.setHoleColor( Color.argb(0,0,0,0))
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
-        chart.holeRadius = 85f
+        chart.holeRadius = 70f
+        chart.setCenterTextColor(ContextCompat.getColor(context!!,R.color.statusbar))
+        chart.centerText = UtilMethod.currencyFormat(monthTotal.toString())+"원"
+        chart.setCenterTextSize(18F)
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
+//        colors.add(Color.parseColor("#CC0000"))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.rippleColor))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
         colors.add(ContextCompat.getColor(context!!, R.color.lightPink))

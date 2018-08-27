@@ -15,32 +15,48 @@ import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivitySettingMainBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.AdView
 
 class SettingMainActivity : BaseActivity(), View.OnClickListener {
 
     lateinit var binding: ActivitySettingMainBinding
     private var backKeyPressedTime: Long = 0
-
+    private var adView: AdView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@SettingMainActivity, R.layout.activity_setting_main)
         binding.layoutBottomTab.onClickListener = this
         addFragment(R.id.frame_layout, SettingMainFragment(), false, false, "SettingMainFragment")
         setCurrentTab()
+        adView = binding.adView
         abADs()
     }
+    override fun onResume() {
+        super.onResume()
+        adView?.resume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adView?.destroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        adView?.pause()
+    }
+
     private fun abADs() {
 
-        val mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = getString(R.string.admob_banner_setting)
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+//        val mInterstitialAd = InterstitialAd(this)
+//        mInterstitialAd.adUnitId = getString(R.string.admob_banner_setting)
+//        mInterstitialAd.loadAd(AdRequest.Builder().build())
 
         val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-        binding.adView.adListener = object : AdListener() {
+        adView?.loadAd(adRequest)
+        adView?.adListener = object : AdListener() {
             override fun onAdClosed() {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
+//                mInterstitialAd.loadAd(AdRequest.Builder().build())
             }
         }
     }

@@ -23,6 +23,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,6 +31,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding {
@@ -79,4 +84,9 @@ dependencies {
 
     //admob 광고
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
+
+    //excel 파싱
+    compile 'com.ajts.androidmads.SQLite2Excel:library:1.0.2'
+//    implementation 'com.opencsv:opencsv:4.2'
+//    compile 'org.apache.poi:poi:3.14'
 }

@@ -58,7 +58,6 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
         override fun onClick(v: View?) {
             when (v?.id) {
                 R.id.estimate_cate_const1 -> {
-                    if (binding.model.cate != "합계") {
                         if (!isExpend) {
                             binding.estimateCateConst2.visibility = View.VISIBLE
                             isExpend = true
@@ -66,7 +65,6 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
                             binding.estimateCateConst2.visibility = View.GONE
                             isExpend = false
                         }
-                    }
                 }
                 R.id.item_cate_sub_img_clear -> {
                     deleteData()

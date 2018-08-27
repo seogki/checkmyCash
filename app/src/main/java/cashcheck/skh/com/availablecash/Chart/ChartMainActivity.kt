@@ -15,46 +15,59 @@ import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityChartMainBinding
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-
+import com.google.android.gms.ads.AdView
 
 
 class ChartMainActivity : BaseActivity(), View.OnClickListener {
     private var backKeyPressedTime: Long = 0
     lateinit var binding: ActivityChartMainBinding
     private lateinit var db: DBHelper
+    private var adView: AdView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@ChartMainActivity, R.layout.activity_chart_main)
         binding.layoutBottomTab.onClickListener = this
         addFragment(R.id.frame_layout, ChartMainFragment(), false, false, "ChartMainFragment")
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
-        abADs()
+//        adView = binding.adView
+//        abADs()
         setCurrentTab()
         checkColumn()
     }
 
-    private fun abADs() {
-
-        val mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = getString(R.string.admob_banner_main)
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-        binding.adView.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
-            }
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        adView?.resume()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        adView?.destroy()
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        adView?.pause()
+//    }
+//
+//    private fun abADs() {
+//
+////        val mInterstitialAd = InterstitialAd(this)
+////        mInterstitialAd.adUnitId = getString(R.string.admob_banner_main)
+////        mInterstitialAd.loadAd(AdRequest.Builder().build())
+//
+//        val adRequest = AdRequest.Builder().build()
+//        adView?.loadAd(adRequest)
+//        adView?.adListener = object : AdListener() {
+//            override fun onAdClosed() {
+////                mInterstitialAd.loadAd(AdRequest.Builder().build())
+//            }
+//        }
+//    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bottom_layout_btn1 -> {
-                DLog.e("onclicked")
                 beginActivity(Intent(this, RegisterMainActivity::class.java))
             }
             R.id.bottom_layout_btn2 -> {
