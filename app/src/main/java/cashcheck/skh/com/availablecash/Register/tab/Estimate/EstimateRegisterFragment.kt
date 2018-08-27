@@ -5,6 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -223,14 +224,18 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
         chart.setCenterTextColor(ContextCompat.getColor(context!!,R.color.statusbar))
-        chart.centerText = UtilMethod.currencyFormat(totalUsage.toString())+"원"
+        chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
+        if(totalUsage != 0) {
+            chart.centerText = UtilMethod.currencyFormat(totalUsage.toString()) + "원"
+        } else {
+            chart.centerText = ""
+        }
         chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
         colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.rippleColor))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
 
         dataSet.colors = colors
         dataSet.label = ""

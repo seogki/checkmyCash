@@ -22,7 +22,7 @@ class CustomPercentFormatter : IValueFormatter, IAxisValueFormatter {
      */
     // IValueFormatter
     override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
-        if (value < 3) {
+        if (value < 5) {
             return ""
         }
         return mFormat.format(value.toDouble()) + "%"
@@ -30,7 +30,7 @@ class CustomPercentFormatter : IValueFormatter, IAxisValueFormatter {
 
     // IAxisValueFormatter
     override fun getFormattedValue(value: Float, axis: AxisBase): String {
-        if (value < 3) {
+        if (value < 5) {
             return ""
         }
         return mFormat.format(value.toDouble()) + "%"

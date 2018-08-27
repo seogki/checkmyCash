@@ -3,6 +3,7 @@ package cashcheck.skh.com.availablecash.Register.tab.Normal
 
 import android.databinding.DataBindingUtil
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -45,7 +46,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private var dates: String = ""
     fun getDate(v: String) {
         dates = v
-        binding.chartFragTxtTitle.text = "20${dates.substring(0,2)}년 ${dates.substring(3,5)}월"
+        binding.chartFragTxtTitle.text = "20${dates.substring(0, 2)}년 ${dates.substring(3, 5)}월"
         checkDiffAndRefresh()
     }
 
@@ -66,7 +67,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         itemTreeMap = TreeMap()
         tempMItem = ArrayList()
         dates = UtilMethod.getCurrentDate()
-        binding.chartFragTxtTitle.text = "20${dates.substring(0,2)}년 ${dates.substring(3,5)}월"
+        binding.chartFragTxtTitle.text = "20${dates.substring(0, 2)}년 ${dates.substring(3, 5)}월"
         return binding.root
     }
 
@@ -105,6 +106,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private fun checkDiffAndRefresh() {
         val db = db.readableDatabase
         map = HashMap()
+        monthTotal = 0
         mItems = ArrayList()
         itemTreeMap = TreeMap()
         DLog.e("cur $dates")
@@ -232,24 +234,28 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         dataSet.valueFormatter = CustomPercentFormatter()
         chart.isRotationEnabled = false
         chart.setTouchEnabled(false)
-        chart.setHoleColor( Color.argb(0,0,0,0))
+        chart.setHoleColor(Color.argb(0, 0, 0, 0))
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
-        chart.setCenterTextColor(ContextCompat.getColor(context!!,R.color.statusbar))
-        chart.centerText = UtilMethod.currencyFormat(monthTotal.toString())+"원"
+        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
+        chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
+        if (monthTotal != 0) {
+            chart.centerText = UtilMethod.currencyFormat(monthTotal.toString()) + "원"
+
+        } else {
+            chart.centerText = ""
+        }
         chart.setCenterTextSize(18F)
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
-//        colors.add(Color.parseColor("#CC0000"))
         colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.rippleColor))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
         colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightGreen))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightPink))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
 
         dataSet.colors = colors
         dataSet.label = ""

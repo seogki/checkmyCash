@@ -36,21 +36,21 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.setting_frag_btn_clear_data -> {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("데이터 삭제")
                         .setMessage("정말로 지우시겠습니까?")
                         .setPositiveButton("확인", { dialog, _ ->
                             dialog.dismiss()
-                            try{
-                                if((context!!.getSystemService(ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()){
-                                    Toast.makeText(context!!,"삭제되었습니다",Toast.LENGTH_SHORT).show()
+                            try {
+                                if ((context!!.getSystemService(ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()) {
+                                    Toast.makeText(context!!, "삭제되었습니다", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(context!!,"오류로 인해 삭제 불가 설정에가서 직접 지워주세요! \n설정 -> 어플리케이션 -> 앱 -> 저장공간 -> 데이터 삭제",Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context!!, "오류로 인해 삭제 불가 설정에가서 직접 지워주세요! \n설정 -> 어플리케이션 -> 앱 -> 저장공간 -> 데이터 삭제", Toast.LENGTH_LONG).show()
                                 }
-                            } catch (e: Exception){
-                                Toast.makeText(context!!,"오류가 발생했습니다. 설정에가서 직접 지워주세요! \n설정 -> 어플리케이션 -> 앱 -> 저장공간 -> 데이터 삭제",Toast.LENGTH_LONG).show()
+                            } catch (e: Exception) {
+                                Toast.makeText(context!!, "오류가 발생했습니다. 설정에가서 직접 지워주세요! \n설정 -> 어플리케이션 -> 앱 -> 저장공간 -> 데이터 삭제", Toast.LENGTH_LONG).show()
                             }
 
                         }).setNegativeButton("취소", { dialog, _ ->
@@ -70,32 +70,46 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener {
                         .show()
             }
             R.id.setting_frag_btn_excel_data -> {
-//                setDBtoExcel()
-                TedPermission.with(context)
-                        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .setPermissionListener(object : PermissionListener {
-                            override fun onPermissionGranted() {
-                                Handler().postDelayed({
-                                    setDBtoExcel()
-                                }, 10)
-                            }
+                AlertDialog.Builder(context!!, R.style.MyDialogTheme)
+                        .setTitle("파일 저장")
+                        .setMessage("데이터를 엑셀파일로 저장하시겠습니까?")
+                        .setPositiveButton("확인", { dialog, _ ->
+                            setTedPermission()
+                            dialog.dismiss()
 
-                            override fun onPermissionDenied(deniedPermissions: java.util.ArrayList<String>) {
+                        }).setNegativeButton("취소", { dialog, _ ->
+                            dialog.dismiss()
+                        })
+                        .show()
 
-                            }
-                        }).check()
 
             }
         }
     }
 
-    private fun setDBtoExcel(){
-        val date = "가계부_"+ UtilMethod.getExcelDate()+".xls"
-        val sql = SQLiteToExcel(context,"${Const.DbName}.db")
+    private fun setTedPermission() {
+        TedPermission.with(context)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        Handler().postDelayed({
+                            setDBtoExcel()
+                        }, 10)
+                    }
+
+                    override fun onPermissionDenied(deniedPermissions: java.util.ArrayList<String>) {
+
+                    }
+                }).check()
+    }
+
+    private fun setDBtoExcel() {
+        val date = "가계부_" + UtilMethod.getExcelDate() + ".xls"
+        val sql = SQLiteToExcel(context, "${Const.DbName}.db")
         DLog.e("excel start")
-        sql.exportSingleTable(Const.DbName,date,object: SQLiteToExcel.ExportListener{
+        sql.exportSingleTable(Const.DbName, date, object : SQLiteToExcel.ExportListener {
             override fun onError(e: java.lang.Exception?) {
-                Toast.makeText(context!!,"오류가 발생하였습니다.",Toast.LENGTH_SHORT)
+                Toast.makeText(context!!, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
             }
 
             override fun onStart() {
