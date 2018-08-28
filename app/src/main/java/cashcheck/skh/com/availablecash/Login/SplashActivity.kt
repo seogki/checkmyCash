@@ -17,6 +17,6 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         Handler().postDelayed({
             startActivity(Intent(this, ChartMainActivity::class.java))
-        }, 500)
+        }, 1000)
     }
 }
