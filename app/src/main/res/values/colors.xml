@@ -34,8 +34,26 @@
     <color name="danhong">#F23920</color>
     <color name="jaju">#660099</color>
     <color name="pink">#C71585</color>
+    <color name="lightestYellow">#FFEB9A</color>
     <color name="lightBlack">#4C4C4C</color>
 
+
+    <!--파이차트색-->
+    <color name="pie1">#B20000</color>
+    <color name="pie2">#CC0000</color>
+    <color name="pie3">#E40000</color>
+    <color name="pie4">#FE0000</color>
+    <color name="pie5">#FF1919</color>
+    <color name="pie6">#FF3333</color>
+    <color name="pie7">#FF6565</color>
+    <color name="pie8">#FF9999</color>
+    <color name="pie9">#FFB1B1</color>
+    <color name="pie10">#FFCBCB</color>
+    <color name="pie11">#FFE5E5</color>
+    <!--<color name="pie12">#FF4B4B</color>-->
+    <!--<color name="pie13">#FF6565</color>-->
+    <!--<color name="pie14">#FF7F7F</color>-->
+    <!--<color name="pie15">#FF9999</color>-->
 
     <color name="titleColor">#CC0000</color>
     <color name="btn">#131A53</color>

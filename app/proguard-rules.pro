@@ -26,6 +26,7 @@
 -keepnames class * implements android.os.Parcelable {
    public static final ** CREATOR;
 }
+-dontwarn org.apache.poi.**
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable

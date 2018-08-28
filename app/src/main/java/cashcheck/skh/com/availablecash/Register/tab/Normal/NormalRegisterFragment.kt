@@ -36,12 +36,12 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private lateinit var db: DBHelper
     private lateinit var normalRegisterAdapter: NormalRegisterAdapter
     private lateinit var layoutManager: LinearLayoutManager
-    private var monthTotal = 0
+    private var monthTotal = 0F
     private lateinit var itemTreeMap: TreeMap<String, MutableList<NormalRegisterModel>>
     private lateinit var mItems: ArrayList<ListItem>
     private lateinit var tempMItem: ArrayList<ListItem>
-    private lateinit var map: HashMap<String, String>
-    private lateinit var tempMap: HashMap<String, String>
+    private lateinit var map: HashMap<String, Float>
+    private lateinit var tempMap: HashMap<String, Float>
     private var isRvOn: Boolean = false
     private var dates: String = ""
     fun getDate(v: String) {
@@ -106,7 +106,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private fun checkDiffAndRefresh() {
         val db = db.readableDatabase
         map = HashMap()
-        monthTotal = 0
         mItems = ArrayList()
         itemTreeMap = TreeMap()
         DLog.e("cur $dates")
@@ -115,13 +114,12 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + dates + "%' ORDER BY date DESC", null)
         while (cursor.moveToNext()) {
             setHeaderAndData(NormalRegisterModel(cursor.getString(0), cursor.getString(1).substring(0, 8), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
-            monthTotal += cursor.getString(3).toInt()
             val cate = cursor.getString(2)
-            val money = cursor.getString(3)
+            val money = cursor.getString(3).toFloat()
             if (map.containsKey(cate)) {
                 val data = map.getValue(cate).toFloat().plus(money.toFloat())
                 map.remove(cate)
-                map[cate] = data.toString()
+                map[cate] = data
             } else {
                 map[cate] = money
             }
@@ -215,12 +213,32 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private fun setPieChart() {
         val chart = binding.normalFragPiechart
         chart.setUsePercentValues(true)
-
+        monthTotal = 0F
         val yvalues = mutableListOf<PieEntry>()
+        val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
+        for((key,value) in result){
 
-        for ((key, value) in map) {
-            yvalues.add(PieEntry(value.toFloat(), key))
+            monthTotal = monthTotal.plus(value)
+
         }
+        if(result.size <= 4){
+            for ((key, value) in result) {
+                yvalues.add(PieEntry(value, key))
+            }
+        } else {
+            var data = 0F
+            for(i in 0 until result.size){
+                if(i >= 3){
+                    data += result.toList()[i].second
+                } else {
+                    yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
+                }
+            }
+            yvalues.add(PieEntry(data, "그외"))
+
+        }
+
+
         val dataSet = PieDataSet(yvalues, "")
 
         dataSet.sliceSpace = 1F
@@ -241,9 +259,8 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         chart.holeRadius = 70f
         chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
         chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
-        if (monthTotal != 0) {
-            chart.centerText = UtilMethod.currencyFormat(monthTotal.toString()) + "원"
-
+        if (monthTotal != 0F) {
+            chart.centerText = UtilMethod.currencyFormat(monthTotal.toInt().toString()) + "원"
         } else {
             chart.centerText = ""
         }
@@ -252,10 +269,10 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
 
         dataSet.colors = colors
         dataSet.label = ""

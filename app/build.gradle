@@ -87,6 +87,6 @@ dependencies {
 
     //excel 파싱
     compile 'com.ajts.androidmads.SQLite2Excel:library:1.0.2'
-//    implementation 'com.opencsv:opencsv:4.2'
-//    compile 'org.apache.poi:poi:3.14'
+    implementation 'com.opencsv:opencsv:4.2'
+    compile 'org.apache.poi:poi:3.14'
 }

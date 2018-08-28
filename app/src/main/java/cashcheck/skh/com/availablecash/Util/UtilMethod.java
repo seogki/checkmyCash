@@ -56,7 +56,7 @@ public class UtilMethod {
 
     public static String getExcelDate() {
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("yy_MM_dd_HH_mm_ss", Locale.KOREA);
+        SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss", Locale.KOREA);
         return df.format(c);
     }
 

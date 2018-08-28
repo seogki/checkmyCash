@@ -78,6 +78,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
+
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -91,43 +92,55 @@
                     >
 
                     <TextView
+                        android:id="@+id/setting_frag_txt_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="데이터"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="8dp"
                         android:layout_marginStart="8dp"
-                        android:id="@+id/setting_frag_txt_data"
+                        android:layout_marginTop="8dp"
+                        android:text="데이터"
                         android:textColor="@color/darkGrey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
 
                     <TextView
                         android:id="@+id/setting_frag_btn_excel_data"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        app:layout_constraintTop_toBottomOf="@id/setting_frag_txt_data"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="8dp"
-                        android:text="데이터 엑셀파일로 저장"
-                        android:gravity="center_vertical"
-                        android:paddingStart="8dp"
-
-
-                        android:onClick="@{onClickListener::onClick}"
-                        android:textColor="@color/black"
+                        android:layout_marginTop="4dp"
                         android:background="@drawable/rv_end_ripple_corner_btm"
+                        android:gravity="center_vertical"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingStart="8dp"
+                        android:text="데이터 엑셀파일로 저장"
+
+
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_txt_data"
                         />
 
                     <ImageView
-                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_excel_data"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_excel_data"
+                        android:layout_marginEnd="8dp"
+                        android:id="@+id/setting_frag_img_excel_data_excel"
                         android:src="@drawable/icons8_microsoft_excel_24"
+                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_excel_data"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_excel_data"
                         />
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/setting_frag_img_excel_data_data"-->
+                        <!--android:src="@drawable/icons8_data_backup_24"-->
+                        <!--android:layout_marginEnd="16dp"-->
+                        <!--app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_excel_data"-->
+                        <!--app:layout_constraintEnd_toStartOf="@id/setting_frag_img_excel_data_excel"-->
+                        <!--app:layout_constraintTop_toTopOf="@id/setting_frag_btn_excel_data"-->
+                        <!--/>-->
 
                     <View
                         android:id="@+id/setting_frag_view_excel"
@@ -138,28 +151,76 @@
                         />
 
                     <TextView
+                        android:id="@+id/setting_frag_btn_data_excel"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/rv_end_ripple_corner_btm"
+                        android:gravity="center_vertical"
+
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingStart="8dp"
+                        android:text="엑셀파일 데이터로 저장"
+
+
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_excel"
+                        />
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginEnd="16dp"-->
+                        <!--android:id="@+id/setting_frag_img_data_excel_excel"-->
+                        <!--android:src="@drawable/icons8_microsoft_excel_24"-->
+                        <!--app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_data_excel"-->
+                        <!--app:layout_constraintEnd_toStartOf="@id/setting_frag_img_data_excel_data"-->
+                        <!--app:layout_constraintTop_toTopOf="@id/setting_frag_btn_data_excel"-->
+                        <!--/>-->
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:id="@+id/setting_frag_img_data_excel_data"
+                        android:src="@drawable/icons8_database_24"
+                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_data_excel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_data_excel"
+                        />
+
+
+                    <View
+                        android:id="@+id/setting_frag_view_data_excel"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/midGrey"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_btn_data_excel"
+                        />
+
+                    <TextView
                         android:id="@+id/setting_frag_btn_clear_data"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="데이터 삭제"
-                        android:gravity="center_vertical"
-                        android:paddingStart="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-
-                        android:onClick="@{onClickListener::onClick}"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_excel"
                         android:background="@drawable/rv_end_ripple_corner_btm"
+                        android:gravity="center_vertical"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingStart="8dp"
+
+                        android:text="데이터 삭제"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_data_excel"
                         />
 
                     <ImageView
-                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_clear_data"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_clear_data"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/baseline_delete_black_24"
+                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_clear_data"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_clear_data"
                         />
 
                     <View
@@ -171,39 +232,39 @@
                         />
 
                     <TextView
+                        android:id="@+id/setting_frag_txt_user"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="유저"
-                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_clear"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="8dp"
                         android:layout_marginStart="8dp"
-                        android:id="@+id/setting_frag_txt_user"
+                        android:layout_marginTop="8dp"
+                        android:text="유저"
                         android:textColor="@color/darkGrey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_clear"
                         />
 
                     <TextView
                         android:id="@+id/setting_frag_btn_ask_developer"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:text="문의 하기"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:paddingStart="8dp"
-                        android:onClick="@{onClickListener::onClick}"
-                        app:layout_constraintTop_toBottomOf="@id/setting_frag_txt_user"
-                        android:textColor="@color/black"
+                        android:layout_marginTop="4dp"
                         android:background="@drawable/rv_end_ripple_corner_btm"
+                        android:gravity="center_vertical"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingStart="8dp"
+                        android:text="문의 하기"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_txt_user"
                         />
 
                     <ImageView
-                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_ask_developer"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_ask_developer"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/icons8_help_24"
+                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_ask_developer"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_ask_developer"
                         />
 
                     <View

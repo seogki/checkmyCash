@@ -36,6 +36,7 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentComparePieBinding
     private lateinit var dbHelper: DBHelper
+    private var total = 0F
     private lateinit var spinnerArray: MutableList<String>
     private var pieMap1: HashMap<String, String>? = null
     private var pieMap2: HashMap<String, String>? = null
@@ -192,13 +193,31 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setPieChart(chart: PieChart, map: HashMap<String, String>) {
-
+        total = 0F
         chart.setUsePercentValues(true)
 
         val yvalues = mutableListOf<PieEntry>()
 
-        for ((key, value) in map) {
-            yvalues.add(PieEntry(value.toFloat(), key))
+        val result = map.toList().sortedByDescending { (_, value) -> value.toFloat() }.toMap()
+        for((key,value) in result){
+
+            total = total.plus(value.toFloat())
+
+        }
+        if(result.size <= 4){
+            for ((key, value) in result) {
+                yvalues.add(PieEntry(value.toFloat(), key))
+            }
+        } else {
+            var data = 0F
+            for(i in 0 until result.size){
+                if(i >= 3){
+                    data += result.toList()[i].second.toFloat()
+                } else {
+                    yvalues.add(PieEntry(result.toList()[i].second.toFloat(), result.toList()[i].first))
+                }
+            }
+            yvalues.add(PieEntry(data, "그외"))
 
         }
 
@@ -220,10 +239,10 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
 
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
 
         dataSet.colors = colors
         dataSet.label = ""

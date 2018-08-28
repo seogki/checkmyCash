@@ -13,16 +13,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Setting.Dialog.ExceltoDBDialogV2
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentSettingMainBinding
+import com.ajts.androidmads.library.ExcelToSQLite
 import com.ajts.androidmads.library.SQLiteToExcel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 
 
-class SettingMainFragment : BaseFragment(), View.OnClickListener {
+class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListener {
 
 
     lateinit var binding: FragmentSettingMainBinding
@@ -74,7 +76,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener {
                         .setTitle("파일 저장")
                         .setMessage("데이터를 엑셀파일로 저장하시겠습니까?")
                         .setPositiveButton("확인", { dialog, _ ->
-                            setTedPermission()
+                            setTedPermission(true)
                             dialog.dismiss()
 
                         }).setNegativeButton("취소", { dialog, _ ->
@@ -84,16 +86,49 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener {
 
 
             }
+            R.id.setting_frag_btn_data_excel -> {
+                AlertDialog.Builder(context!!, R.style.MyDialogTheme)
+                        .setTitle("데이터 저장")
+                        .setMessage("엑셀파일을 데이터로 저장하시겠습니까?")
+                        .setPositiveButton("확인", { dialog, _ ->
+                            setTedPermission(false)
+                            dialog.dismiss()
+
+                        }).setNegativeButton("취소", { dialog, _ ->
+                            dialog.dismiss()
+                        })
+                        .show()
+            }
         }
     }
 
-    private fun setTedPermission() {
+    private fun onExceltoDBDialog() {
+        val metrics = resources.displayMetrics
+        val width = metrics.widthPixels
+        val height = metrics.heightPixels
+        val d = ExceltoDBDialogV2(context!!, this)
+        d.show()
+        d.window.setLayout((6 * width) / 7, (4 * height) / 12)
+
+    }
+
+    override fun ExcelData(date: String?) {
+        if (date != null) {
+            setExceltoDB(date)
+        }
+    }
+
+    private fun setTedPermission(isExcel: Boolean) {
         TedPermission.with(context)
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .setPermissionListener(object : PermissionListener {
                     override fun onPermissionGranted() {
                         Handler().postDelayed({
-                            setDBtoExcel()
+                            if (isExcel)
+                                setDBtoExcel()
+                            else
+                                onExceltoDBDialog()
+
                         }, 10)
                     }
 
@@ -103,8 +138,34 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener {
                 }).check()
     }
 
+    private fun setExceltoDB(date: String?) {
+        DLog.e("date $date")
+        val sql = ExcelToSQLite(context, "${Const.DbName}.db")
+        sql.importFromFile(date, object : ExcelToSQLite.ImportListener {
+            override fun onError(e: java.lang.Exception?) {
+                Toast.makeText(context!!, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStart() {
+
+            }
+
+            override fun onCompleted(dbName: String?) {
+                AlertDialog.Builder(context!!, R.style.MyDialogTheme)
+                        .setMessage("데이터가 저장되었습니다.")
+                        .setPositiveButton("확인", { dialog, _ ->
+                            dialog.dismiss()
+
+                        }).setNegativeButton(null, null)
+                        .show()
+            }
+
+        })
+    }
+
     private fun setDBtoExcel() {
-        val date = "가계부_" + UtilMethod.getExcelDate() + ".xls"
+
+        val date = "우리가계부_" + UtilMethod.getExcelDate() + ".xls"
         val sql = SQLiteToExcel(context, "${Const.DbName}.db")
         DLog.e("excel start")
         sql.exportSingleTable(Const.DbName, date, object : SQLiteToExcel.ExportListener {

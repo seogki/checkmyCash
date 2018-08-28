@@ -38,12 +38,12 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
 
     lateinit var binding: FragmentEstimateRegisterBinding
-    private lateinit var map: HashMap<String, String>
-    private lateinit var tempMap: HashMap<String, String>
+    private lateinit var map: HashMap<String, Float>
+    private lateinit var tempMap: HashMap<String, Float>
     private lateinit var estimateRegisterAdapter: EstimateRegisterAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var mItems: ArrayList<EstimateRegisterModel>
-    private var totalUsage: Int = 0
+    private var totalUsage = 0F
     private lateinit var db: EstimateDBHelper
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -91,7 +91,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun getDbData() {
         val database = db.readableDatabase
         map = HashMap()
-        totalUsage = 0
+        totalUsage = 0F
         mItems = ArrayList()
         var cursor: Cursor? = null
         try {
@@ -103,16 +103,14 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                 val money = cursor.getString(3)
                 val days = cursor.getString(4)
 
-                totalUsage += money.toInt().times(days.toInt())
-
                 mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString(),days))
 
                 if (map.containsKey(cate)) {
                     val data = map.getValue(cate).toInt().plus(money.toInt().times(days.toInt()))
                     map.remove(cate)
-                    map[cate] = data.toString()
+                    map[cate] = data.toFloat()
                 } else {
-                    map[cate] = money.toInt().times(days.toInt()).toString()
+                    map[cate] = money.toInt().times(days.toInt()).toFloat()
                 }
             }
 
@@ -121,7 +119,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                 checkTempMap()
             } else {
                 setPieChart()
-                totalUsage = 0
+                totalUsage = 0F
                 binding.estimateFragPiechart.centerText =""
                 saveTotalInSharedPreference()
                 estimateRegisterAdapter.clearItems()
@@ -140,8 +138,6 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun checkTempMap() {
         if (tempMap != map) {
             tempMap = map
-//            mItems.add(EstimateRegisterModel("last", UtilMethod.getCurrentDateToSec(), "합계", totalUsage.toString()))
-            saveTotalInSharedPreference()
             setPieChart()
         } else {
 
@@ -151,7 +147,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun saveTotalInSharedPreference() {
         val pref = activity?.getSharedPreferences(Const.PreferenceTitle, MODE_PRIVATE)
         val editor = pref?.edit()
-        editor?.putInt(Const.EstimateUsage, totalUsage)
+        editor?.putInt(Const.EstimateUsage, totalUsage.toInt())
         editor?.apply()
 
     }
@@ -197,11 +193,31 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun setPieChart() {
         val chart = binding.estimateFragPiechart
         chart.setUsePercentValues(true)
-
         val yvalues = mutableListOf<PieEntry>()
+        val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
 
-        for ((key, value) in map) {
-            yvalues.add(PieEntry(value.toFloat(), key))
+        for((key,value) in result){
+            totalUsage = totalUsage.plus(value)
+        }
+        saveTotalInSharedPreference()
+        if(result.size <= 4){
+            for ((key, value) in result) {
+//                val percent = value.toFloat().div(monthTotal).times(100F)
+                yvalues.add(PieEntry(value, key))
+            }
+        } else {
+            var data = 0F
+            for(i in 0 until result.size){
+                if(i >= 3){
+                    data += result.toList()[i].second
+                } else {
+//                    val percent = result.toList()[i].second.toFloat().div(monthTotal).times(100F)
+                    yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
+                }
+            }
+//            val percent = data.div(monthTotal).times(100F)
+            yvalues.add(PieEntry(data, "그외"))
+
         }
         val dataSet = PieDataSet(yvalues, "")
 
@@ -225,17 +241,17 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.legend.isWordWrapEnabled = true
         chart.setCenterTextColor(ContextCompat.getColor(context!!,R.color.statusbar))
         chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
-        if(totalUsage != 0) {
-            chart.centerText = UtilMethod.currencyFormat(totalUsage.toString()) + "원"
+        if(totalUsage != 0F) {
+            chart.centerText = UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
         } else {
             chart.centerText = ""
         }
         chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightBlue))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
         colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
 
         dataSet.colors = colors
         dataSet.label = ""
