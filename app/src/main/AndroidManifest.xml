@@ -10,9 +10,9 @@
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
-        android:icon="@mipmap/main_now_icon_big"
+        android:icon="@mipmap/big_backround_straight"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/main_now_icon_big"
+        android:roundIcon="@mipmap/big_bg_round"
         android:supportsRtl="true"
         android:theme="@style/CustomAppTheme">
         <activity android:name=".Login.SplashActivity">

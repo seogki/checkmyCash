@@ -69,8 +69,12 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
 
     override fun onItemClick(view: View, position: Int) {
+        val end = calendarAdapter.getItem(position)?.date!!
+        val replaced = end.replace("-","").replace(" ","")
+        val month = replaced.substring(2,4)
+        val day = replaced.substring(4,6)
         AlertDialog.Builder(context!!, R.style.MyDialogTheme)
-                .setTitle(calendarAdapter.getItem(position)?.date!!)
+                .setTitle(month+"월 "+day +"일")
                 .setMessage("항목을 추가 또는 조회 하시겠습니까?")
                 .setPositiveButton("추가", { dialog, _ ->
                     val i = Intent(context!!, RegisterCalendarActivity::class.java)
