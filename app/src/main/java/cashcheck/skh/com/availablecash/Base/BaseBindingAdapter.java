@@ -152,6 +152,25 @@ public class BaseBindingAdapter {
 
     }
 
+    @BindingAdapter("setDayOnly")
+    public static void setDayOnly(final TextView textView, final String date) {
+
+        String days;
+        String result = date.replace("-", "").replace(" ", "");
+        if (!Objects.equals(result, "")) {
+
+            days = result.substring(4, 6);
+            if(Objects.equals(days.substring(0, 1), "0")){
+                textView.setText(days.substring(1,2));
+            } else {
+                textView.setText(days);
+            }
+        } else {
+            textView.setText("");
+        }
+
+    }
+
     @BindingAdapter("checkMoney")
     public static void checkMoney(final TextView textView, final String money) {
         Context context = textView.getContext();
@@ -174,6 +193,33 @@ public class BaseBindingAdapter {
                 }
                 String result = UtilMethod.currencyFormat(money);
                 textView.setText(result + "원");
+            }
+        }
+
+    }
+
+    @BindingAdapter("checkMoneyWithoutWon")
+    public static void checkMoneyWithoutWon(final TextView textView, final String money) {
+        Context context = textView.getContext();
+        if (context == null) {
+            return;
+        } else if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            if (activity.isFinishing() || activity.isDestroyed()) {
+                return;
+            }
+        }
+        if (money != null) {
+            if (money.contains(".")) {
+                String data = money.replace(".", "").substring(0, money.length() - 2);
+                String result = UtilMethod.currencyFormat(data);
+                textView.setText(result);
+            } else {
+                if (money.isEmpty() || money.length() == 0) {
+                    textView.setText("");
+                }
+                String result = UtilMethod.currencyFormat(money);
+                textView.setText(result);
             }
         }
 

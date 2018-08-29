@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
@@ -14,9 +15,6 @@
         android:roundIcon="@mipmap/main_now_icon_big"
         android:supportsRtl="true"
         android:theme="@style/CustomAppTheme">
-
-
-
         <activity android:name=".Login.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,35 +25,38 @@
         <activity
             android:name=".Chart.ChartMainActivity"
             android:screenOrientation="portrait">
-            <!--구글 admobs 광고-->
+
+            <!-- 구글 admobs 광고 -->
             <meta-data
                 android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
+                android:value="@integer/google_play_services_version"/>
         </activity>
         <activity
             android:name=".Register.RegisterMainActivity"
             android:screenOrientation="portrait">
-            <!--구글 admobs 광고-->
+
+            <!-- 구글 admobs 광고 -->
             <meta-data
                 android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
+                android:value="@integer/google_play_services_version"/>
         </activity>
         <activity
             android:name=".Setting.SettingMainActivity"
             android:screenOrientation="portrait">
-            <!--구글 admobs 광고-->
+
+            <!-- 구글 admobs 광고 -->
             <meta-data
                 android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
+                android:value="@integer/google_play_services_version"/>
         </activity>
         <activity
             android:name=".Compare.CompareMainActivity"
             android:screenOrientation="portrait">
-            <!--구글 admobs 광고-->
+
+            <!-- 구글 admobs 광고 -->
             <meta-data
                 android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
-
+                android:value="@integer/google_play_services_version"/>
         </activity>
         <activity
             android:name=".Register.tab.Normal.NormalRegisterActivity"
@@ -68,7 +69,10 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="4e2563966386d345bf77783b0c4885d543e55a68" />
+            android:value="4e2563966386d345bf77783b0c4885d543e55a68"/>
+
+        <activity android:name=".Register.tab.Calendar.RegisterCalendarActivity">
+        </activity>
     </application>
 
 </manifest>

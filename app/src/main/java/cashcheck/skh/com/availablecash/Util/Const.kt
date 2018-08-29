@@ -47,5 +47,11 @@ open class Const {
         const val ItemDBNAME = "RVItemDB"
         const val ItemDays = "RVItemDays"
 
+
+        /***
+         *  캘린더
+         */
+        const val ItemClickCalendar = "ItemCalendar"
+        const val ItemClickCalendarDays = "ItemCalendarDays"
     }
 }

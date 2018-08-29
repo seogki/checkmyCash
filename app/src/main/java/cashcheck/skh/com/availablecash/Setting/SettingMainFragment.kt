@@ -3,7 +3,9 @@ package cashcheck.skh.com.availablecash.Setting
 import android.Manifest
 import android.app.ActivityManager
 import android.content.Context.ACTIVITY_SERVICE
+import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AlertDialog
@@ -64,12 +66,16 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
             R.id.setting_frag_btn_ask_developer -> {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("문의하기")
-                        .setMessage("아직 개발중입니다.")
+                        .setMessage("앱의 문제 또는 개선해하야할 부분을 남겨주세요!")
                         .setPositiveButton("확인", { dialog, _ ->
+                            startMyAppPlayStore()
                             dialog.dismiss()
 
-                        }).setNegativeButton(null, null)
+                        }).setNegativeButton("취소", { dialog, _ ->
+                            dialog.dismiss()
+                        })
                         .show()
+
             }
             R.id.setting_frag_btn_excel_data -> {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
@@ -99,6 +105,16 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                         })
                         .show()
             }
+        }
+    }
+
+
+    private fun startMyAppPlayStore(){
+        val appPackageName = activity?.packageName // getPackageName() from Context or Activity object
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+        } catch (anfe: android.content.ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
         }
     }
 
@@ -165,7 +181,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
 
     private fun setDBtoExcel() {
 
-        val date = "우리가계부_" + UtilMethod.getExcelDate() + ".xls"
+        val date = "오늘가계부_" + UtilMethod.getExcelDate() + ".xls"
         val sql = SQLiteToExcel(context, "${Const.DbName}.db")
         DLog.e("excel start")
         sql.exportSingleTable(Const.DbName, date, object : SQLiteToExcel.ExportListener {

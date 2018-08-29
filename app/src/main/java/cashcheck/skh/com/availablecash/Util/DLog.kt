@@ -8,7 +8,7 @@ import cashcheck.skh.com.availablecash.BuildConfig
  */
 
 object DLog {
-    private const val TAG = "CheeseCounter"
+    private const val TAG = "NowGaggebu"
 
     /**
      * Log Level Error

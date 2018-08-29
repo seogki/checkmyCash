@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="model"
+            type="cashcheck.skh.com.availablecash.Register.model.CalendarModel"
+            />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener"
+            />
+
+    </data>
+
+    <cashcheck.skh.com.availablecash.Util.SquareLayout
+        android:id="@+id/item_rv_calendar_constAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="start"-->
+            <!--android:background="@color/grey"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--/>-->
+
+        <TextView
+            android:id="@+id/item_rv_calendar_txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="start|top"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:setDayOnly="@{model.date}"
+            tools:text="1"
+            />
+
+        <TextView
+            android:id="@+id/item_rv_calendar_txt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:textColor="@color/statusbar"
+            android:textSize="9sp"
+            app:checkMoneyWithoutWon="@{model.money}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="3,000원"
+            />
+
+
+    </cashcheck.skh.com.availablecash.Util.SquareLayout>
+
+</layout>

@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.R
+import cashcheck.skh.com.availablecash.Register.tab.Calendar.RegisterCalendarFragment
 import cashcheck.skh.com.availablecash.Register.tab.Estimate.EstimateRegisterFragment
 import cashcheck.skh.com.availablecash.Register.tab.Normal.NormalRegisterFragment
 import cashcheck.skh.com.availablecash.Util.TabPagerAdapter
@@ -41,6 +42,8 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         binding.registerFragImgLeft.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
         binding.registerFragImgRight.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
         setTabLayout()
+        val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
+        fab.hide()
         binding.onClickListener = this
         date = UtilMethod.getCurrentDate()
         val result = UtilMethod.getCurrentDate().replace("-", "")
@@ -53,6 +56,7 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         adapter = TabPagerAdapter(childFragmentManager)
         tabLayout = binding.registerFragTablayout
 
+        adapter.addFragment(RegisterCalendarFragment(), "달력")
         adapter.addFragment(NormalRegisterFragment(), "기본")
         adapter.addFragment(EstimateRegisterFragment(), "예상")
         viewPager.adapter = adapter
@@ -88,17 +92,22 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
                 if (adapter.getItem(position) == null) {
                     return
                 }
-                if (position == 0) {
+                if (position == 1) {
                     val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
                     fab.show()
                     binding.registerFragImgRight.visibility = View.VISIBLE
                     binding.registerFragImgLeft.visibility = View.VISIBLE
 
-                } else {
+                } else if(position == 2){
                     val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
                     fab.hide()
                     binding.registerFragImgRight.visibility = View.INVISIBLE
                     binding.registerFragImgLeft.visibility = View.INVISIBLE
+                } else {
+                    val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
+                    fab.hide()
+                    binding.registerFragImgRight.visibility = View.VISIBLE
+                    binding.registerFragImgLeft.visibility = View.VISIBLE
                 }
             }
 
@@ -136,9 +145,12 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         if (adapter.getItem(viewPager.currentItem) == null) {
             return
         }
-        if (viewPager.currentItem == 0) {
+        if (viewPager.currentItem == 1) {
             /* 1번째 인덱스에 있는 탭을 의미*/
-            val f = adapter.getItem(0) as NormalRegisterFragment
+            val f = adapter.getItem(1) as NormalRegisterFragment
+            f.getDate(date)
+        } else if (viewPager.currentItem == 0) {
+            val f = adapter.getItem(0) as RegisterCalendarFragment
             f.getDate(date)
         }
     }
@@ -147,9 +159,12 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         if (adapter.getItem(viewPager.currentItem) == null) {
             return
         }
-        if (viewPager.currentItem == 0) {
+        if (viewPager.currentItem == 1) {
             /* 1번째 인덱스에 있는 탭을 의미*/
-            val f = adapter.getItem(0) as NormalRegisterFragment
+            val f = adapter.getItem(1) as NormalRegisterFragment
+            f.getDate(date)
+        } else if (viewPager.currentItem == 0) {
+            val f = adapter.getItem(0) as RegisterCalendarFragment
             f.getDate(date)
         }
     }

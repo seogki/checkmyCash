@@ -37,7 +37,7 @@ class ExceltoDBDialogV2(context: Context, private var listener: ExceltoDBListene
         setContentView(binding.root)
         binding.onClickListener = this
         binding.excelDbEditDate.setOnEditorActionListener(this)
-        binding.excelDbTxtTitle.text = "경로: ${Environment.getExternalStorageDirectory()}/\n해당 경로에 파일을 넣어주시고\n우리가계부_************.xls\n *표 12자리 날짜만 적어주세요"
+        binding.excelDbTxtTitle.text = "경로: ${Environment.getExternalStorageDirectory()}/\n해당 경로에 파일을 넣어주시고\n오늘가계부_************.xls\n *표 12자리 날짜만 적어주세요"
     }
 
 
@@ -45,7 +45,7 @@ class ExceltoDBDialogV2(context: Context, private var listener: ExceltoDBListene
         when (v?.id) {
             R.id.excel_db_btn_done -> {
                 if (binding.excelDbEditDate.text.toString().length == 12) {
-                    listener.ExcelData("${Environment.getExternalStorageDirectory()}/우리가계부_${binding.excelDbEditDate.text}.xls")
+                    listener.ExcelData("${Environment.getExternalStorageDirectory()}/오늘가계부_${binding.excelDbEditDate.text}.xls")
                     dismiss()
                 } else {
                     Toast.makeText(context!!, "12자리를 입력해주세요", Toast.LENGTH_SHORT).show()
@@ -57,7 +57,7 @@ class ExceltoDBDialogV2(context: Context, private var listener: ExceltoDBListene
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             return if (binding.excelDbEditDate.text.toString().length == 12) {
-                listener.ExcelData("${Environment.getExternalStorageDirectory()}/우리가계부_${binding.excelDbEditDate.text}.xls")
+                listener.ExcelData("${Environment.getExternalStorageDirectory()}/오늘가계부_${binding.excelDbEditDate.text}.xls")
                 dismiss()
                 true
             } else {

@@ -21,8 +21,8 @@ android {
         applicationId "cashcheck.skh.com.availablecash"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -39,6 +39,13 @@ android {
     }
     dataBinding {
         enabled = true
+    }
+    android {
+        lintOptions {
+            checkReleaseBuilds false
+
+            abortOnError false
+        }
     }
 
 }
@@ -71,7 +78,6 @@ dependencies {
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 //    compile 'com.github.bumptech.glide:annotations:4.7.1'
 
-
     //권한 설정용
     implementation 'gun0912.ted:tedpermission:2.2.0'
 
@@ -80,7 +86,6 @@ dependencies {
 
     //차트
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-
 
     //admob 광고
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
