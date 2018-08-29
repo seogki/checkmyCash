@@ -3,6 +3,7 @@ package cashcheck.skh.com.availablecash.Register.tab.Calendar
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.os.Handler
@@ -93,19 +94,25 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
         todayItem = mutableListOf()
         val db = db.readableDatabase
+        var cursor: Cursor? = null
+        try {
+            // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+            cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + result + "%' ORDER BY date DESC", null)
+            while (cursor.moveToNext()) {
+                val num = cursor.getString(0)
+                val date = cursor.getString(1)
+                val cate = cursor.getString(2)
+                val money = cursor.getString(3)
+                val days = cursor.getString(4)
 
-        // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + result + "%' ORDER BY date DESC", null)
-        while (cursor.moveToNext()) {
-            val num = cursor.getString(0)
-            val date = cursor.getString(1)
-            val cate = cursor.getString(2)
-            val money = cursor.getString(3)
-            val days = cursor.getString(4)
-
-            todayItem.add(EstimateRegisterModel(num, date, cate, money, days))
+                todayItem.add(EstimateRegisterModel(num, date, cate, money, days))
+            }
+            setTodayData()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
         }
-        setTodayData()
     }
 
     private fun setTodayData() {
