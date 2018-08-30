@@ -26,7 +26,7 @@ class CalendarTodayAdapter(context: Context, arraylist: MutableList<EstimateRegi
     private var arr = arraylist
     private var mContext = context
     override fun onBindView(holder: CalendarTodayViewHolder, position: Int) {
-        holder.setIsRecyclable(true)
+        holder.setIsRecyclable(false)
         val model = getItem(holder.adapterPosition)
         holder.binding.model = model
 

@@ -27,13 +27,13 @@ class CalendarAdapter(context: Context, arraylist: MutableList<CalendarModel>) :
             if (model.isNow == true) {
                 holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_stroke_status_notthismonth)
             } else {
-                holder.binding.itemRvCalendarConstAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.darkGrey))
+                holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_grey_ripple)
             }
         } else {
             if(model?.isNow == true){
                 holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_stroke_status)
             } else {
-                holder.binding.itemRvCalendarConstAll.setBackgroundColor(ContextCompat.getColor(context!!, R.color.white))
+                holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.rv_end_ripple_corner_btm)
             }
         }
         when {

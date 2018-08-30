@@ -46,7 +46,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private var dates: String = ""
     fun getDate(v: String) {
         dates = v
-        binding.chartFragTxtTitle.text = "20${dates.substring(0, 2)}년 ${dates.substring(3, 5)}월"
+//        binding.chartFragTxtTitle.text = "20${dates.substring(0, 2)}년 ${dates.substring(3, 5)}월"
         checkDiffAndRefresh()
     }
 
@@ -67,7 +67,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         itemTreeMap = TreeMap()
         tempMItem = ArrayList()
         dates = UtilMethod.getCurrentDate()
-        binding.chartFragTxtTitle.text = "20${dates.substring(0, 2)}년 ${dates.substring(3, 5)}월"
+//        binding.chartFragTxtTitle.text = "20${dates.substring(0, 2)}년 ${dates.substring(3, 5)}월"
         return binding.root
     }
 

@@ -34,6 +34,7 @@ public class UtilMethod {
         SimpleDateFormat df = new SimpleDateFormat("yy-MM", Locale.KOREA);
         return df.format(c);
     }
+
     public static String getCurrentMonth() {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
@@ -53,6 +54,45 @@ public class UtilMethod {
         return df.format(c);
     }
 
+    public static String millisToDate(long currentTime) {
+        String finalDate;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentTime);
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
+        Date date = calendar.getTime();
+        return df.format(date);
+    }
+
+    public static String getWeekofDay(String date) {
+        SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
+        try {
+            Date first = df.parse(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(first);
+            int value = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+            switch (value) {
+                case 0:
+                    return "일요일";
+                case 1:
+                    return "월요일";
+                case 2:
+                    return "화요일";
+                case 3:
+                    return "수요일";
+                case 4:
+                    return "목요일";
+                case 5:
+                    return "금요일";
+                case 6:
+                    return "토요일";
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 
     public static String getExcelDate() {
         Date c = Calendar.getInstance().getTime();

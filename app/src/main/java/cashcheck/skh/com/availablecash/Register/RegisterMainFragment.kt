@@ -55,7 +55,7 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         viewPager = binding.registerFragViewpager
         adapter = TabPagerAdapter(childFragmentManager)
         tabLayout = binding.registerFragTablayout
-
+        viewPager.offscreenPageLimit = 3
         adapter.addFragment(RegisterCalendarFragment(), "달력")
         adapter.addFragment(NormalRegisterFragment(), "기본")
         adapter.addFragment(EstimateRegisterFragment(), "예상")
@@ -92,22 +92,29 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
                 if (adapter.getItem(position) == null) {
                     return
                 }
-                if (position == 1) {
-                    val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
-                    fab.show()
-                    binding.registerFragImgRight.visibility = View.VISIBLE
-                    binding.registerFragImgLeft.visibility = View.VISIBLE
+                when (position) {
+                    1 -> {
+                        val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
+                        fab.show()
+                        setTitleBar(date)
+                        binding.registerFragImgRight.visibility = View.VISIBLE
+                        binding.registerFragImgLeft.visibility = View.VISIBLE
 
-                } else if(position == 2){
-                    val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
-                    fab.hide()
-                    binding.registerFragImgRight.visibility = View.INVISIBLE
-                    binding.registerFragImgLeft.visibility = View.INVISIBLE
-                } else {
-                    val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
-                    fab.hide()
-                    binding.registerFragImgRight.visibility = View.VISIBLE
-                    binding.registerFragImgLeft.visibility = View.VISIBLE
+                    }
+                    2 -> {
+                        val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
+                        fab.hide()
+                        binding.registerFragTxtTitlebar.text = "예상금액"
+                        binding.registerFragImgRight.visibility = View.INVISIBLE
+                        binding.registerFragImgLeft.visibility = View.INVISIBLE
+                    }
+                    else -> {
+                        val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
+                        fab.hide()
+                        setTitleBar(date)
+                        binding.registerFragImgRight.visibility = View.VISIBLE
+                        binding.registerFragImgLeft.visibility = View.VISIBLE
+                    }
                 }
             }
 

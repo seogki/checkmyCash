@@ -131,16 +131,7 @@
                         app:layout_constraintTop_toTopOf="@id/setting_frag_btn_excel_data"
                         />
 
-                    <!--<ImageView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:id="@+id/setting_frag_img_excel_data_data"-->
-                        <!--android:src="@drawable/icons8_data_backup_24"-->
-                        <!--android:layout_marginEnd="16dp"-->
-                        <!--app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_excel_data"-->
-                        <!--app:layout_constraintEnd_toStartOf="@id/setting_frag_img_excel_data_excel"-->
-                        <!--app:layout_constraintTop_toTopOf="@id/setting_frag_btn_excel_data"-->
-                        <!--/>-->
+
 
                     <View
                         android:id="@+id/setting_frag_view_excel"
@@ -244,17 +235,49 @@
                         />
 
                     <TextView
+                        android:id="@+id/setting_frag_btn_get_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/rv_end_ripple_corner_btm"
+                        android:gravity="center_vertical"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingStart="8dp"
+                        android:text="메시지 가져오기"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_txt_user"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/icons8_new_message_24"
+                        app:layout_constraintBottom_toBottomOf="@id/setting_frag_btn_get_msg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/setting_frag_btn_get_msg"
+                        />
+
+                    <View
+                        android:id="@+id/setting_frag_view_get_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/midGrey"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_btn_get_msg"
+                        />
+
+                    <TextView
                         android:id="@+id/setting_frag_btn_ask_developer"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_height="50dp"
+
                         android:background="@drawable/rv_end_ripple_corner_btm"
                         android:gravity="center_vertical"
                         android:onClick="@{onClickListener::onClick}"
                         android:paddingStart="8dp"
                         android:text="문의 하기"
                         android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@id/setting_frag_txt_user"
+                        app:layout_constraintTop_toBottomOf="@id/setting_frag_view_get_msg"
                         />
 
                     <ImageView

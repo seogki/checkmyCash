@@ -11,17 +11,17 @@ import android.database.sqlite.SQLiteOpenHelper
 class DBHelper(c: Context, name: String, factory: SQLiteDatabase.CursorFactory? = null, version: Int) : SQLiteOpenHelper(c, name, factory, version) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE IF NOT EXISTS ${Const.DbName} (_id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, categories TEXT, money TEXT, days TEXT);")
+        db?.execSQL("CREATE TABLE IF NOT EXISTS ${Const.DbName} (_id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, categories TEXT, money TEXT, days TEXT, card_id TEXT, card_name TEXT);")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
     }
 
-    fun insertData(date: String, cate: String, money: String, days: String) {
+    fun insertData(date: String, cate: String, money: String, days: String, card_id: String? = null, card_name :String? = null) {
         val db = writableDatabase
 
 
-        db.execSQL("INSERT INTO ${Const.DbName} VALUES(null, '$date', '$cate', '$money', '$days');")
+        db.execSQL("INSERT INTO ${Const.DbName} VALUES(null, '$date', '$cate', '$money', '$days', '$card_id', '$card_name');")
         db.close()
     }
 

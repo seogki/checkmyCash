@@ -22,7 +22,10 @@ import cashcheck.skh.com.availablecash.Register.adapter.Calendar.CalendarAdapter
 import cashcheck.skh.com.availablecash.Register.adapter.Calendar.CalendarTodayAdapter
 import cashcheck.skh.com.availablecash.Register.model.CalendarModel
 import cashcheck.skh.com.availablecash.Register.model.EstimateRegisterModel
-import cashcheck.skh.com.availablecash.Util.*
+import cashcheck.skh.com.availablecash.Util.Const
+import cashcheck.skh.com.availablecash.Util.DBHelper
+import cashcheck.skh.com.availablecash.Util.GridSpacingItemDecoration
+import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentRegisterCalendarBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,11 +46,10 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
     private lateinit var mItem: MutableList<CalendarModel>
     private lateinit var db: DBHelper
     private var isStart = false
-    private var result = ""
+    private var result = "no"
     private var date: String? = null
     fun getDate(date: String) {
         this.date = "$date-01"
-        DLog.e("date ? $date")
         setCalendar()
     }
 
@@ -70,11 +72,17 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
     override fun onItemClick(view: View, position: Int) {
         val end = calendarAdapter.getItem(position)?.date!!
-        val replaced = end.replace("-","").replace(" ","")
-        val month = replaced.substring(2,4)
-        val day = replaced.substring(4,6)
+        val replaced = end.replace("-", "").replace(" ", "")
+        var month = replaced.substring(2, 4)
+        var day = replaced.substring(4, 6)
+        if (month.substring(0, 1) == "0") {
+            month = month.substring(1, 2)
+        }
+        if (day.substring(0, 1) == "0") {
+            day = day.substring(1, 2)
+        }
         AlertDialog.Builder(context!!, R.style.MyDialogTheme)
-                .setTitle(month+"월 "+day +"일")
+                .setTitle(month + "월 " + day + "일")
                 .setMessage("항목을 추가 또는 조회 하시겠습니까?")
                 .setPositiveButton("추가", { dialog, _ ->
                     val i = Intent(context!!, RegisterCalendarActivity::class.java)
@@ -102,21 +110,42 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
         try {
             // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
             cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + result + "%' ORDER BY date DESC", null)
+            var totalMoney = 0
+            var dayofWeek = ""
             while (cursor.moveToNext()) {
                 val num = cursor.getString(0)
                 val date = cursor.getString(1)
                 val cate = cursor.getString(2)
                 val money = cursor.getString(3)
                 val days = cursor.getString(4)
-
+                totalMoney += money.toInt()
+                dayofWeek = days
                 todayItem.add(EstimateRegisterModel(num, date, cate, money, days))
             }
-            setTodayData()
+            if (todayItem.size < 1) {
+                binding.fragCalendarConstHeader.visibility = View.INVISIBLE
+                calendarTodayAdapter.clearItems()
+            } else {
+                setHeaderText(totalMoney, dayofWeek, result)
+                setTodayData()
+                binding.fragCalendarConstHeader.visibility = View.VISIBLE
+            }
+
+
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             cursor?.close()
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setHeaderText(totalMoney: Int, dayofWeek: String, result: String) {
+        val replaced = result.replace("-", "").replace(" ", "")
+        val day = replaced.substring(4, 6)
+        binding.calendarCateTxtDays.text = dayofWeek
+        binding.calendarCateTxtMoney.text = "${UtilMethod.currencyFormat(totalMoney.toString())}원"
+        binding.calendarCateTxtTime.text = day
     }
 
     private fun setTodayData() {
@@ -128,6 +157,8 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_calendar, container, false)
         db = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
+        binding.fragCalendarConstHeader.visibility = View.INVISIBLE
+        result = UtilMethod.getCurrentMonth()
         setRv()
         setCalendar()
         setRvToday()
@@ -149,7 +180,9 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
         Thread(Runnable {
             binding.fragCalendarRvToday.adapter = calendarTodayAdapter
+            getTodayDB()
         }).start()
+
     }
 
     private fun setRv() {
@@ -160,28 +193,24 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
         binding.fragCalendarRv.addItemDecoration(GridSpacingItemDecoration(7, 5, false, 0))
         binding.fragCalendarRv.setHasFixedSize(false)
         calendarAdapter.setOnItemClickListener(this)
-
         Handler().postDelayed({
             binding.fragCalendarRv.adapter = calendarAdapter
         }, 10)
-
-
     }
 
     private fun checkMoneyFromDate() {
-        DLog.e("cehckMoneyFromDate")
+
         val db = db.readableDatabase
         for (dates in mItem) {
             // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
             val cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + dates.date + "%' ORDER BY date DESC", null)
             var money = 0
             val temp = dates
-
             while (cursor.moveToNext()) {
 
                 money += cursor.getString(0).toInt()
                 dates.money = money.toString()
-                DLog.e("money $money")
+
             }
         }
 
@@ -205,16 +234,14 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
         // 처음 시작을 달의 시작으로 세팅
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
         val start = cal.time
-        DLog.e("start time ${df.format(start)}")
-        DLog.e("end $end")
         for (i in 0 until end) {
             if (i == 0) {
                 // 만약 처음시작이 일요일일시 아무것도 안하고 데이터를 넣어도된다
                 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                    DLog.e("첫번째날이 일요일이다..")
+
                     addDate(cal, df)
                 } else {
-                    DLog.e("첫번째날이 일요일이 아니다..")
+
                     val date = cal.time
                     val now = df.format(date)
                     // 만약 처음시작이 일요일이 아닐시 현재요일의 전요일을 다가져온다
@@ -233,11 +260,11 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
                 //만약 마지막에 날이 토요일이면 아무것도 안하고 데이터 넣으면된다
                 cal.add(Calendar.DATE, 1)
                 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                    DLog.e("마지막날이 토요일이다..")
+
                     addDate(cal, df)
 
                 } else {
-                    DLog.e("마지막날이 토요일이 아니다..")
+
                     //만약 마지막이 토요일이 아니면 현재 요일 부터 토요일까지 모두 가져온다
                     val date = cal.time
                     val now = df.format(date)
