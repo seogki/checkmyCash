@@ -73,6 +73,7 @@ class CompareMainFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+
     @SuppressLint("SetTextI18n")
     private fun setTitleBar(a: String, pos: Int) {
         if (pos == 0) {

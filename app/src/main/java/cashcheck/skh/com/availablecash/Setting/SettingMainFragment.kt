@@ -2,6 +2,7 @@ package cashcheck.skh.com.availablecash.Setting
 
 import android.Manifest
 import android.app.ActivityManager
+import android.content.ActivityNotFoundException
 import android.content.Context.ACTIVITY_SERVICE
 import android.content.Intent
 import android.database.Cursor
@@ -113,7 +114,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
             R.id.setting_frag_btn_get_msg -> {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("메시지 내역")
-                        .setMessage("메시지 내역을 저장하시겠습니까?\n아직 신한은행만 가능합니다.")
+                        .setMessage("메시지 내역을 저장하시겠습니까?\n현재 가능한 은행\n * 신한은행\n * 시티BC, 해외승인 USD")
                         .setPositiveButton("확인", { dialog, _ ->
                             setMessagePermission()
                             dialog.dismiss()
@@ -154,7 +155,40 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
             val date = cur.getString(cur.getColumnIndex("date"))
             val id = cur.getString(cur.getColumnIndex("_id"))
             val msgArr = body.split(" ")
-            if (msgArr[0].contains("044")) {
+            if (msgArr[0].contains("씨티BC(7478)")) {
+                val dateFormat = UtilMethod.millisToDate(date.toLong())
+                if (msgArr[0].contains("해외승인")) {
+                    val first = msgArr[0].replace("\n", "")
+                    val second = msgArr[1].replace("\n", "")
+                    val third = msgArr[2].replace("\n", "")
+                    val won = second.substring(0, 5).toDouble().times(1108.80).toInt().toString()
+                    val cate = third.substring(5)
+                    DLog.e("cate $cate : $won : $dateFormat size : USD")
+                    mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)해외승인"))
+                } else {
+
+                    if (msgArr.size == 2) {
+                        val first = msgArr[0].replace("\n", "").split("원")
+                        val second = msgArr[1].replace("\n", "")
+                        val won = first[0].substringAfter("님").replace(",", "")
+                        val cate = second.substring(5)
+                        DLog.e("cate $cate : $won : $dateFormat size : 2")
+                        mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
+
+                    } else if (msgArr.size == 3) {
+                        val first = msgArr[0].replace("\n", "").split("원")
+                        val second = msgArr[1].replace("\n", "")
+                        val third = msgArr[2].replace("\n", "")
+                        val won = first[0].substringAfter("님").replace(",", "")
+                        val cate = second.substring(5) + third
+                        DLog.e("cate $cate : $won : $dateFormat size : 3")
+                        mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
+                    }
+
+
+                }
+            }
+            if (msgArr[0].contains("신한카드(044)")) {
                 val money = msgArr[3].split("원")[0].replace(",".toRegex(), "")
                 val first = msgArr[0]
                 var five = msgArr[5]
@@ -191,6 +225,34 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                         }
 
                     }
+                } else if (msgArr.size == 9) {
+                    var seven = msgArr[7]
+                    DLog.e("set $id , $money, $five + $six + $seven, $dateFormat, $first")
+                    if (six.length <= 1) {
+                        if (six.contains("-") || six.contains("(")) {
+                            six = ""
+                        }
+                    } else {
+                        if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
+                            six = six.substring(0, six.length - 1)
+                        }
+                    }
+                    if (seven.length <= 1) {
+                        if (seven.contains("-") || seven.contains("(")) {
+                            seven = ""
+                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                        } else {
+                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                        }
+                    } else {
+                        if (seven.substring(seven.length - 1).contains("-") || seven.substring(seven.length - 1).contains("(")) {
+                            seven = seven.substring(0, seven.length - 1)
+                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                        } else {
+                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                        }
+
+                    }
                 }
 
             }
@@ -207,42 +269,49 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
         if (db != null) {
             var cursor: Cursor? = null
             try {
-                cursor = db.rawQuery("SELECT card_id FROM ${Const.DbName} WHERE card_id IS NOT NULL ORDER BY _id DESC", null)
 
+
+                cursor = db.rawQuery("SELECT card_id, card_name FROM ${Const.DbName} WHERE card_id IS NOT NULL ORDER BY _id DESC", null)
                 while (cursor.moveToNext()) {
-                    arr.add(cursor.getString(0))
+                    val a = cursor.getString(0)
+                    val b = cursor.getString(1)
+                    arr.add("$a $b")
                 }
-                if (arr.size < 1) {
-                    for (item in mItem) {
+
+                for (item in mItem) {
+                    for (a in arr) {
+                        val split = a.split(" ")
+                        if (split[0] == item.cardid && split[1] == item.cardName) {
+                            isThere = true
+                            break
+                        } else {
+                            isThere = false
+                        }
+                    }
+                    DLog.e("isThere = $isThere")
+                    if (!isThere) {
                         howMany += 1
                         dbHelper.insertData(item.date!!, item.cate!!, item.money!!, UtilMethod.getWeekofDay(item.date), item.cardid, item.cardName)
                     }
-                } else {
-                    for (item in mItem) {
-                        for (a in arr) {
-                            if (a == item.cardid) {
-                                isThere = true
-                                break
-                            } else {
-                                isThere = false
-                            }
-                        }
-                        if (!isThere) {
-                            howMany += 1
-                            dbHelper.insertData(item.date!!, item.cate!!, item.money!!, UtilMethod.getWeekofDay(item.date), item.cardid, item.cardName)
-                        }
-                    }
                 }
 
-
-                AlertDialog.Builder(context!!, R.style.MyDialogTheme)
-                        .setTitle("메시지 내역")
-                        .setMessage("$howMany 항목이 등록되었습니다.")
-                        .setPositiveButton("확인", { dialog, _ ->
-                            dialog.dismiss()
-                        }).setNegativeButton(null, null)
-                        .show()
-
+                if (howMany <= 0) {
+                    AlertDialog.Builder(context!!, R.style.MyDialogTheme)
+                            .setTitle("메시지 내역")
+                            .setMessage("등록할 항목이 존재하지 않습니다")
+                            .setPositiveButton("확인", { dialog, _ ->
+                                dialog.dismiss()
+                            }).setNegativeButton(null, null)
+                            .show()
+                } else {
+                    AlertDialog.Builder(context!!, R.style.MyDialogTheme)
+                            .setTitle("메시지 내역")
+                            .setMessage("$howMany 항목이 등록되었습니다.")
+                            .setPositiveButton("확인", { dialog, _ ->
+                                dialog.dismiss()
+                            }).setNegativeButton(null, null)
+                            .show()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
@@ -256,7 +325,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
         val appPackageName = activity?.packageName // getPackageName() from Context or Activity object
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
-        } catch (anfe: android.content.ActivityNotFoundException) {
+        } catch (anfe: ActivityNotFoundException) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
         }
     }
