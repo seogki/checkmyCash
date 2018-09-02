@@ -21,8 +21,8 @@ android {
         applicationId "cashcheck.skh.com.availablecash"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 5
-        versionName "1.0.3"
+        versionCode 6
+        versionName "1.0.4"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

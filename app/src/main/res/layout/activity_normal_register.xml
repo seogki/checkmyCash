@@ -176,7 +176,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_date"
+                        app:layout_constraintTop_toBottomOf="@+id/normal_atv_txt_date"
                         />
 
                     <EditText
@@ -193,7 +193,7 @@
                         android:paddingStart="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_cat"
-                        app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_date"
+                        app:layout_constraintTop_toBottomOf="@+id/normal_atv_txt_date"
                         />
 
                     <TextView
@@ -209,7 +209,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_cat"
+                        app:layout_constraintTop_toBottomOf="@+id/normal_atv_txt_cat"
                         />
 
                     <EditText
@@ -226,7 +226,7 @@
                         android:paddingStart="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/normal_atv_txt_money"
-                        app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_cat"
+                        app:layout_constraintTop_toBottomOf="@+id/normal_atv_txt_cat"
                         />
 
 
@@ -239,9 +239,9 @@
                         android:onClick="@{onClickListener::onClick}"
                         android:padding="5dp"
                         android:src="@drawable/baseline_close_black_24"
-                        app:layout_constraintBottom_toBottomOf="@id/normal_atv_edit_money"
-                        app:layout_constraintEnd_toEndOf="@id/normal_atv_edit_money"
-                        app:layout_constraintTop_toTopOf="@id/normal_atv_edit_money"
+                        app:layout_constraintBottom_toBottomOf="@+id/normal_atv_edit_money"
+                        app:layout_constraintEnd_toEndOf="@+id/normal_atv_edit_money"
+                        app:layout_constraintTop_toTopOf="@+id/normal_atv_edit_money"
                         />
 
                     <com.google.android.gms.ads.AdView
@@ -252,7 +252,7 @@
                         android:layout_marginTop="16dp"
                         ads:adSize="BANNER"
                         ads:adUnitId="@string/admob_banner_main"
-                        app:layout_constraintTop_toBottomOf="@id/normal_atv_edit_money"
+                        app:layout_constraintTop_toBottomOf="@+id/normal_atv_edit_money"
                         />
 
                     <android.support.constraint.ConstraintLayout
@@ -262,6 +262,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/adView"
