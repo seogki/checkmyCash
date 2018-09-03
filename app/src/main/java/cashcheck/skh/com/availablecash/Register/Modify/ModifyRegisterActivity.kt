@@ -24,6 +24,9 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
     lateinit var binding: ActivityModifyRegisterBinding
     lateinit var dbname: String
     lateinit var id: String
+    private var firstCalData = ""
+    private var secondCalData = ""
+    private var whichOne = ""
     private var days: String = ""
     private lateinit var estimateDBHelper: EstimateDBHelper
     private lateinit var dbHelper: DBHelper
@@ -64,15 +67,11 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
 
     private fun abADs() {
 
-//        val mInterstitialAd = InterstitialAd(this)
-//        mInterstitialAd.adUnitId = getString(R.string.admob_banner_compare)
-//        mInterstitialAd.loadAd(AdRequest.Builder().build())
-
         val adRequest = AdRequest.Builder().build()
         adView?.loadAd(adRequest)
         adView?.adListener = object : AdListener() {
             override fun onAdClosed() {
-//                mInterstitialAd.loadAd(AdRequest.Builder().build())
+
             }
         }
     }
@@ -118,6 +117,142 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
             }
             R.id.normal_atv_img_clear_ill -> {
                 binding.normalAtvEditIll.text.clear()
+            }
+            R.id.cal_txt_1 -> binding.calTxtTitle.append("1")
+            R.id.cal_txt_2 -> binding.calTxtTitle.append("2")
+            R.id.cal_txt_3 -> binding.calTxtTitle.append("3")
+            R.id.cal_txt_4 -> binding.calTxtTitle.append("4")
+            R.id.cal_txt_5 -> binding.calTxtTitle.append("5")
+            R.id.cal_txt_6 -> binding.calTxtTitle.append("6")
+            R.id.cal_txt_7 -> binding.calTxtTitle.append("7")
+            R.id.cal_txt_8 -> binding.calTxtTitle.append("8")
+            R.id.cal_txt_9 -> binding.calTxtTitle.append("9")
+            R.id.cal_txt_dot -> {
+                if (binding.calTxtTitle.text.toString().isNotEmpty())
+                    binding.calTxtTitle.append(".")
+            }
+            R.id.cal_txt_cancel -> {
+                firstCalData = ""
+                secondCalData = ""
+                whichOne = ""
+                binding.calTxtTitle.text = ""
+                binding.calTxtResult.text = ""
+            }
+            R.id.cal_txt_divide -> {
+                calculate("/")
+            }
+            R.id.cal_txt_time -> {
+                calculate("*")
+            }
+            R.id.cal_txt_plus -> {
+                calculate("+")
+            }
+            R.id.cal_txt_minus -> {
+                calculate("-")
+            }
+            R.id.cal_txt_equal -> {
+                calculate("=")
+            }
+        }
+    }
+    private fun calculate(what: String) {
+        when (what) {
+            "/" -> {
+                if (firstCalData != "") {
+                    secondCalData = binding.calTxtTitle.text.toString()
+                    var result = ""
+                    when (whichOne) {
+                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                    }
+                    binding.calTxtResult.text = result
+                    binding.calTxtTitle.text = ""
+                    whichOne = "/"
+                    firstCalData = result
+                } else {
+                    firstCalData = binding.calTxtTitle.text.toString()
+                    binding.calTxtTitle.text = ""
+                    whichOne = "/"
+                }
+            }
+            "*" -> {
+                if (firstCalData != "") {
+                    secondCalData = binding.calTxtTitle.text.toString()
+                    var result = ""
+                    when (whichOne) {
+                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                    }
+                    binding.calTxtResult.text = result
+                    binding.calTxtTitle.text = ""
+                    whichOne = "*"
+                    firstCalData = result
+                } else {
+                    firstCalData = binding.calTxtTitle.text.toString()
+                    binding.calTxtTitle.text = ""
+                    whichOne = "*"
+                }
+            }
+            "+" -> {
+                if (firstCalData != "") {
+                    secondCalData = binding.calTxtTitle.text.toString()
+                    var result = ""
+                    when (whichOne) {
+                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                    }
+                    binding.calTxtResult.text = result
+                    binding.calTxtTitle.text = ""
+                    whichOne = "+"
+                    firstCalData = result
+                } else {
+                    firstCalData = binding.calTxtTitle.text.toString()
+                    binding.calTxtTitle.text = ""
+                    whichOne = "+"
+                }
+            }
+            "-" -> {
+                if (firstCalData != "") {
+                    secondCalData = binding.calTxtTitle.text.toString()
+                    var result = ""
+                    when (whichOne) {
+                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                    }
+                    binding.calTxtResult.text = result
+                    binding.calTxtTitle.text = ""
+                    whichOne = "-"
+                    firstCalData = result
+                } else {
+                    firstCalData = binding.calTxtTitle.text.toString()
+                    binding.calTxtTitle.text = ""
+                    whichOne = "-"
+                }
+            }
+            "=" -> {
+                if (firstCalData != "") {
+                    secondCalData = binding.calTxtTitle.text.toString()
+                    var result = ""
+                    when (whichOne) {
+                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                    }
+
+                    binding.calTxtTitle.text = result
+                    binding.calTxtResult.text = result
+                    firstCalData = ""
+                    secondCalData = ""
+                }
             }
         }
     }

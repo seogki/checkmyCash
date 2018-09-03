@@ -48,15 +48,11 @@ class CompareMainActivity : BaseActivity(), View.OnClickListener {
 
     private fun abADs() {
 
-//        val mInterstitialAd = InterstitialAd(this)
-//        mInterstitialAd.adUnitId = getString(R.string.admob_banner_compare)
-//        mInterstitialAd.loadAd(AdRequest.Builder().build())
-
         val adRequest = AdRequest.Builder().build()
         adView?.loadAd(adRequest)
         adView?.adListener = object : AdListener() {
             override fun onAdClosed() {
-//                mInterstitialAd.loadAd(AdRequest.Builder().build())
+
             }
         }
     }
