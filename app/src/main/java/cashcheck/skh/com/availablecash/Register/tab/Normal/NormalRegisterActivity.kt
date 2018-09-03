@@ -21,10 +21,7 @@ import android.widget.Toast
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.Dialog.CategoryDialogV2
 import cashcheck.skh.com.availablecash.Register.Interface.CategoryDialogInterface
-import cashcheck.skh.com.availablecash.Util.Const
-import cashcheck.skh.com.availablecash.Util.CustomTextWatcher
-import cashcheck.skh.com.availablecash.Util.DBHelper
-import cashcheck.skh.com.availablecash.Util.DLog
+import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.ActivityNormalRegisterBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -247,18 +244,21 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             "=" -> {
                 if (firstCalData != "") {
                     secondCalData = binding.calTxtTitle.text.toString()
-                    var result = ""
-                    when (whichOne) {
-                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
-                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
-                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
-                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
-                    }
+                    if (secondCalData != "") {
+                        var result = ""
+                        when (whichOne) {
+                            "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                            "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                            "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                            "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                        }
 
-                    binding.calTxtTitle.text = result
-                    binding.calTxtResult.text = result
-                    firstCalData = ""
-                    secondCalData = ""
+                        binding.calTxtTitle.text = result
+                        binding.calTxtResult.text = result
+                        binding.normalAtvEditMoney.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(Math.ceil(result.toDouble()).toString()) + "원")
+                        firstCalData = ""
+                        secondCalData = ""
+                    }
                 }
             }
         }
@@ -322,7 +322,6 @@ class NormalRegisterActivity : AppCompatActivity(), View.OnClickListener, Catego
             mDatePicker.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             mDatePicker.show()
         }
-
 
     }
 

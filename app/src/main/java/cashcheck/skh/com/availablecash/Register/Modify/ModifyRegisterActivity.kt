@@ -86,7 +86,7 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
         val days = i.getStringExtra(Const.ItemDays)
 
 
-        if(dbname == Const.DbName){
+        if (dbname == Const.DbName) {
             binding.normalAtvEditIll.visibility = View.GONE
             binding.normalAtvImgClearIll.visibility = View.GONE
             binding.normalAtvTxtIll.visibility = View.GONE
@@ -117,6 +117,11 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
             }
             R.id.normal_atv_img_clear_ill -> {
                 binding.normalAtvEditIll.text.clear()
+            }
+            R.id.cal_txt_0 -> {
+                if (binding.calTxtTitle.text.toString().isNotEmpty()) {
+                    binding.calTxtTitle.append("0")
+                }
             }
             R.id.cal_txt_1 -> binding.calTxtTitle.append("1")
             R.id.cal_txt_2 -> binding.calTxtTitle.append("2")
@@ -155,6 +160,7 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
             }
         }
     }
+
     private fun calculate(what: String) {
         when (what) {
             "/" -> {
@@ -240,18 +246,21 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
             "=" -> {
                 if (firstCalData != "") {
                     secondCalData = binding.calTxtTitle.text.toString()
-                    var result = ""
-                    when (whichOne) {
-                        "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
-                        "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
-                        "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
-                        "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
-                    }
+                    if (secondCalData != "") {
+                        var result = ""
+                        when (whichOne) {
+                            "/" -> result = firstCalData.toFloat().div(secondCalData.toFloat()).toString()
+                            "*" -> result = firstCalData.toFloat().times(secondCalData.toFloat()).toString()
+                            "-" -> result = firstCalData.toFloat().minus(secondCalData.toFloat()).toString()
+                            "+" -> result = firstCalData.toFloat().plus(secondCalData.toFloat()).toString()
+                        }
 
-                    binding.calTxtTitle.text = result
-                    binding.calTxtResult.text = result
-                    firstCalData = ""
-                    secondCalData = ""
+                        binding.calTxtTitle.text = result
+                        binding.calTxtResult.text = result
+                        firstCalData = ""
+                        secondCalData = ""
+                        binding.normalAtvEditMoney.text = Editable.Factory.getInstance().newEditable(UtilMethod.currencyFormat(Math.ceil(result.toDouble()).toString()) + "원")
+                    }
                 }
             }
         }
@@ -261,10 +270,10 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
         when (v?.id) {
             R.id.normal_atv_edit_money -> {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if(dbname == Const.DbName){
+                    if (dbname == Const.DbName) {
                         checkEmptyAndSave()
                         return true
-                    } else if(dbname == Const.DbEstimateName){
+                    } else if (dbname == Const.DbEstimateName) {
                         binding.normalAtvEditIll.requestFocus()
                         return true
                     }
@@ -308,7 +317,7 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
                 estimateDBHelper.updateData(id
                         , binding.normalAtvEditCat.text.toString()
                         , binding.normalAtvEditMoney.text.toString().trim().replace(",".toRegex(), "").replace("원", "")
-                        , binding.normalAtvEditIll.text.toString().replace("일",""))
+                        , binding.normalAtvEditIll.text.toString().replace("일", ""))
                 finish()
                 binding.normalAtvBtnDone.isEnabled = true
             } else {

@@ -64,6 +64,8 @@
     <color name="textColor">#fff</color>
     <color name="rippleColor">#CC0000</color>
     <color name="editBoxColor">#AA00FF</color>
+    <color name="rippleReverse">#00CCCC</color>
+    <color name="statusReverse">#009898</color>
 
 
 

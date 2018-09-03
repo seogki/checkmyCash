@@ -36,6 +36,7 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
     var date: String = ""
+    var dateNormal: String = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_main, container, false)
@@ -46,6 +47,7 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         fab.hide()
         binding.onClickListener = this
         date = UtilMethod.getCurrentDate()
+        dateNormal = UtilMethod.getCurrentDate()
         val result = UtilMethod.getCurrentDate().replace("-", "")
         binding.registerFragTxtTitlebar.text = "20" + result.substring(0, 2) + "년 " + result.substring(2, 4) + "월 "
         return binding.root
@@ -75,10 +77,18 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.register_frag_img_right -> {
-                setTimeToRight()
+                if (viewPager.currentItem == 0) {
+                    setTimeToRight()
+                } else if (viewPager.currentItem == 1) {
+                    setNormalToRight()
+                }
             }
             R.id.register_frag_img_left -> {
-                setTimeToLeft()
+                if (viewPager.currentItem == 0) {
+                    setTimeToLeft()
+                } else if (viewPager.currentItem == 1) {
+                    setNormalToLeft()
+                }
             }
         }
     }
@@ -96,7 +106,7 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
                     1 -> {
                         val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
                         fab.show()
-                        setTitleBar(date)
+                        setTitleBar(dateNormal)
                         binding.registerFragImgRight.visibility = View.VISIBLE
                         binding.registerFragImgLeft.visibility = View.VISIBLE
 
@@ -122,6 +132,19 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
+    private fun setNormalToRight() {
+        val newDate = getDesignatedDate(1, dateNormal)
+        arrowRight(newDate)
+        dateNormal = newDate
+        setTitleBar(dateNormal)
+    }
+
+    private fun setNormalToLeft() {
+        val newDate = getDesignatedDate(-1, dateNormal)
+        arrowLeft(newDate)
+        dateNormal = newDate
+        setTitleBar(dateNormal)
+    }
 
     private fun setTimeToRight() {
         val newDate = getDesignatedDate(1, date)
