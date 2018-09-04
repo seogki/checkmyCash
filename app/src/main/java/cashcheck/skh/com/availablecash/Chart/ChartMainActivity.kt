@@ -15,55 +15,23 @@ import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.databinding.ActivityChartMainBinding
-import com.google.android.gms.ads.AdView
 
 
 class ChartMainActivity : BaseActivity(), View.OnClickListener {
     private var backKeyPressedTime: Long = 0
     lateinit var binding: ActivityChartMainBinding
     private lateinit var db: DBHelper
-    private var adView: AdView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@ChartMainActivity, R.layout.activity_chart_main)
-        binding.layoutBottomTab.onClickListener = this
+        binding.layoutBottomTab?.onClickListener = this
         addFragment(R.id.frame_layout, ChartMainFragment(), false, false, "ChartMainFragment")
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
-//        adView = binding.adView
-//        abADs()
         setCurrentTab()
         checkColumn()
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        adView?.resume()
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        adView?.destroy()
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        adView?.pause()
-//    }
-//
-//    private fun abADs() {
-//
-////        val mInterstitialAd = InterstitialAd(this)
-////        mInterstitialAd.adUnitId = getString(R.string.admob_banner_main)
-////        mInterstitialAd.loadAd(AdRequest.Builder().build())
-//
-//        val adRequest = AdRequest.Builder().build()
-//        adView?.loadAd(adRequest)
-//        adView?.adListener = object : AdListener() {
-//            override fun onAdClosed() {
-////                mInterstitialAd.loadAd(AdRequest.Builder().build())
-//            }
-//        }
-//    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -88,9 +56,9 @@ class ChartMainActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun setCurrentTab() {
-        binding.layoutBottomTab.bottomLayoutBtn0Txt.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_home_24))
-        binding.layoutBottomTab.bottomLayoutBtn0Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
-        binding.layoutBottomTab.bottomLayoutText0.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
+        binding.layoutBottomTab?.bottomLayoutBtn0Txt?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_home_24))
+        binding.layoutBottomTab?.bottomLayoutBtn0Txt?.drawable?.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
+        binding.layoutBottomTab?.bottomLayoutText0?.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
     }
 
     override fun onBackPressed() {

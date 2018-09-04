@@ -26,13 +26,14 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
     private var arr = arraylist
     override fun onBindView(holder: EstimateRegisterViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-        val model = getItem(holder.adapterPosition)
-        holder.binding.model = model
+        holder.bind(getItem(holder.adapterPosition))
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_estimate, parent, false)
-        return EstimateRegisterViewHolder(view, onNormalRegisterDeleteListener)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemEstimateBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_estimate, parent, false)
+        return EstimateRegisterViewHolder(binding, onNormalRegisterDeleteListener)
     }
 
     override fun getItemId(position: Int): Long {
@@ -41,30 +42,30 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
     }
 
 
-    inner class EstimateRegisterViewHolder(itemView: View?, private var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class EstimateRegisterViewHolder(val binding: ItemEstimateBinding, private var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
 
-        var binding: ItemEstimateBinding
         private var isExpend: Boolean = false
-        private var db: EstimateDBHelper
+        private var db: EstimateDBHelper? = null
 
-        init {
-            super.itemView
-            binding = DataBindingUtil.bind(itemView)
+
+        fun bind(model: EstimateRegisterModel?) {
+            binding.model = model
             db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
             binding.onClickListener = this
+            binding.executePendingBindings()
         }
 
         override fun onClick(v: View?) {
             when (v?.id) {
                 R.id.estimate_cate_const1 -> {
-                        if (!isExpend) {
-                            binding.estimateCateConst2.visibility = View.VISIBLE
-                            isExpend = true
-                        } else {
-                            binding.estimateCateConst2.visibility = View.GONE
-                            isExpend = false
-                        }
+                    if (!isExpend) {
+                        binding.estimateCateConst2.visibility = View.VISIBLE
+                        isExpend = true
+                    } else {
+                        binding.estimateCateConst2.visibility = View.GONE
+                        isExpend = false
+                    }
                 }
                 R.id.item_cate_sub_img_clear -> {
                     deleteData()
@@ -84,7 +85,7 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
                     .setMessage("정말로 지우시겠습니까?")
                     .setPositiveButton("확인", { dialog, _ ->
                         dialog.dismiss()
-                        binding.model?.num?.let { db.deleteData(it) }
+                        binding.model?.num?.let { db?.deleteData(it) }
                         onNormalRegisterDeleteListener.onCompleteDelete("done")
                         binding.estimateCateConst2.visibility = View.GONE
                         isExpend = false
@@ -100,11 +101,11 @@ class EstimateRegisterAdapter(context: Context, arraylist: MutableList<EstimateR
         private fun beginActivity() {
             val model = binding.model
             val i = Intent(context, ModifyRegisterActivity::class.java)
-            i.putExtra(Const.ItemId, model.num)
-            i.putExtra(Const.ItemCategory, model.cate)
-            i.putExtra(Const.ItemMoney, model.money)
-            i.putExtra(Const.ItemDate, model.date)
-            i.putExtra(Const.ItemDays, model.days)
+            i.putExtra(Const.ItemId, model?.num)
+            i.putExtra(Const.ItemCategory, model?.cate)
+            i.putExtra(Const.ItemMoney, model?.money)
+            i.putExtra(Const.ItemDate, model?.date)
+            i.putExtra(Const.ItemDays, model?.days)
             i.putExtra(Const.ItemDBNAME, Const.DbEstimateName)
             context!!.startActivity(i)
             binding.estimateCateConst2.visibility = View.GONE

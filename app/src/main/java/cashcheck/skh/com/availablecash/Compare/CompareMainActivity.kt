@@ -24,7 +24,7 @@ class CompareMainActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@CompareMainActivity, R.layout.activity_compare_main)
-        binding.layoutBottomTab.onClickListener = this
+        binding.layoutBottomTab?.onClickListener = this
         addFragment(R.id.frame_layout, CompareMainFragment(), false, false, "CompareMainFragment")
         adView = binding.adView
         setCurrentTab()
@@ -72,9 +72,9 @@ class CompareMainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setCurrentTab() {
-        binding.layoutBottomTab.bottomLayoutBtn2Txt.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_insert_chart_black_24))
-        binding.layoutBottomTab.bottomLayoutBtn2Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
-        binding.layoutBottomTab.bottomLayoutText2.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
+        binding.layoutBottomTab?.bottomLayoutBtn2Txt?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.baseline_insert_chart_black_24))
+        binding.layoutBottomTab?.bottomLayoutBtn2Txt?.drawable?.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
+        binding.layoutBottomTab?.bottomLayoutText2?.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
     }
 
     override fun onBackPressed() {

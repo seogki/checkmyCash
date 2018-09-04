@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.Compare.model.CompareLineModel
@@ -20,31 +19,28 @@ open class CompareLineAdapter(context: Context, arrayList: MutableList<CompareLi
 
     override fun onBindView(holder: CompareLineViewHolder, position: Int) {
         holder.setIsRecyclable(true)
-        val model = getItem(holder.adapterPosition)
-        holder.binding.model = model
-        when {
-            model!!.result.contains("-") -> {
-                holder.binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
-            }
-            model.result.isEmpty() -> {
-                holder.binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
-            }
-            else -> {
-                holder.binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.green))
-            }
-        }
+        holder.bind(getItem(holder.adapterPosition))
+
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_compare_line, parent, false).let { CompareLineViewHolder(it) }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemCompareLineBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_compare_line, parent, false)
+        return CompareLineViewHolder(binding)
+    }
 
 
-    inner class CompareLineViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        var binding: ItemCompareLineBinding
+    inner class CompareLineViewHolder(val binding: ItemCompareLineBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            super.itemView
-            binding = DataBindingUtil.bind(itemView)
+        fun bind(model: CompareLineModel?) {
+            binding.model = model
+
+            when {
+                model!!.result.contains("-") -> binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
+                model.result.isEmpty() -> binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
+                else -> binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.green))
+            }
+            binding.executePendingBindings()
         }
     }
 }

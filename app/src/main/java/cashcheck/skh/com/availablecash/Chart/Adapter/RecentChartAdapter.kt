@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cashcheck.skh.com.availablecash.BR
 import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.Interface.OnNormalRegisterDeleteListener
@@ -28,25 +29,27 @@ class RecentChartAdapter(context: Context, arraylist: MutableList<EstimateRegist
     override fun onBindView(holder: RecentChartViewHolder, position: Int) {
         holder.setIsRecyclable(false)
         val model = getItem(holder.adapterPosition)
-        holder.binding.model = model
+        holder.bind(model)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_estimate, parent, false)
-        return RecentChartViewHolder(view, onNormalRegisterDeleteListener)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemEstimateBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_estimate, parent, false)
+
+        return RecentChartViewHolder(binding, onNormalRegisterDeleteListener)
     }
 
 
-    inner class RecentChartViewHolder(itemView: View?, private var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class RecentChartViewHolder(val binding: ItemEstimateBinding, private var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
 
-        var binding: ItemEstimateBinding
         private var isExpend: Boolean = false
-        private var db: DBHelper
+        private var db: DBHelper? = null
 
-        init {
-            super.itemView
-            binding = DataBindingUtil.bind(itemView)
+
+        fun bind(data: EstimateRegisterModel?) {
+            binding.setVariable(BR.model, data)
+            binding.executePendingBindings()
             db = DBHelper(mContext.applicationContext, "${Const.DbName}.db", null, 1)
             binding.onClickListener = this
         }
@@ -80,7 +83,7 @@ class RecentChartAdapter(context: Context, arraylist: MutableList<EstimateRegist
                     .setMessage("정말로 지우시겠습니까?")
                     .setPositiveButton("확인", { dialog, _ ->
                         dialog.dismiss()
-                        binding.model?.num?.let { db.deleteData(it) }
+                        binding.model?.num?.let { db?.deleteData(it) }
                         onNormalRegisterDeleteListener.onCompleteDelete("done")
                         binding.estimateCateConst2.visibility = View.GONE
                         isExpend = false
@@ -96,11 +99,11 @@ class RecentChartAdapter(context: Context, arraylist: MutableList<EstimateRegist
         private fun beginActivity() {
             val model = binding.model
             val i = Intent(context, ModifyRegisterActivity::class.java)
-            i.putExtra(Const.ItemId, model.num)
-            i.putExtra(Const.ItemCategory, model.cate)
-            i.putExtra(Const.ItemMoney, model.money)
-            i.putExtra(Const.ItemDate, model.date)
-            i.putExtra(Const.ItemDays, model.days)
+            i.putExtra(Const.ItemId, model?.num)
+            i.putExtra(Const.ItemCategory, model?.cate)
+            i.putExtra(Const.ItemMoney, model?.money)
+            i.putExtra(Const.ItemDate, model?.date)
+            i.putExtra(Const.ItemDays, model?.days)
             i.putExtra(Const.ItemDBNAME, Const.DbName)
             context!!.startActivity(i)
             binding.estimateCateConst2.visibility = View.GONE

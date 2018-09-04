@@ -21,37 +21,15 @@ class CalendarAdapter(context: Context, arraylist: MutableList<CalendarModel>) :
     private var arr = arraylist
     override fun onBindView(holder: CalendarViewHolder, position: Int) {
         holder.setIsRecyclable(true)
-        val model = getItem(holder.adapterPosition)
-        holder.binding.model = model
-        if (model?.isBelow == true) {
-            if (model.isNow == true) {
-                holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_stroke_status_notthismonth)
-            } else {
-                holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_grey_ripple)
-            }
-        } else {
-            if(model?.isNow == true){
-                holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_stroke_status)
-            } else {
-                holder.binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.rv_end_ripple_corner_btm)
-            }
-        }
-        when {
-            model?.weekday == "일요일" -> {
-                holder.binding.itemRvCalendarTxtDate.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
-            }
-            model?.weekday == "토요일" -> {
-                holder.binding.itemRvCalendarTxtDate.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
-            }
-            else -> {
-                holder.binding.itemRvCalendarTxtDate.setTextColor(ContextCompat.getColor(context!!, R.color.black))
-            }
-        }
+        holder.bind(getItem(holder.adapterPosition))
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rv_calendar, parent, false)
-        return CalendarViewHolder(view)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemRvCalendarBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_rv_calendar, parent, false)
+        return CalendarViewHolder(binding)
+
     }
 
     override fun getItemId(position: Int): Long {
@@ -60,13 +38,29 @@ class CalendarAdapter(context: Context, arraylist: MutableList<CalendarModel>) :
     }
 
 
-    inner class CalendarViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        var binding: ItemRvCalendarBinding
+    inner class CalendarViewHolder(val binding: ItemRvCalendarBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        init {
-            super.itemView
-            binding = DataBindingUtil.bind(itemView)
-            binding.onClickListener = this
+        fun bind(model: CalendarModel?) {
+            binding.model = model
+            if (model!!.isBelow == true) {
+                if (model.isNow == true)
+                    binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_stroke_status_notthismonth)
+                else
+                    binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_grey_ripple)
+
+            } else {
+                if (model.isNow == true)
+                    binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.view_calendar_now_stroke_status)
+                else
+                    binding.itemRvCalendarConstAll.setBackgroundResource(R.drawable.rv_end_ripple_corner_btm)
+
+            }
+            when {
+                model.weekday == "일요일" -> binding.itemRvCalendarTxtDate.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
+                model.weekday == "토요일" -> binding.itemRvCalendarTxtDate.setTextColor(ContextCompat.getColor(context!!, R.color.blue))
+                else -> binding.itemRvCalendarTxtDate.setTextColor(ContextCompat.getColor(context!!, R.color.black))
+            }
+            binding.executePendingBindings()
         }
 
         override fun onClick(v: View?) {

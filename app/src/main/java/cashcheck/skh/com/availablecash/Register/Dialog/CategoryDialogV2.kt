@@ -115,8 +115,8 @@ class CategoryDialogV2(context: Context, private var listener: CategoryDialogInt
         }
     }
 
-    override fun getTextFromAdapter(text: String) {
-        if (text.isNotEmpty()) {
+    override fun getTextFromAdapter(text: String?) {
+        if (text != null) {
             onSaveDbAndEnd(text)
         }
     }
@@ -153,7 +153,7 @@ class CategoryDialogV2(context: Context, private var listener: CategoryDialogInt
         }
     }
 
-    private fun onSaveDbAndEnd(data: String){
+    private fun onSaveDbAndEnd(data: String) {
         insertDb(data)
         listener.getTextFromDialog(data)
         dismiss()

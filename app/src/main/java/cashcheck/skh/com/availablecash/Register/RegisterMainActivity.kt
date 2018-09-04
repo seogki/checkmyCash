@@ -21,7 +21,7 @@ class RegisterMainActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this@RegisterMainActivity, R.layout.activity_register_main)
-        binding.layoutBottomTab.onClickListener = this
+        binding.layoutBottomTab?.onClickListener = this
         binding.normalAtvFab.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         binding.onClickListener = this
         addFragment(R.id.frame_layout, RegisterMainFragment(), false, false, "RegisterMainFragment")
@@ -48,9 +48,9 @@ class RegisterMainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setCurrentTab() {
-        binding.layoutBottomTab.bottomLayoutBtn1Txt.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_pie_char_24))
-        binding.layoutBottomTab.bottomLayoutBtn1Txt.drawable.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
-        binding.layoutBottomTab.bottomLayoutText1.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
+        binding.layoutBottomTab?.bottomLayoutBtn1Txt?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.icons8_pie_char_24))
+        binding.layoutBottomTab?.bottomLayoutBtn1Txt?.drawable?.setColorFilter(ContextCompat.getColor(this, R.color.rippleColor), PorterDuff.Mode.SRC_ATOP)
+        binding.layoutBottomTab?.bottomLayoutText1?.setTextColor(ContextCompat.getColor(this, R.color.rippleColor))
     }
 
     override fun onBackPressed() {

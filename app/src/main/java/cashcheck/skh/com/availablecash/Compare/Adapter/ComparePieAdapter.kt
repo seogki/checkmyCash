@@ -6,7 +6,6 @@ import android.graphics.PorterDuff
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseRecyclerViewAdapter
 import cashcheck.skh.com.availablecash.Compare.model.ComparePieModel
@@ -21,31 +20,35 @@ open class ComparePieAdapter(context: Context, arrayList: MutableList<ComparePie
 
     override fun onBindView(holder: ComparePieViewHolder, position: Int) {
         holder.setIsRecyclable(true)
-        val model = getItem(holder.adapterPosition)
-        holder.binding.model = model
-        if (model!!.result!!.contains("-")) {
-            holder.binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_arrow_downward_black_24))
-            holder.binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.Red), PorterDuff.Mode.SRC_ATOP)
-        } else if (model.result == "0" || model.result == "0.0") {
-            holder.binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_remove_black_24))
-            holder.binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.blue), PorterDuff.Mode.SRC_ATOP)
-        } else {
-            holder.binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_arrow_upward_black_24))
-            holder.binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.green), PorterDuff.Mode.SRC_ATOP)
-        }
+        holder.bind(getItem(holder.adapterPosition))
+
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_compare_pie, parent, false).let { ComparePieViewHolder(it) }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemComparePieBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_compare_pie, parent, false)
+        return ComparePieViewHolder(binding)
+
+    }
 
 
-    inner class ComparePieViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        var binding: ItemComparePieBinding
+    inner class ComparePieViewHolder(val binding: ItemComparePieBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            super.itemView
-            binding = DataBindingUtil.bind(itemView)
+        fun bind(model: ComparePieModel?) {
+            binding.model = model
+            if (model!!.result!!.contains("-")) {
+                binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_arrow_downward_black_24))
+                binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.Red), PorterDuff.Mode.SRC_ATOP)
+            } else if (model.result == "0" || model.result == "0.0") {
+                binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_remove_black_24))
+               binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.blue), PorterDuff.Mode.SRC_ATOP)
+            } else {
+                binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_arrow_upward_black_24))
+                binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.green), PorterDuff.Mode.SRC_ATOP)
+            }
+            binding.executePendingBindings()
+
         }
     }
 }

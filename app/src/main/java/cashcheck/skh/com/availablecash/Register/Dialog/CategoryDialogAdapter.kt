@@ -19,26 +19,25 @@ class CategoryDialogAdapter(context: Context, arraylist: MutableList<String>) : 
     lateinit var categoryDialogInterface: DialogInterface
     override fun onBindView(holder: CategoryDialogViewHolder, position: Int) {
         holder.setIsRecyclable(false)
-        val model = getItem(holder.adapterPosition)
-        holder.binding.cate = model
+        holder.bind(getItem(holder.adapterPosition))
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category_dialogv2_item, parent, false)
-        return CategoryDialogViewHolder(view, categoryDialogInterface)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemCategoryDialogv2ItemBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_category_dialogv2_item, parent, false)
+        return CategoryDialogViewHolder(binding, categoryDialogInterface)
+
     }
 
 
-    inner class CategoryDialogViewHolder(itemView: View?, private var categoryDialogInterface: DialogInterface) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
+    inner class CategoryDialogViewHolder(val binding: ItemCategoryDialogv2ItemBinding, private var categoryDialogInterface: DialogInterface) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-
-        var binding: ItemCategoryDialogv2ItemBinding
-
-        init {
-            super.itemView
-            binding = DataBindingUtil.bind(itemView)
+        fun bind(model: String?) {
+            binding.cate = model
             binding.onClickListener = this
             binding.onLongClickListener = this
+            binding.executePendingBindings()
         }
 
         override fun onClick(v: View?) {
