@@ -20,21 +20,18 @@ open class CompareLineAdapter(context: Context, arrayList: MutableList<CompareLi
     override fun onBindView(holder: CompareLineViewHolder, position: Int) {
         holder.setIsRecyclable(true)
         holder.bind(getItem(holder.adapterPosition))
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemCompareLineBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_compare_line, parent, false)
+        val binding: ItemCompareLineBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_compare_line, parent, false)
         return CompareLineViewHolder(binding)
     }
 
 
     inner class CompareLineViewHolder(val binding: ItemCompareLineBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(model: CompareLineModel?) {
             binding.model = model
-
             when {
                 model!!.result.contains("-") -> binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
                 model.result.isEmpty() -> binding.itemCompareLineTxtSdate.setTextColor(ContextCompat.getColor(context!!, R.color.blue))

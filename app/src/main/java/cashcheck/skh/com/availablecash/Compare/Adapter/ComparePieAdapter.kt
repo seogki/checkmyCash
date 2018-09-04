@@ -27,9 +27,8 @@ open class ComparePieAdapter(context: Context, arrayList: MutableList<ComparePie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemComparePieBinding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_compare_pie, parent, false)
+        val binding: ItemComparePieBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_compare_pie, parent, false)
         return ComparePieViewHolder(binding)
-
     }
 
 
@@ -42,7 +41,7 @@ open class ComparePieAdapter(context: Context, arrayList: MutableList<ComparePie
                 binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.Red), PorterDuff.Mode.SRC_ATOP)
             } else if (model.result == "0" || model.result == "0.0") {
                 binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_remove_black_24))
-               binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.blue), PorterDuff.Mode.SRC_ATOP)
+                binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.blue), PorterDuff.Mode.SRC_ATOP)
             } else {
                 binding.itemComparePieImgArrow.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.baseline_arrow_upward_black_24))
                 binding.itemComparePieImgArrow.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.green), PorterDuff.Mode.SRC_ATOP)

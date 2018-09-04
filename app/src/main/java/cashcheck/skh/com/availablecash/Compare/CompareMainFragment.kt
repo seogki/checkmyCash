@@ -70,6 +70,7 @@ class CompareMainFragment : BaseFragment(), View.OnClickListener {
                 }
             }
 
+
         }
 
     }
