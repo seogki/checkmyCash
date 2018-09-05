@@ -60,8 +60,6 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener {
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.initialPrefetchItemCount = 2
         binding.compareFragLineRv.layoutManager = layoutManager
-        binding.compareFragLineRv.isDrawingCacheEnabled = true
-        binding.compareFragLineRv.setItemViewCacheSize(10)
         binding.compareFragLineRv.isNestedScrollingEnabled = false
         binding.compareFragLineRv.itemAnimator = null
 

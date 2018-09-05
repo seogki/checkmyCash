@@ -37,7 +37,7 @@ class ExceltoDBDialogV2(context: Context, private var listener: ExceltoDBListene
         setContentView(binding.root)
         binding.onClickListener = this
         binding.excelDbEditDate.setOnEditorActionListener(this)
-        binding.excelDbTxtTitle.text = "경로: ${Environment.getExternalStorageDirectory()}/\n해당 경로에 파일을 넣어주시고\n오늘가계부_************.xls\n *표 12자리 날짜만 적어주세요"
+        binding.excelDbTxtTitle.text = "경로: 내파일 -> 내장메모리/\n해당 경로에 파일을 넣어주시고\n오늘가계부_************.xls\n *표 12자리 날짜만 적어주세요"
     }
 
 

@@ -2,7 +2,6 @@ package cashcheck.skh.com.availablecash.Compare.tab
 
 
 import android.annotation.SuppressLint
-import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.graphics.Typeface
 import android.os.Bundle
@@ -15,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import cashcheck.skh.com.availablecash.Base.BaseFragment
 import cashcheck.skh.com.availablecash.Compare.Adapter.CompareWeekAdapter
+import cashcheck.skh.com.availablecash.Compare.Listener.CompareWeekListener
+import cashcheck.skh.com.availablecash.Compare.Thread.CompareWeekThread
 import cashcheck.skh.com.availablecash.Compare.model.CompareWeekModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.Const
@@ -22,15 +23,13 @@ import cashcheck.skh.com.availablecash.Util.DBHelper
 import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentCompareWeekBinding
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class CompareWeekFragment : BaseFragment() {
+class CompareWeekFragment : BaseFragment(), CompareWeekListener {
+
 
     lateinit var binding: FragmentCompareWeekBinding
     private lateinit var compareWeekAdapter: CompareWeekAdapter
@@ -38,6 +37,7 @@ class CompareWeekFragment : BaseFragment() {
     private lateinit var mItems: MutableList<CompareWeekModel>
     private lateinit var tempItem: MutableList<CompareWeekModel>
     private lateinit var dbHelper: DBHelper
+    private lateinit var thread : CompareWeekThread
     private var isCreated: Boolean = false
     private var weekTotalUsage = 0
     private var mostUsage = 0
@@ -73,10 +73,7 @@ class CompareWeekFragment : BaseFragment() {
         binding.fragCompareWeekRv.setHasFixedSize(true)
         compareWeekAdapter.setHasStableIds(true)
         binding.fragCompareWeekRv.layoutManager = layoutManager
-        binding.fragCompareWeekRv.isDrawingCacheEnabled = true
-        binding.fragCompareWeekRv.setItemViewCacheSize(20)
         binding.fragCompareWeekRv.isNestedScrollingEnabled = false
-        binding.fragCompareWeekRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.fragCompareWeekRv.itemAnimator = null
 
         Handler().postDelayed({
@@ -86,34 +83,27 @@ class CompareWeekFragment : BaseFragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun getWeekFromDB() {
-        var cursor: Cursor? = null
         try {
-            val db = dbHelper.readableDatabase
-            val item = getDaysFromMonth()
-            for (i in 0 until item.size) {
-                weekUsage = 0
-                cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date BETWEEN '" + item[i].first + " 00:00:00" + "' AND '" + item[i].last + " 23:59:59" + "' ORDER BY date DESC", null)
-                while (cursor.moveToNext()) {
-                    weekUsage += cursor.getString(0).toInt()
-
-                }
-                val model = item[i]
-                model.total = weekUsage.toString()
-            }
-            if (tempItem != item) {
-                weekTotalUsage = 0
-                mostUsage = 0
-                tempItem = item.asReversed()
-
-                setItem(tempItem)
-            }
+            thread = CompareWeekThread(dbHelper, weekUsage, fragDate, mutableListOf(), this)
+            thread.run()
 
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            cursor?.close()
         }
     }
+
+    override fun getItems(weekUsage: Int, mItems: MutableList<CompareWeekModel>) {
+        this.weekUsage = weekUsage
+        this.mItems = mItems
+        DLog.e("now getItemCalled?")
+        if (tempItem != mItems) {
+            weekTotalUsage = 0
+            mostUsage = 0
+            tempItem = mItems
+            setItem(mItems.asReversed())
+        }
+    }
+
 
     private fun getTotalAndMostUsage(tempItem: MutableList<CompareWeekModel>) {
         val arr = ArrayList<Int>()
@@ -136,15 +126,15 @@ class CompareWeekFragment : BaseFragment() {
     private fun setTotalAndMostUsage(size: Int, mostUsage: Int, weekTotalUsage: Int, mostItem: CompareWeekModel?) {
         if (weekTotalUsage != 0) {
             setTextOfTotal("$size 주 합계"
-                    ,"${UtilMethod.currencyFormat(weekTotalUsage.toString())}원"
-                    ,"가장 많은 소비를 한 주"
-                    ,"${replaceDate(mostItem?.first)} ~ ${replaceDate(mostItem?.last)}"
-                    ,"${UtilMethod.currencyFormat(mostUsage.toString())}원"
-                    ,18)
+                    , "${UtilMethod.currencyFormat(weekTotalUsage.toString())}원"
+                    , "가장 많은 소비를 한 주"
+                    , "${replaceDate(mostItem?.first)} ~ ${replaceDate(mostItem?.last)}"
+                    , "${UtilMethod.currencyFormat(mostUsage.toString())}원"
+                    , 18)
 
 
         } else {
-            setTextOfTotal("데이터가 존재하지 않습니다","","","","",16)
+            setTextOfTotal("데이터가 존재하지 않습니다", "", "", "", "", 16)
         }
         if (!isCreated)
             isCreated = true
@@ -168,15 +158,15 @@ class CompareWeekFragment : BaseFragment() {
 
 
     private fun setTextOfTotal(allTotal: String, allMoney: String, mostTotal: String, mostMonth: String, mostMoney: String, font: Int) {
-        if(font == 18){
+        if (font == 18) {
             binding.fragCompareWeekTxtAlltotal.textSize = 18F
             binding.fragCompareWeekTxtAlltotal.typeface = Typeface.DEFAULT_BOLD
-            binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.lightBlack))
+            binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!, R.color.lightBlack))
         } else {
 
             binding.fragCompareWeekTxtAlltotal.textSize = 16F
             binding.fragCompareWeekTxtAlltotal.typeface = Typeface.DEFAULT
-            binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!, R.color.darkGrey))
         }
 
         binding.fragCompareWeekTxtAlltotal.text = allTotal
@@ -189,71 +179,98 @@ class CompareWeekFragment : BaseFragment() {
     private fun setItem(mItems: MutableList<CompareWeekModel>) {
         compareWeekAdapter.clearItems()
         compareWeekAdapter.addItems(mItems)
-
         getTotalAndMostUsage(mItems)
     }
 
 
-    @SuppressLint("SimpleDateFormat")
-    private fun getDaysFromMonth(): MutableList<CompareWeekModel> {
-        mItems = mutableListOf()
-        val cal = Calendar.getInstance()
-        val df = SimpleDateFormat("yy-MM-dd")
-        val sdf = SimpleDateFormat("yy-MM", Locale.KOREA)
-        val currentDay = df.parse(UtilMethod.getCurrentMonth())
-        val current = sdf.parse(UtilMethod.getCurrentMonth())
-        if (fragDate != null) {
-            val d = sdf.parse(fragDate)
-            cal.time = d
-        } else {
-            cal.time = current
-        }
-        cal.add(Calendar.MONTH, 1)
-        cal.add(Calendar.DATE, -1)
-        val end = cal.get(Calendar.WEEK_OF_MONTH)
-
-        for (i in 0 until end) {
-            if (i == 0) {
-
-                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
-                val start = cal.time
-                DLog.e("start $start")
-                cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-                val firstDate = cal.time
-                val first = df.format(firstDate)
-
-                cal.add(Calendar.DATE, 6)
-                val sevenDate = cal.time
-                val seven = df.format(sevenDate)
-
-                if (currentDay in firstDate..sevenDate) {
-                    mItems.add(CompareWeekModel(first, seven, "0", "now"))
-                } else {
-                    mItems.add(CompareWeekModel(first, seven, "0", ""))
-                }
-
-
-            } else {
-
-                cal.add(Calendar.DATE, 1)
-                cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-                val firstDate = cal.time
-                val first = df.format(firstDate)
-
-
-                cal.add(Calendar.DATE, 6)
-                val sevenDate = cal.time
-                val seven = df.format(sevenDate)
-
-                if (currentDay in firstDate..sevenDate) {
-                    mItems.add(CompareWeekModel(first, seven, "0", "now"))
-                } else {
-                    mItems.add(CompareWeekModel(first, seven, "0", ""))
-                }
-            }
-        }
-
-        return mItems
-    }
+//    @SuppressLint("SimpleDateFormat")
+//    private fun getDaysFromMonth(): MutableList<CompareWeekModel> {
+//        mItems = mutableListOf()
+//        val cal = Calendar.getInstance()
+//        val df = SimpleDateFormat("yy-MM-dd")
+//        val sdf = SimpleDateFormat("yy-MM", Locale.KOREA)
+//        val currentDay = df.parse(UtilMethod.getCurrentMonth())
+//        val current = sdf.parse(UtilMethod.getCurrentMonth())
+//        if (fragDate != null) {
+//            val d = sdf.parse(fragDate)
+//            cal.time = d
+//        } else {
+//            cal.time = current
+//        }
+//        cal.add(Calendar.MONTH, 1)
+//        cal.add(Calendar.DATE, -1)
+//        val end = cal.get(Calendar.WEEK_OF_MONTH)
+//
+//        for (i in 0 until end) {
+//            if (i == 0) {
+//
+//                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
+//                val start = cal.time
+//                DLog.e("start $start")
+//                cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+//                val firstDate = cal.time
+//                val first = df.format(firstDate)
+//
+//                cal.add(Calendar.DATE, 6)
+//                val sevenDate = cal.time
+//                val seven = df.format(sevenDate)
+//
+//                if (currentDay in firstDate..sevenDate) {
+//                    mItems.add(CompareWeekModel(first, seven, "0", "now"))
+//                } else {
+//                    mItems.add(CompareWeekModel(first, seven, "0", ""))
+//                }
+//
+//
+//            } else {
+//
+//                cal.add(Calendar.DATE, 1)
+//                cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+//                val firstDate = cal.time
+//                val first = df.format(firstDate)
+//
+//
+//                cal.add(Calendar.DATE, 6)
+//                val sevenDate = cal.time
+//                val seven = df.format(sevenDate)
+//
+//                if (currentDay in firstDate..sevenDate) {
+//                    mItems.add(CompareWeekModel(first, seven, "0", "now"))
+//                } else {
+//                    mItems.add(CompareWeekModel(first, seven, "0", ""))
+//                }
+//            }
+//        }
+//
+//        return mItems
+//    }
+//
+//    inner class QueryTask : AsyncTask<Void, Void, MutableList<CompareWeekModel>>() {
+//        override fun doInBackground(vararg params: Void?): MutableList<CompareWeekModel> {
+//
+//            var cursor: Cursor? = null
+//            val item = getDaysFromMonth()
+//            try {
+//                val db = dbHelper.readableDatabase
+//
+//                for (i in 0 until item.size) {
+//                    weekUsage = 0
+//                    cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date BETWEEN '" + item[i].first + " 00:00:00" + "' AND '" + item[i].last + " 23:59:59" + "' ORDER BY date DESC", null)
+//                    while (cursor.moveToNext()) {
+//                        weekUsage += cursor.getString(0).toInt()
+//
+//                    }
+//                    val model = item[i]
+//                    model.total = weekUsage.toString()
+//                }
+//            } catch (e: Exception) {
+//
+//            } finally {
+//                cursor?.close()
+//            }
+//
+//            return item
+//        }
+//    }
 
 }// Required empty public constructor

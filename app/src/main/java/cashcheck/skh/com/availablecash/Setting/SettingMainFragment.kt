@@ -8,6 +8,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AlertDialog
@@ -28,6 +29,7 @@ import com.ajts.androidmads.library.ExcelToSQLite
 import com.ajts.androidmads.library.SQLiteToExcel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import java.util.*
 
 
 class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListener {
@@ -146,118 +148,9 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
     }
 
     private fun getMessageFromAndroid() {
-        mItem = mutableListOf()
-        val uriSMSURI = Uri.parse("content://sms/inbox")
-        val cur = activity!!.contentResolver.query(uriSMSURI, null, null, null, null)
-
-        while (cur != null && cur.moveToNext()) {
-            val body = cur.getString(cur.getColumnIndexOrThrow("body"))
-            val date = cur.getString(cur.getColumnIndex("date"))
-            val id = cur.getString(cur.getColumnIndex("_id"))
-            val msgArr = body.split(" ")
-            if (msgArr[0].contains("씨티BC(7478)")) {
-                val dateFormat = UtilMethod.millisToDate(date.toLong())
-                if (msgArr[0].contains("해외승인")) {
-                    val first = msgArr[0].replace("\n", "")
-                    val second = msgArr[1].replace("\n", "")
-                    val third = msgArr[2].replace("\n", "")
-                    val won = second.substring(0, 5).toDouble().times(1108.80).toInt().toString()
-                    val cate = third.substring(5)
-                    DLog.e("cate $cate : $won : $dateFormat size : USD")
-                    mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)해외승인"))
-                } else {
-
-                    if (msgArr.size == 2) {
-                        val first = msgArr[0].replace("\n", "").split("원")
-                        val second = msgArr[1].replace("\n", "")
-                        val won = first[0].substringAfter("님").replace(",", "")
-                        val cate = second.substring(5)
-                        DLog.e("cate $cate : $won : $dateFormat size : 2")
-                        mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
-
-                    } else if (msgArr.size == 3) {
-                        val first = msgArr[0].replace("\n", "").split("원")
-                        val second = msgArr[1].replace("\n", "")
-                        val third = msgArr[2].replace("\n", "")
-                        val won = first[0].substringAfter("님").replace(",", "")
-                        val cate = second.substring(5) + third
-                        DLog.e("cate $cate : $won : $dateFormat size : 3")
-                        mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
-                    }
-
-
-                }
-            }
-            if (msgArr[0].contains("신한카드(044)")) {
-                val money = msgArr[3].split("원")[0].replace(",".toRegex(), "")
-                val first = msgArr[0]
-                var five = msgArr[5]
-                var six = msgArr[6]
-                val dateFormat = UtilMethod.millisToDate(date.toLong())
-                if (msgArr.size == 7) {
-                    DLog.e("set $id , $money, $five, $dateFormat, $first")
-                    if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
-                        five = five.substring(0, five.length - 1)
-                        mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
-                    } else {
-                        mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
-                    }
-
-                } else if (msgArr.size == 8) {
-
-                    if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
-                        five = five.substring(0, five.length - 1)
-                    }
-
-                    DLog.e("set $id , $money, $five + $six, $dateFormat, $first")
-                    if (six.length <= 1) {
-                        if (six.contains("-") || six.contains("(")) {
-                            mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
-                        } else {
-                            mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
-                        }
-                    } else {
-                        if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
-                            six = six.substring(0, six.length - 1)
-                            mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
-                        } else {
-                            mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
-                        }
-
-                    }
-                } else if (msgArr.size == 9) {
-                    var seven = msgArr[7]
-                    DLog.e("set $id , $money, $five + $six + $seven, $dateFormat, $first")
-                    if (six.length <= 1) {
-                        if (six.contains("-") || six.contains("(")) {
-                            six = ""
-                        }
-                    } else {
-                        if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
-                            six = six.substring(0, six.length - 1)
-                        }
-                    }
-                    if (seven.length <= 1) {
-                        if (seven.contains("-") || seven.contains("(")) {
-                            seven = ""
-                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                        } else {
-                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                        }
-                    } else {
-                        if (seven.substring(seven.length - 1).contains("-") || seven.substring(seven.length - 1).contains("(")) {
-                            seven = seven.substring(0, seven.length - 1)
-                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                        } else {
-                            mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                        }
-
-                    }
-                }
-
-            }
-        }
-        cur?.close()
+        val task = QueryTask()
+        task.execute()
+        mItem = task.get()
         checkcardIdFromDB(mItem)
     }
 
@@ -407,7 +300,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
 
             override fun onCompleted(filePath: String?) {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
-                        .setMessage("$filePath\n에 파일이 저장되었습니다.")
+                        .setMessage("내파일 -> 내장메모리안에 파일이 저장되었습니다.")
                         .setPositiveButton("확인", { dialog, _ ->
                             dialog.dismiss()
 
@@ -417,5 +310,122 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
 
         })
     }
+    inner class QueryTask : AsyncTask<Void, Void, MutableList<SettingMsgModel>>() {
+        override fun doInBackground(vararg params: Void?): MutableList<SettingMsgModel> {
 
+            mItem = mutableListOf()
+            val uriSMSURI = Uri.parse("content://sms/inbox")
+            val cur = activity!!.contentResolver.query(uriSMSURI, null, null, null, null)
+
+            while (cur != null && cur.moveToNext()) {
+                val body = cur.getString(cur.getColumnIndexOrThrow("body"))
+                val date = cur.getString(cur.getColumnIndex("date"))
+                val id = cur.getString(cur.getColumnIndex("_id"))
+                val msgArr = body.split(" ")
+                if (msgArr[0].contains("씨티BC(7478)")) {
+                    val dateFormat = UtilMethod.millisToDate(date.toLong())
+                    if (msgArr[0].contains("해외승인")) {
+                        val first = msgArr[0].replace("\n", "")
+                        val second = msgArr[1].replace("\n", "")
+                        val third = msgArr[2].replace("\n", "")
+                        val won = second.substring(0, 5).toDouble().times(1108.80).toInt().toString()
+                        val cate = third.substring(5)
+                        DLog.e("cate $cate : $won : $dateFormat size : USD")
+                        mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)해외승인"))
+                    } else {
+
+                        if (msgArr.size == 2) {
+                            val first = msgArr[0].replace("\n", "").split("원")
+                            val second = msgArr[1].replace("\n", "")
+                            val won = first[0].substringAfter("님").replace(",", "")
+                            val cate = second.substring(5)
+                            DLog.e("cate $cate : $won : $dateFormat size : 2")
+                            mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
+
+                        } else if (msgArr.size == 3) {
+                            val first = msgArr[0].replace("\n", "").split("원")
+                            val second = msgArr[1].replace("\n", "")
+                            val third = msgArr[2].replace("\n", "")
+                            val won = first[0].substringAfter("님").replace(",", "")
+                            val cate = second.substring(5) + third
+                            DLog.e("cate $cate : $won : $dateFormat size : 3")
+                            mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
+                        }
+
+
+                    }
+                }
+                if (msgArr[0].contains("신한카드(044)")) {
+                    val money = msgArr[3].split("원")[0].replace(",".toRegex(), "")
+                    val first = msgArr[0]
+                    var five = msgArr[5]
+                    var six = msgArr[6]
+                    val dateFormat = UtilMethod.millisToDate(date.toLong())
+                    if (msgArr.size == 7) {
+                        DLog.e("set $id , $money, $five, $dateFormat, $first")
+                        if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
+                            five = five.substring(0, five.length - 1)
+                            mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                        } else {
+                            mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                        }
+
+                    } else if (msgArr.size == 8) {
+
+                        if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
+                            five = five.substring(0, five.length - 1)
+                        }
+
+                        DLog.e("set $id , $money, $five + $six, $dateFormat, $first")
+                        if (six.length <= 1) {
+                            if (six.contains("-") || six.contains("(")) {
+                                mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                            } else {
+                                mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+                            }
+                        } else {
+                            if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
+                                six = six.substring(0, six.length - 1)
+                                mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+                            } else {
+                                mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+                            }
+
+                        }
+                    } else if (msgArr.size == 9) {
+                        var seven = msgArr[7]
+                        DLog.e("set $id , $money, $five + $six + $seven, $dateFormat, $first")
+                        if (six.length <= 1) {
+                            if (six.contains("-") || six.contains("(")) {
+                                six = ""
+                            }
+                        } else {
+                            if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
+                                six = six.substring(0, six.length - 1)
+                            }
+                        }
+                        if (seven.length <= 1) {
+                            if (seven.contains("-") || seven.contains("(")) {
+                                seven = ""
+                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                            } else {
+                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                            }
+                        } else {
+                            if (seven.substring(seven.length - 1).contains("-") || seven.substring(seven.length - 1).contains("(")) {
+                                seven = seven.substring(0, seven.length - 1)
+                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                            } else {
+                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                            }
+
+                        }
+                    }
+
+                }
+            }
+            cur?.close()
+            return mItem
+        }
+    }
 }// Required empty public constructor

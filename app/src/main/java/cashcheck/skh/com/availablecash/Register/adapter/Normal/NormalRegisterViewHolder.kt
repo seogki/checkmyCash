@@ -28,6 +28,7 @@ class NormalRegisterViewHolder(val binding: ItemNormalRegisterRvBinding, private
     }
 
     fun bind(model: NormalRegisterModel?){
+
         binding.model = model
         db = DBHelper(context.applicationContext, "${Const.DbName}.db", null, 1)
         binding.onClickListener = this

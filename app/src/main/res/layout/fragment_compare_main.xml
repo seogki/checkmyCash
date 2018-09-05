@@ -47,15 +47,30 @@
                     <TextView
                         android:id="@+id/chart_frag_txt_titlebar"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="비교"
                         android:textColor="@color/textColor"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
+                        android:padding="8dp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/compare_frag_img_left"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/chart_frag_txt_midtitlebar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="등록"
+                        android:textStyle="bold"
+                        android:textColor="@color/textColor"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
@@ -67,8 +82,7 @@
                         android:src="@drawable/baseline_keyboard_arrow_right_black_24"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"
+                        app:layout_constraintStart_toEndOf="@id/chart_frag_txt_titlebar"
                         android:background="@drawable/btn_ripple_colored_statusbar"
                         android:padding="8dp"
                         />
@@ -83,7 +97,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="8dp"
                         android:padding="8dp"
                         />
 

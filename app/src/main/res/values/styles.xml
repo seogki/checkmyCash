@@ -102,7 +102,7 @@
         <item name="android:layout_height">65dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/btn_ripple_colored</item>
+        <item name="android:background">@drawable/btn_ripple_colored_white</item>
         <item name="android:gravity">center</item>
     </style>
 

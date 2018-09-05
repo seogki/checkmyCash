@@ -127,7 +127,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
         val yvalues = mutableListOf<PieEntry>()
         val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
-        for ((key, value) in result) {
+        for ((_, value) in result) {
 
             totalUsage = totalUsage.plus(value.toFloat())
 
@@ -200,7 +200,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         l.yEntrySpace = 4f
         chart.data = data
         chart.description.isEnabled = false
-        chart.animateXY(1000, 1000)
+        chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
         chart.invalidate()
         getResultUsage()
     }

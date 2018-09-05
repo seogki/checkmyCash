@@ -53,5 +53,10 @@ open class Const {
          */
         const val ItemClickCalendar = "ItemCalendar"
         const val ItemClickCalendarDays = "ItemCalendarDays"
+
+        /***
+         *  차트명
+         */
+        const val ChartAnimation = 700
     }
 }

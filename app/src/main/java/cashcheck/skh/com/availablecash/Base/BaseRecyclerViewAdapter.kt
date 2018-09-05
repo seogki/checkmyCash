@@ -100,13 +100,13 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> : Recycle
 
     fun addItemNotifyRanged(item: T, firstPosition: Int, lastPosition: Int) {
         this.arrayList!!.add(item)
-        Handler().post { notifyItemRangeInserted(firstPosition, lastPosition) }
+        Handler(Looper.getMainLooper()).post { notifyItemRangeInserted(firstPosition, lastPosition) }
 
     }
 
     fun addItemsPosition(position: Int, items: List<T>) {
         this.arrayList!!.addAll(position, items)
-        Handler().post { notifyItemChanged(position) }
+        Handler(Looper.getMainLooper()).post { notifyItemChanged(position) }
 
     }
 
@@ -116,14 +116,15 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> : Recycle
         if (position >= 0) {
             this.arrayList!!.add(position, item)
         }
-        notifyItemInserted(position)
+        Handler(Looper.getMainLooper()).post { notifyItemInserted(position) }
+
     }
 
     fun clearItems() {
         if (arrayList != null) {
 
             arrayList!!.clear()
-            notifyDataSetChanged()
+            Handler(Looper.getMainLooper()).post { notifyDataSetChanged() }
         }
 
 

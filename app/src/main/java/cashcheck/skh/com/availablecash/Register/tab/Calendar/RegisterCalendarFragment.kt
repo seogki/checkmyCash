@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import android.databinding.DataBindingUtil
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -46,7 +47,7 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
     private lateinit var mItem: MutableList<CalendarModel>
     private lateinit var db: DBHelper
     private var isStart = false
-    private var result = "no"
+    private var result = ""
     private var date: String? = null
     fun getDate(date: String) {
         this.date = "$date-01"
@@ -172,10 +173,7 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
         layoutManager2.initialPrefetchItemCount = 4
         calendarTodayAdapter.onNormalRegisterDeleteListener = this
         binding.fragCalendarRvToday.layoutManager = layoutManager2
-        binding.fragCalendarRvToday.isDrawingCacheEnabled = true
-        binding.fragCalendarRvToday.setItemViewCacheSize(20)
         binding.fragCalendarRvToday.isNestedScrollingEnabled = false
-        binding.fragCalendarRvToday.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.fragCalendarRvToday.itemAnimator = null
 
         Thread(Runnable {
@@ -205,7 +203,6 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
             // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
             val cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + dates.date + "%' ORDER BY date DESC", null)
             var money = 0
-            val temp = dates
             while (cursor.moveToNext()) {
 
                 money += cursor.getString(0).toInt()
@@ -219,73 +216,10 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
 
     private fun setCalendar() {
-        mItem = mutableListOf()
-        val cal = Calendar.getInstance()
-        val df = SimpleDateFormat("yy-MM-dd", Locale.KOREA)
-        val current = df.parse(UtilMethod.getCurrentMonth())
-        if (date != null) {
-            val d = df.parse(date)
-            cal.time = d
-        } else {
-            cal.time = current
-        }
-        val end = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-        // 처음 시작을 달의 시작으로 세팅
-        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
-        val start = cal.time
-        for (i in 0 until end) {
-            if (i == 0) {
-                // 만약 처음시작이 일요일일시 아무것도 안하고 데이터를 넣어도된다
-                if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-
-                    addDate(cal, df)
-                } else {
-
-                    val date = cal.time
-                    val now = df.format(date)
-                    // 만약 처음시작이 일요일이 아닐시 현재요일의 전요일을 다가져온다
-                    cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-                    val sundayDate = cal.time
-                    val sunday = df.format(sundayDate)
-                    val dates = getBetweenDates(sunday, now)
-                    for (between in dates) {
-                        addDatebyDate(between, df, now)
-                    }
-                    cal.add(Calendar.MONTH, 1)
-                    cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
-                }
-
-            } else if (i == end - 1) {
-                //만약 마지막에 날이 토요일이면 아무것도 안하고 데이터 넣으면된다
-                cal.add(Calendar.DATE, 1)
-                if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-
-                    addDate(cal, df)
-
-                } else {
-
-                    //만약 마지막이 토요일이 아니면 현재 요일 부터 토요일까지 모두 가져온다
-                    val date = cal.time
-                    val now = df.format(date)
-                    cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY)
-                    val saturdayDate = cal.time
-                    val saturday = df.format(saturdayDate)
-
-                    val dates = getBetweenDates(now, saturday)
-                    for (between in dates) {
-                        addDatebyDate(between, df, now)
-                    }
-                }
-
-
-            } else {
-                //중간 부분일땐 그냥 데이터 집어넣으면된다.
-                cal.add(Calendar.DATE, 1)
-                addDate(cal, df)
-            }
-        }
-
+        val task = QueryTask()
+        task.execute()
+        mItem = task.get()
         checkMoneyFromDate()
     }
 
@@ -367,6 +301,85 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
             cal1.add(Calendar.DATE, 1)
         }
         return dates
+    }
+
+    inner class QueryTask : AsyncTask<Void, Void, MutableList<CalendarModel>>() {
+        override fun doInBackground(vararg params: Void?): MutableList<CalendarModel> {
+            mItem = mutableListOf()
+            try {
+
+                val cal = Calendar.getInstance()
+                val df = SimpleDateFormat("yy-MM-dd", Locale.KOREA)
+                val current = df.parse(UtilMethod.getCurrentMonth())
+                if (date != null) {
+                    val d = df.parse(date)
+                    cal.time = d
+                } else {
+                    cal.time = current
+                }
+                val end = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+                // 처음 시작을 달의 시작으로 세팅
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
+                val start = cal.time
+                for (i in 0 until end) {
+                    if (i == 0) {
+                        // 만약 처음시작이 일요일일시 아무것도 안하고 데이터를 넣어도된다
+                        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+
+                            addDate(cal, df)
+                        } else {
+
+                            val date = cal.time
+                            val now = df.format(date)
+                            // 만약 처음시작이 일요일이 아닐시 현재요일의 전요일을 다가져온다
+                            cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+                            val sundayDate = cal.time
+                            val sunday = df.format(sundayDate)
+                            val dates = getBetweenDates(sunday, now)
+                            for (between in dates) {
+                                addDatebyDate(between, df, now)
+                            }
+                            cal.add(Calendar.MONTH, 1)
+                            cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
+                        }
+
+                    } else if (i == end - 1) {
+                        //만약 마지막에 날이 토요일이면 아무것도 안하고 데이터 넣으면된다
+                        cal.add(Calendar.DATE, 1)
+                        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+
+                            addDate(cal, df)
+
+                        } else {
+
+                            //만약 마지막이 토요일이 아니면 현재 요일 부터 토요일까지 모두 가져온다
+                            val date = cal.time
+                            val now = df.format(date)
+                            cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY)
+                            val saturdayDate = cal.time
+                            val saturday = df.format(saturdayDate)
+
+                            val dates = getBetweenDates(now, saturday)
+                            for (between in dates) {
+                                addDatebyDate(between, df, now)
+                            }
+                        }
+
+
+                    } else {
+                        //중간 부분일땐 그냥 데이터 집어넣으면된다.
+                        cal.add(Calendar.DATE, 1)
+                        addDate(cal, df)
+                    }
+                }
+
+            } catch (e: Exception) {
+
+            }
+
+            return mItem
+        }
     }
 
 }// Required empty public constructor

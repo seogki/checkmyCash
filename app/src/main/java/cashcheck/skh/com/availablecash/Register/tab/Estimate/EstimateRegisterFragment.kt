@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -29,6 +30,7 @@ import cashcheck.skh.com.availablecash.databinding.FragmentEstimateRegisterBindi
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import java.util.*
 
 
 /**
@@ -67,52 +69,32 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-            when(v?.id){
-                R.id.estimate_edit_cate -> {
-                    if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                        binding.estimateEditMoney.requestFocus()
-                    }
-                }
-                R.id.estimate_edit_money -> {
-                    if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                        binding.estimateEditDays.requestFocus()
-                    }
-                }
-                R.id.estimate_edit_days -> {
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        savePreference()
-                    }
+        when (v?.id) {
+            R.id.estimate_edit_cate -> {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.estimateEditMoney.requestFocus()
                 }
             }
+            R.id.estimate_edit_money -> {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    binding.estimateEditDays.requestFocus()
+                }
+            }
+            R.id.estimate_edit_days -> {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    savePreference()
+                }
+            }
+        }
         return false
     }
 
 
     private fun getDbData() {
-        val database = db.readableDatabase
-        map = HashMap()
-        totalUsage = 0F
-        mItems = ArrayList()
-        var cursor: Cursor? = null
         try {
-            cursor = database.rawQuery("SELECT * FROM ${Const.DbEstimateName} ORDER BY date DESC", null)
-            while (cursor.moveToNext()) {
-                val num = cursor.getString(0)
-                val date = cursor.getString(1)
-                val cate = cursor.getString(2)
-                val money = cursor.getString(3)
-                val days = cursor.getString(4)
-
-                mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString(),days))
-
-                if (map.containsKey(cate)) {
-                    val data = map.getValue(cate).toInt().plus(money.toInt().times(days.toInt()))
-                    map.remove(cate)
-                    map[cate] = data.toFloat()
-                } else {
-                    map[cate] = money.toInt().times(days.toInt()).toFloat()
-                }
-            }
+            val task = QueryTask()
+            task.execute()
+            map = task.get()
 
             if (map.size > 0) {
                 binding.estimateTxtEmpty.visibility = View.GONE
@@ -120,7 +102,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
             } else {
                 setPieChart()
                 totalUsage = 0F
-                binding.estimateFragPiechart.centerText =""
+                binding.estimateFragPiechart.centerText = ""
                 saveTotalInSharedPreference()
                 estimateRegisterAdapter.clearItems()
                 binding.estimateTxtEmpty.visibility = View.VISIBLE
@@ -129,8 +111,6 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            cursor?.close()
         }
 
     }
@@ -169,11 +149,8 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         binding.estimateFragRv.setHasFixedSize(true)
         estimateRegisterAdapter.setHasStableIds(true)
         binding.estimateFragRv.layoutManager = layoutManager
-        binding.estimateFragRv.isDrawingCacheEnabled = true
-        binding.estimateFragRv.setItemViewCacheSize(20)
         binding.estimateFragRv.setHasFixedSize(true)
         binding.estimateFragRv.isNestedScrollingEnabled = false
-        binding.estimateFragRv.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         binding.estimateFragRv.itemAnimator = null
 
         Thread(Runnable {
@@ -196,26 +173,23 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         val yvalues = mutableListOf<PieEntry>()
         val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
 
-        for((key,value) in result){
+        for ((_, value) in result) {
             totalUsage = totalUsage.plus(value)
         }
         saveTotalInSharedPreference()
-        if(result.size <= 4){
+        if (result.size <= 4) {
             for ((key, value) in result) {
-//                val percent = value.toFloat().div(monthTotal).times(100F)
                 yvalues.add(PieEntry(value, key))
             }
         } else {
             var data = 0F
-            for(i in 0 until result.size){
-                if(i >= 3){
+            for (i in 0 until result.size) {
+                if (i >= 3) {
                     data += result.toList()[i].second
                 } else {
-//                    val percent = result.toList()[i].second.toFloat().div(monthTotal).times(100F)
                     yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
                 }
             }
-//            val percent = data.div(monthTotal).times(100F)
             yvalues.add(PieEntry(data, "그외"))
 
         }
@@ -236,12 +210,12 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
-        chart.setHoleColor( Color.argb(0,0,0,0))
+        chart.setHoleColor(Color.argb(0, 0, 0, 0))
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
-        chart.setCenterTextColor(ContextCompat.getColor(context!!,R.color.statusbar))
+        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
         chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
-        if(totalUsage != 0F) {
+        if (totalUsage != 0F) {
             chart.centerText = UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
         } else {
             chart.centerText = ""
@@ -261,7 +235,6 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
         chart.data = data
         chart.description.isEnabled = false
-        chart.animateXY(1000, 1000)
         chart.invalidate()
         setRvData()
     }
@@ -318,6 +291,42 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     override fun onResume() {
         super.onResume()
         getDbData()
+    }
+
+    inner class QueryTask : AsyncTask<Void, Void, HashMap<String, Float>>() {
+        override fun doInBackground(vararg params: Void?): HashMap<String, Float> {
+            map = HashMap()
+            val database = db.readableDatabase
+            totalUsage = 0F
+            mItems = ArrayList()
+            var cursor: Cursor? = null
+            try {
+                cursor = database.rawQuery("SELECT * FROM ${Const.DbEstimateName} ORDER BY date DESC", null)
+                while (cursor.moveToNext()) {
+                    val num = cursor.getString(0)
+                    val date = cursor.getString(1)
+                    val cate = cursor.getString(2)
+                    val money = cursor.getString(3)
+                    val days = cursor.getString(4)
+
+                    mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString(), days))
+
+                    if (map.containsKey(cate)) {
+                        val data = map.getValue(cate).toInt().plus(money.toInt().times(days.toInt()))
+                        map.remove(cate)
+                        map[cate] = data.toFloat()
+                    } else {
+                        map[cate] = money.toInt().times(days.toInt()).toFloat()
+                    }
+                }
+            } catch (e: Exception) {
+
+            } finally {
+                cursor?.close()
+            }
+
+            return map
+        }
     }
 
 }// Required empty public constructor

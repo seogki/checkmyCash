@@ -47,6 +47,7 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
         fab.hide()
         binding.onClickListener = this
         date = UtilMethod.getCurrentDate()
+        binding.registerFragTxtMidtitlebar.visibility = View.INVISIBLE
         dateNormal = UtilMethod.getCurrentDate()
         val result = UtilMethod.getCurrentDate().replace("-", "")
         binding.registerFragTxtTitlebar.text = "20" + result.substring(0, 2) + "년 " + result.substring(2, 4) + "월 "
@@ -107,29 +108,40 @@ class RegisterMainFragment : BaseFragment(), View.OnClickListener {
                         val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
                         fab.show()
                         setTitleBar(dateNormal)
-                        binding.registerFragImgRight.visibility = View.VISIBLE
-                        binding.registerFragImgLeft.visibility = View.VISIBLE
-
+                        visibilityLR(false)
                     }
                     2 -> {
                         val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
                         fab.hide()
-                        binding.registerFragTxtTitlebar.text = "예상금액"
-                        binding.registerFragImgRight.visibility = View.INVISIBLE
-                        binding.registerFragImgLeft.visibility = View.INVISIBLE
+                        visibilityLR(true)
+                        binding.registerFragTxtMidtitlebar.text = "예상금액"
+
                     }
                     else -> {
                         val fab = activity!!.findViewById(R.id.normal_atv_fab) as FloatingActionButton
                         fab.hide()
                         setTitleBar(date)
-                        binding.registerFragImgRight.visibility = View.VISIBLE
-                        binding.registerFragImgLeft.visibility = View.VISIBLE
+                        visibilityLR(false)
                     }
                 }
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+    }
+
+    private fun visibilityLR(isgone: Boolean) {
+        if (isgone) {
+            binding.registerFragTxtTitlebar.visibility = View.INVISIBLE
+            binding.registerFragImgLeft.visibility = View.INVISIBLE
+            binding.registerFragImgRight.visibility = View.INVISIBLE
+            binding.registerFragTxtMidtitlebar.visibility = View.VISIBLE
+        } else {
+            binding.registerFragTxtTitlebar.visibility = View.VISIBLE
+            binding.registerFragImgLeft.visibility = View.VISIBLE
+            binding.registerFragImgRight.visibility = View.VISIBLE
+            binding.registerFragTxtMidtitlebar.visibility = View.INVISIBLE
+        }
     }
 
     private fun setNormalToRight() {

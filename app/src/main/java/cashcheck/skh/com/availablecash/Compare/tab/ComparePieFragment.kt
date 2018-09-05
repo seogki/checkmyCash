@@ -65,8 +65,6 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
         layoutManager.isItemPrefetchEnabled = true
         layoutManager.initialPrefetchItemCount = 2
         binding.compareFragPiechartRv.layoutManager = layoutManager
-        binding.compareFragPiechartRv.isDrawingCacheEnabled = true
-        binding.compareFragPiechartRv.setItemViewCacheSize(10)
         binding.compareFragPiechartRv.isNestedScrollingEnabled = false
         binding.compareFragPiechartRv.itemAnimator = null
 
@@ -199,7 +197,7 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
         val yvalues = mutableListOf<PieEntry>()
 
         val result = map.toList().sortedByDescending { (_, value) -> value.toFloat() }.toMap()
-        for((key,value) in result){
+        for((_,value) in result){
 
             total = total.plus(value.toFloat())
 
@@ -254,7 +252,7 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
         chart.holeRadius = 0F
         chart.isDrawHoleEnabled = false
         chart.description.isEnabled = false
-        chart.animateXY(1000, 1000)
+        chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
         chart.invalidate()
     }
 

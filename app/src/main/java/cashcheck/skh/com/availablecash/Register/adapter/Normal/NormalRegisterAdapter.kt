@@ -26,7 +26,7 @@ open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListIt
     lateinit var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener
     override fun onBindView(holder: RecyclerView.ViewHolder, position: Int) {
         val type = getItemViewType(position)
-        holder.setIsRecyclable(true)
+        holder.setIsRecyclable(false)
         if (type == ListItem.TYPE_EVENT) {
             val data = mitem[holder.adapterPosition] as EventItem
             if (holder is NormalRegisterViewHolder) {

@@ -3,6 +3,7 @@ package cashcheck.skh.com.availablecash.Compare.tab
 
 import android.database.Cursor
 import android.databinding.DataBindingUtil
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -67,8 +68,6 @@ class CompareMonthFragment : BaseFragment() {
         binding.fragCompareMonthRv.setHasFixedSize(true)
         compareMonthAdapter.setHasStableIds(true)
         binding.fragCompareMonthRv.layoutManager = layoutManager
-        binding.fragCompareMonthRv.isDrawingCacheEnabled = true
-        binding.fragCompareMonthRv.setItemViewCacheSize(10)
         binding.fragCompareMonthRv.isNestedScrollingEnabled = false
         binding.fragCompareMonthRv.itemAnimator = null
 
@@ -110,21 +109,11 @@ class CompareMonthFragment : BaseFragment() {
     }
 
     private fun getTotalFromMonth() {
-        mItems = ArrayList()
-        var cursor: Cursor? = null
         try {
-            for (i in 0 until monthArray.size) {
-                monthUsage = 0
+            val task = QueryTask()
+            task.execute()
+            mItems = task.get()
 
-                val db = dbHelper.readableDatabase
-
-                cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + monthArray[i] + "%' ORDER BY date DESC", null)
-                while (cursor.moveToNext()) {
-                    val money = cursor.getString(0)
-                    monthUsage += money.toInt()
-                }
-                mItems.add(CompareMonthModel("", monthArray[i], monthUsage.toString()))
-            }
             if (mItems != tempItem) {
                 tempItem = mItems
                 getTotalAndMostUsage(mItems)
@@ -138,10 +127,6 @@ class CompareMonthFragment : BaseFragment() {
 
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-
-            cursor?.close()
-
         }
 
 
@@ -167,10 +152,10 @@ class CompareMonthFragment : BaseFragment() {
             setTotalAndMostUsage(tempModel, mostUsage, totalUsage)
         } else {
             setTextView(""
-                    ,""
-                    ,"",
+                    , ""
+                    , "",
                     ""
-                    ,"")
+                    , "")
         }
 
     }
@@ -181,15 +166,16 @@ class CompareMonthFragment : BaseFragment() {
             month = month.substring(1, 2)
         }
         setTextView("20${tempModel?.months?.substring(0, 2)}년 합계"
-                ,"${UtilMethod.currencyFormat(totalUsage.toString())}원"
-                ,"가장 많은 소비를 한 달",
+                , "${UtilMethod.currencyFormat(totalUsage.toString())}원"
+                , "가장 많은 소비를 한 달",
                 "${month}월"
-                ,"${UtilMethod.currencyFormat(mostUsage.toString())}원")
+                , "${UtilMethod.currencyFormat(mostUsage.toString())}원")
 
         if (!isCreated)
             isCreated = true
     }
-    private fun setTextView(allYear: String, allMoney: String, mostMonth: String, month: String, mostMoney: String){
+
+    private fun setTextView(allYear: String, allMoney: String, mostMonth: String, month: String, mostMoney: String) {
 
         binding.fragCompareMonthTxtAlltotal.text = allYear
         binding.fragCompareMonthTxtAlltotalMoney.text = allMoney
@@ -202,6 +188,34 @@ class CompareMonthFragment : BaseFragment() {
     private fun onAddItem() {
         compareMonthAdapter.clearItems()
         compareMonthAdapter.addItems(mItems.asReversed())
+    }
+
+    inner class QueryTask : AsyncTask<Void, Void, ArrayList<CompareMonthModel>>() {
+        override fun doInBackground(vararg params: Void?): ArrayList<CompareMonthModel> {
+
+            mItems = ArrayList()
+            var cursor: Cursor? = null
+            try {
+                for (i in 0 until monthArray.size) {
+                    monthUsage = 0
+
+                    val db = dbHelper.readableDatabase
+
+                    cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + monthArray[i] + "%' ORDER BY date DESC", null)
+                    while (cursor.moveToNext()) {
+                        val money = cursor.getString(0)
+                        monthUsage += money.toInt()
+                    }
+                    mItems.add(CompareMonthModel("", monthArray[i], monthUsage.toString()))
+                }
+            } catch (e: Exception) {
+
+            } finally {
+                cursor?.close()
+            }
+
+            return mItems
+        }
     }
 
 }// Required empty public constructor

@@ -47,6 +47,7 @@ class CompareMainFragment : BaseFragment(), View.OnClickListener {
         date = UtilMethod.getCurrentDate()
         year = UtilMethod.getCurrentYear()
         val result = UtilMethod.getCurrentDate().replace("-", "")
+        binding.chartFragTxtMidtitlebar.visibility = View.INVISIBLE
         binding.chartFragTxtTitlebar.text = "20" + result.substring(0, 2) + "년 " + result.substring(2, 4) + "월 "
         setTabLayout()
         onPageSelected()
@@ -158,26 +159,23 @@ class CompareMainFragment : BaseFragment(), View.OnClickListener {
                 when (position) {
                     0 -> {
                         setTitleBar(date, 0)
-                        binding.compareFragImgLeft.visibility = View.VISIBLE
-                        binding.compareFragImgRight.visibility = View.VISIBLE
+                        visibilityLR(false)
                     }
                     1 -> {
                         setTitleBar(year, 1)
-                        binding.compareFragImgLeft.visibility = View.VISIBLE
-                        binding.compareFragImgRight.visibility = View.VISIBLE
+                        visibilityLR(false)
                     }
                     2 -> {
-                        if (binding.chartFragTxtTitlebar.text != "그래프") {
-                            binding.chartFragTxtTitlebar.text = "그래프"
-                            binding.compareFragImgLeft.visibility = View.INVISIBLE
-                            binding.compareFragImgRight.visibility = View.INVISIBLE
+                        if (binding.chartFragTxtTitlebar.text != "라인그래프") {
+                            visibilityLR(true)
+                            binding.chartFragTxtMidtitlebar.text = "라인그래프"
                         }
                     }
                     3 -> {
-                        if (binding.chartFragTxtTitlebar.text != "그래프") {
-                            binding.chartFragTxtTitlebar.text = "그래프"
-                            binding.compareFragImgLeft.visibility = View.INVISIBLE
-                            binding.compareFragImgRight.visibility = View.INVISIBLE
+                        if (binding.chartFragTxtTitlebar.text != "파이그래프") {
+                            visibilityLR(true)
+                            binding.chartFragTxtMidtitlebar.text = "파이그래프"
+
                         }
                     }
                 }
@@ -185,6 +183,21 @@ class CompareMainFragment : BaseFragment(), View.OnClickListener {
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+    }
+
+
+    private fun visibilityLR(isgone: Boolean){
+        if(isgone){
+            binding.chartFragTxtTitlebar.visibility = View.INVISIBLE
+            binding.compareFragImgLeft.visibility = View.INVISIBLE
+            binding.compareFragImgRight.visibility = View.INVISIBLE
+            binding.chartFragTxtMidtitlebar.visibility = View.VISIBLE
+        } else {
+            binding.chartFragTxtTitlebar.visibility = View.VISIBLE
+            binding.compareFragImgLeft.visibility = View.VISIBLE
+            binding.compareFragImgRight.visibility = View.VISIBLE
+            binding.chartFragTxtMidtitlebar.visibility = View.INVISIBLE
+        }
     }
 
     private fun arrowLeft(date: String) {
