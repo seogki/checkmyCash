@@ -15,6 +15,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import cashcheck.skh.com.availablecash.Base.BaseFragment
+import cashcheck.skh.com.availablecash.Compare.Listener.ComparePieListener
+import cashcheck.skh.com.availablecash.Compare.Thread.ComparePieThread
 import cashcheck.skh.com.availablecash.Compare.model.ComparePieModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.adapter.ComparePieAdapter
@@ -31,7 +33,7 @@ import com.github.mikephil.charting.data.PieEntry
 /**
  * A simple [Fragment] subclass.
  */
-class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
+class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, ComparePieListener {
 
 
     private lateinit var binding: FragmentComparePieBinding
@@ -40,7 +42,6 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     private lateinit var spinnerArray: MutableList<String>
     private var pieMap1: HashMap<String, String>? = null
     private var pieMap2: HashMap<String, String>? = null
-    private lateinit var rvArray: ArrayList<ComparePieModel>
     private lateinit var firstData: String
     private lateinit var secondData: String
     private lateinit var comparePieAdapter: ComparePieAdapter
@@ -106,79 +107,14 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setRvData() {
-        rvArray = ArrayList()
+        val thread = ComparePieThread(ArrayList(), pieMap1, pieMap2, this)
+        thread.start()
+    }
 
-        pieMap1?.let {
-            for ((key, value) in it) {
-                if (value.contains(".")) {
-                    val data = value.replace(".", "").substring(0, value.length - 2)
-                    rvArray.add(ComparePieModel(key, "" + data, "0", "" + data))
-                } else {
-                    rvArray.add(ComparePieModel(key, "" + value, "0", "" + value))
-                }
-            }
-        }
-
-        var isDiff = false
-        var pieMapSize = pieMap2!!.size
-        pieMap2?.let {
-            for (i in 0 until pieMapSize) {
-
-                val key = pieMap2!!.toList()[i].first
-                val value = pieMap2!!.toList()[i].second
-                val data: String
-                data = if (value.contains(".")) {
-                    value.replace(".", "").substring(0, value.length - 2)
-                } else {
-                    value
-                }
-                for (x in 0 until rvArray.size) {
-                    val cate = rvArray[x].cate
-                    if (key == cate) {
-                        val model = rvArray[x]
-                        model.second = data
-                        model.result = "" + model.first?.toInt()?.minus(data.toInt())
-                        pieMapSize -= 1
-                        rvArray.removeAt(x)
-                        rvArray.add(model)
-                        isDiff = false
-                        break
-                    } else {
-                        isDiff = true
-                    }
-                }
-                if (isDiff) {
-                    rvArray.add(ComparePieModel(key, "0", value, "-$value"))
-                    isDiff = false
-                }
-            }
-        }
-
-
-        var firstMoney = 0
-        var secondMoney = 0
-
-        for (models in rvArray) {
-            val x: String = if (models.first!!.contains(".")) {
-                models.first!!.replace(".", "").substring(0, models.first!!.length - 2)
-            } else {
-                models.first!!
-            }
-            val y: String = if (models.second!!.contains(".")) {
-                models.second!!.replace(".", "").substring(0, models.second!!.length - 2)
-            } else {
-                models.second!!
-            }
-            firstMoney += x.toInt()
-            secondMoney += y.toInt()
-        }
-
-        rvArray.add(ComparePieModel("합계", "" + firstMoney, "" + secondMoney, "" + firstMoney.minus(secondMoney)))
-
+    override fun getItem(arr: ArrayList<ComparePieModel>) {
         comparePieAdapter.clearItems()
-        binding.compareFragPieHeader.visibility = View.VISIBLE
-        comparePieAdapter.addItems(rvArray)
-
+        activity?.runOnUiThread { binding.compareFragPieHeader.visibility = View.VISIBLE }
+        comparePieAdapter.addItems(arr)
     }
 
     private fun addItemOnSpinner() {
@@ -197,19 +133,19 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
         val yvalues = mutableListOf<PieEntry>()
 
         val result = map.toList().sortedByDescending { (_, value) -> value.toFloat() }.toMap()
-        for((_,value) in result){
+        for ((_, value) in result) {
 
             total = total.plus(value.toFloat())
 
         }
-        if(result.size <= 4){
+        if (result.size <= 4) {
             for ((key, value) in result) {
                 yvalues.add(PieEntry(value.toFloat(), key))
             }
         } else {
             var data = 0F
-            for(i in 0 until result.size){
-                if(i >= 3){
+            for (i in 0 until result.size) {
+                if (i >= 3) {
                     data += result.toList()[i].second.toFloat()
                 } else {
                     yvalues.add(PieEntry(result.toList()[i].second.toFloat(), result.toList()[i].first))

@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import cashcheck.skh.com.availablecash.Base.BaseFragment
+import cashcheck.skh.com.availablecash.Compare.Listener.CompareLineListener
+import cashcheck.skh.com.availablecash.Compare.Thread.CompareLineThread
 import cashcheck.skh.com.availablecash.Compare.model.CompareLineModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Register.adapter.CompareLineAdapter
@@ -31,7 +33,8 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class CompareLineFragment : BaseFragment(), View.OnClickListener {
+class CompareLineFragment : BaseFragment(), View.OnClickListener, CompareLineListener {
+
 
 
     private lateinit var binding: FragmentCompareLineBinding
@@ -40,7 +43,6 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener {
     private var cat1: String = ""
     private var cat2: String = ""
     private lateinit var lineMap: HashMap<String, Float>
-    private lateinit var rvArray: ArrayList<CompareLineModel>
     private lateinit var compareLineAdapter: CompareLineAdapter
     private lateinit var layoutManager: LinearLayoutManager
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -158,36 +160,17 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setRvData() {
-        rvArray = ArrayList()
-        DLog.e("lineMap : ${lineMap.toList()}")
-        val sortedMap = lineMap.toSortedMap()
-        for (i in 0 until sortedMap.size) {
+        val thread = CompareLineThread(lineMap,ArrayList(), this)
+        thread.start()
 
-            if (sortedMap.size == 1) {
-                val firstdata = sortedMap.toList()[i].second
-                rvArray.add(CompareLineModel(sortedMap.toList()[i].first
-                        , firstdata.toString()
-                        , sortedMap.toList()[i].first
-                        , firstdata.toString()
-                        , ""))
-                break
-            }
-            if (i + 1 < sortedMap.size) {
-                val firstdata = sortedMap.toList()[i].second
-                val seconddata = sortedMap.toList()[i + 1].second
-                rvArray.add(CompareLineModel(sortedMap.toList()[i].first
-                        , firstdata.toString()
-                        , sortedMap.toList()[i + 1].first
-                        , seconddata.toString()
-                        , firstdata.minus(seconddata).toString()))
-            } else if (i + 1 == sortedMap.size) {
 
-            }
-        }
 
-        binding.compareFragLineHeader.visibility = View.VISIBLE
+    }
+
+    override fun getItem(arr: ArrayList<CompareLineModel>) {
+        activity?.runOnUiThread {  binding.compareFragLineHeader.visibility = View.VISIBLE }
         compareLineAdapter.clearItems()
-        compareLineAdapter.addItems(rvArray)
+        compareLineAdapter.addItems(arr)
     }
 
     private fun setTitleText(date: String, textView: TextView) {

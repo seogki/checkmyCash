@@ -23,10 +23,7 @@ import cashcheck.skh.com.availablecash.Register.adapter.Calendar.CalendarAdapter
 import cashcheck.skh.com.availablecash.Register.adapter.Calendar.CalendarTodayAdapter
 import cashcheck.skh.com.availablecash.Register.model.CalendarModel
 import cashcheck.skh.com.availablecash.Register.model.EstimateRegisterModel
-import cashcheck.skh.com.availablecash.Util.Const
-import cashcheck.skh.com.availablecash.Util.DBHelper
-import cashcheck.skh.com.availablecash.Util.GridSpacingItemDecoration
-import cashcheck.skh.com.availablecash.Util.UtilMethod
+import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentRegisterCalendarBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -178,9 +175,8 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
         Thread(Runnable {
             binding.fragCalendarRvToday.adapter = calendarTodayAdapter
-            getTodayDB()
         }).start()
-
+        getTodayDB()
     }
 
     private fun setRv() {
@@ -322,6 +318,7 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
                 // 처음 시작을 달의 시작으로 세팅
                 cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
                 val start = cal.time
+                DLog.e("start $start")
                 for (i in 0 until end) {
                     if (i == 0) {
                         // 만약 처음시작이 일요일일시 아무것도 안하고 데이터를 넣어도된다

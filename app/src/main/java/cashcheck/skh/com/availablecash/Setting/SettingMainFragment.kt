@@ -325,7 +325,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                 if (msgArr[0].contains("씨티BC(7478)")) {
                     val dateFormat = UtilMethod.millisToDate(date.toLong())
                     if (msgArr[0].contains("해외승인")) {
-                        val first = msgArr[0].replace("\n", "")
+//                        val first = msgArr[0].replace("\n", "")
                         val second = msgArr[1].replace("\n", "")
                         val third = msgArr[2].replace("\n", "")
                         val won = second.substring(0, 5).toDouble().times(1108.80).toInt().toString()
