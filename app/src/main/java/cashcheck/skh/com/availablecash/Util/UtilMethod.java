@@ -126,7 +126,7 @@ public class UtilMethod {
     }
 
     public static String currencyFormat(String amount) {
-        if (amount.isEmpty() || amount.length() == 0) {
+        if (amount.isEmpty()) {
             return "";
         }
         if (amount.contains("첫번째")) {

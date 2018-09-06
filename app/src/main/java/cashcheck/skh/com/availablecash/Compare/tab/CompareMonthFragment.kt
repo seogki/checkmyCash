@@ -193,7 +193,7 @@ class CompareMonthFragment : BaseFragment() {
     companion object {
         class QueryTask(private val compareMonthFragment: CompareMonthFragment) : AsyncTask<Void, Void, ArrayList<CompareMonthModel>>() {
             override fun doInBackground(vararg params: Void?): ArrayList<CompareMonthModel> {
-    
+
                 compareMonthFragment.mItems = ArrayList()
                 var cursor: Cursor? = null
                 try {

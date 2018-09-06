@@ -34,7 +34,7 @@ import kotlin.collections.HashMap
 /**
  * A simple [Fragment] subclass.
  */
-class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalRegisterDeleteListener, NormalThreadListener {
+class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, NormalThreadListener {
 
 
     lateinit var binding: FragmentNormalRegisterBinding
@@ -45,6 +45,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     private lateinit var itemTreeMap: TreeMap<String, MutableList<NormalRegisterModel>>
     private lateinit var mItems: ArrayList<ListItem>
     private lateinit var map: HashMap<String, Float>
+    private var isStart = false
     private lateinit var tempMap: HashMap<String, Float>
     private var isRvOn: Boolean = false
     private var dates: String = ""
@@ -62,7 +63,6 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_normal_register, container, false)
-        binding.onClickListener = this
         binding.normalFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         db = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         tempMap = HashMap()
@@ -83,20 +83,16 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         binding.normalFragRv.isNestedScrollingEnabled = false
         binding.normalFragRv.itemAnimator = null
 
-        Thread(Runnable {
+        Handler().postDelayed({
             binding.normalFragRv.adapter = normalRegisterAdapter
-        }).start()
+        },10)
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
 
-        }
-    }
 
     override fun onResume() {
         super.onResume()
-        checkDiffAndRefresh()
+            checkDiffAndRefresh()
     }
 
     private fun checkDiffAndRefresh() {
@@ -136,6 +132,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
 
     private fun setHeaderAndData(resultModel: NormalRegisterModel) {
 
+
         val dateDays = resultModel.date + resultModel.days
 
         if (itemTreeMap.containsKey(dateDays)) {
@@ -168,6 +165,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
     }
 
     private fun setPieChart() {
+
         val chart = binding.normalFragPiechart
         chart.setUsePercentValues(true)
         monthTotal = 0F
@@ -263,9 +261,9 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
                         }
                     }
                 } catch (e: Exception) {
-    
+
                 }
-    
+
                 return normalRegisterFragment.map
             }
         }

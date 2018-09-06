@@ -37,7 +37,7 @@ class CompareWeekFragment : BaseFragment(), CompareWeekListener {
     private lateinit var mItems: MutableList<CompareWeekModel>
     private lateinit var tempItem: MutableList<CompareWeekModel>
     private lateinit var dbHelper: DBHelper
-    private lateinit var thread : CompareWeekThread
+    private lateinit var thread: CompareWeekThread
     private var isCreated: Boolean = false
     private var weekTotalUsage = 0
     private var mostUsage = 0
