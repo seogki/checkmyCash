@@ -110,7 +110,7 @@ class CompareMonthFragment : BaseFragment() {
 
     private fun getTotalFromMonth() {
         try {
-            val task = QueryTask()
+            val task = QueryTask(this)
             task.execute()
             mItems = task.get()
 
@@ -190,31 +190,33 @@ class CompareMonthFragment : BaseFragment() {
         compareMonthAdapter.addItems(mItems.asReversed())
     }
 
-    inner class QueryTask : AsyncTask<Void, Void, ArrayList<CompareMonthModel>>() {
-        override fun doInBackground(vararg params: Void?): ArrayList<CompareMonthModel> {
-
-            mItems = ArrayList()
-            var cursor: Cursor? = null
-            try {
-                for (i in 0 until monthArray.size) {
-                    monthUsage = 0
-
-                    val db = dbHelper.readableDatabase
-
-                    cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + monthArray[i] + "%' ORDER BY date DESC", null)
-                    while (cursor.moveToNext()) {
-                        val money = cursor.getString(0)
-                        monthUsage += money.toInt()
+    companion object {
+        class QueryTask(private val compareMonthFragment: CompareMonthFragment) : AsyncTask<Void, Void, ArrayList<CompareMonthModel>>() {
+            override fun doInBackground(vararg params: Void?): ArrayList<CompareMonthModel> {
+    
+                compareMonthFragment.mItems = ArrayList()
+                var cursor: Cursor? = null
+                try {
+                    for (i in 0 until compareMonthFragment.monthArray.size) {
+                        compareMonthFragment.monthUsage = 0
+    
+                        val db = compareMonthFragment.dbHelper.readableDatabase
+    
+                        cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + compareMonthFragment.monthArray[i] + "%' ORDER BY date DESC", null)
+                        while (cursor.moveToNext()) {
+                            val money = cursor.getString(0)
+                            compareMonthFragment.monthUsage += money.toInt()
+                        }
+                        compareMonthFragment.mItems.add(CompareMonthModel("", compareMonthFragment.monthArray[i], compareMonthFragment.monthUsage.toString()))
                     }
-                    mItems.add(CompareMonthModel("", monthArray[i], monthUsage.toString()))
+                } catch (e: Exception) {
+    
+                } finally {
+                    cursor?.close()
                 }
-            } catch (e: Exception) {
-
-            } finally {
-                cursor?.close()
+    
+                return compareMonthFragment.mItems
             }
-
-            return mItems
         }
     }
 

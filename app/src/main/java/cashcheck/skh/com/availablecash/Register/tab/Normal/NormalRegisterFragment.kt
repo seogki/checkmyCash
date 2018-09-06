@@ -106,7 +106,7 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         DLog.e("cur $dates")
 
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        val task = QueryTask()
+        val task = QueryTask(this)
         task.execute()
         map = task.get()
 
@@ -241,31 +241,33 @@ class NormalRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalReg
         chart.invalidate()
     }
 
-    inner class QueryTask : AsyncTask<Void, Void, HashMap<String, Float>>() {
-        override fun doInBackground(vararg params: Void?): HashMap<String, Float> {
-            try {
-                val db = db.readableDatabase
-                map = HashMap()
-                mItems = ArrayList()
-                itemTreeMap = TreeMap()
-                val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + dates + "%' ORDER BY date DESC", null)
-                while (cursor.moveToNext()) {
-                    setHeaderAndData(NormalRegisterModel(cursor.getString(0), cursor.getString(1).substring(0, 8), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
-                    val cate = cursor.getString(2)
-                    val money = cursor.getString(3).toFloat()
-                    if (map.containsKey(cate)) {
-                        val data = map.getValue(cate).toFloat().plus(money.toFloat())
-                        map.remove(cate)
-                        map[cate] = data
-                    } else {
-                        map[cate] = money
+    companion object {
+        class QueryTask(private val normalRegisterFragment: NormalRegisterFragment) : AsyncTask<Void, Void, HashMap<String, Float>>() {
+            override fun doInBackground(vararg params: Void?): HashMap<String, Float> {
+                try {
+                    val db = normalRegisterFragment.db.readableDatabase
+                    normalRegisterFragment.map = HashMap()
+                    normalRegisterFragment.mItems = ArrayList()
+                    normalRegisterFragment.itemTreeMap = TreeMap()
+                    val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + normalRegisterFragment.dates + "%' ORDER BY date DESC", null)
+                    while (cursor.moveToNext()) {
+                        normalRegisterFragment.setHeaderAndData(NormalRegisterModel(cursor.getString(0), cursor.getString(1).substring(0, 8), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
+                        val cate = cursor.getString(2)
+                        val money = cursor.getString(3).toFloat()
+                        if (normalRegisterFragment.map.containsKey(cate)) {
+                            val data = normalRegisterFragment.map.getValue(cate).toFloat().plus(money.toFloat())
+                            normalRegisterFragment.map.remove(cate)
+                            normalRegisterFragment.map[cate] = data
+                        } else {
+                            normalRegisterFragment.map[cate] = money
+                        }
                     }
+                } catch (e: Exception) {
+    
                 }
-            } catch (e: Exception) {
-
+    
+                return normalRegisterFragment.map
             }
-
-            return map
         }
     }
 }// Required empty public constructor
