@@ -45,7 +45,6 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
     private lateinit var itemTreeMap: TreeMap<String, MutableList<NormalRegisterModel>>
     private lateinit var mItems: ArrayList<ListItem>
     private lateinit var map: HashMap<String, Float>
-    private var isStart = false
     private lateinit var tempMap: HashMap<String, Float>
     private var isRvOn: Boolean = false
     private var dates: String = ""

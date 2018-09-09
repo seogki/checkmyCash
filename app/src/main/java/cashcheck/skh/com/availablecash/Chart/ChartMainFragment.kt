@@ -176,7 +176,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
-        chart.setExtraOffsets(5F, 5F, 5F, 0F)
+        chart.setExtraOffsets(5F, 5F, 5F, 5F)
         chart.setHoleColor(Color.argb(0, 0, 0, 0))
         val colors = mutableListOf<Int>()
 
@@ -198,6 +198,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         l.textColor = ContextCompat.getColor(context!!, R.color.black)
         l.xEntrySpace = 4f
         l.yEntrySpace = 4f
+
         chart.data = data
         chart.description.isEnabled = false
         chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
