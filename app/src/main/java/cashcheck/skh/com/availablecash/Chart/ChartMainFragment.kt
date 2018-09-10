@@ -225,11 +225,8 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         val result = DecimalFormat("0.0").format(percent)
         DLog.e("percent : ${DecimalFormat("0.0").format(percent)}")
 
-        if(percent < 100){
-            binding.chartFragTxtPercent.text = "예상금액의 $result%를\n소비하셨습니다"
-        } else {
-            binding.chartFragTxtPercent.text = "예상금액의 $result%를\n소비하셨습니다"
-        }
+        binding.chartFragTxtPercent.text = "$result% 를"
+
 
         if (totalUsage > twoHundred) {
             binding.chartFragImgDis.visibility = View.VISIBLE
@@ -245,7 +242,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragImgHappy.visibility = View.INVISIBLE
             binding.chartFragImgNice.visibility = View.INVISIBLE
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_sad_48)
-            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.Red), PorterDuff.Mode.SRC_ATOP)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.GuardsmanRed), PorterDuff.Mode.SRC_ATOP)
         } else if (totalUsage <= estimateUsage && totalUsage > oneHundred) {
             binding.chartFragImgDis.visibility = View.INVISIBLE
             binding.chartFragImgSad.visibility = View.INVISIBLE

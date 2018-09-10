@@ -251,6 +251,8 @@
                         app:layout_constraintTop_toBottomOf="@+id/chart_frag_const_all"
                         >
 
+
+
                         <TextView
                             android:id="@+id/chart_frag_txt_totalresult_Money"
                             android:layout_width="wrap_content"
@@ -295,6 +297,16 @@
                             app:layout_constraintTop_toTopOf="@+id/view_gra"
                             />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:text="예상금액의"
+                            app:layout_constraintStart_toEndOf="@+id/chart_frag_img_dis"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textColor="@color/darkGrey"
+                            app:layout_constraintBottom_toTopOf="@+id/chart_frag_txt_percent"
+                            />
 
                         <TextView
                             android:id="@+id/chart_frag_txt_percent"
@@ -307,9 +319,26 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/rippleColor"
+                            android:gravity="center"
+                            tools:text="500.53%"
+                            />
+
+                        <TextView
+                            android:id="@+id/chart_frag_txt_percent_below"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_txt_percent"
+                            app:layout_constraintStart_toEndOf="@+id/chart_frag_img_dis"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:text="소비하셨습니다"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:textColor="@color/darkGrey"
                             android:gravity="center"
-                            tools:text="예상금액의 500.53%를 \n소비하셨습니다"
+
                             />
 
                         <ImageView
@@ -320,7 +349,7 @@
                             android:src="@drawable/icons8_disappointed_48"
                             app:layout_constraintStart_toStartOf="@+id/chart_frag_txt_percent"
                             app:layout_constraintEnd_toEndOf="@+id/chart_frag_txt_percent"
-                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_txt_percent"
+                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_txt_percent_below"
                             />
 
                         <ImageView
