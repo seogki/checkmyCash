@@ -25,7 +25,7 @@ class CustomMainPercentFormatter : IValueFormatter, IAxisValueFormatter {
         if (value < 3) {
             return ""
         }
-        return mFormat.format(value.toDouble()) + "%"
+        return ""
     }
 
     // IAxisValueFormatter
@@ -33,6 +33,6 @@ class CustomMainPercentFormatter : IValueFormatter, IAxisValueFormatter {
         if (value < 3) {
             return ""
         }
-        return mFormat.format(value.toDouble()) + "%"
+        return ""
     }
 }

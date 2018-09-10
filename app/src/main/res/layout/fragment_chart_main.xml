@@ -86,224 +86,303 @@
                 >
 
                 <android.support.constraint.ConstraintLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     >
 
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/chart_frag_piechart"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/white_bg_top_corner_only_v2"
-                        android:elevation="3dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="UnusedAttribute"
-                        />
-
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/chart_frag_const_everyUsage"
+                        android:id="@+id/chart_frag_const_all"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/white"
-                        android:elevation="3dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/chart_frag_piechart"
                         >
 
                         <android.support.constraint.ConstraintLayout
-                            android:id="@+id/chart_farg_const_totalUse"
-                            android:layout_width="0dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toStartOf="@+id/chart_farg_const_EstimateUse"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            >
-
-                            <TextView
-                                android:id="@+id/chart_farg_txt_totalUse"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:letterSpacing="0.15"
-                                android:text="이번달"
-                                android:textColor="@color/lightBlack"
-                                android:textSize="11sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginTop="4dp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                />
-
-                            <TextView
-                                android:id="@+id/chart_frag_txt_total_Money"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginTop="2dp"
-                                android:letterSpacing="0.15"
-                                android:paddingBottom="4dp"
-
-                                android:text="0원"
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/chart_farg_txt_totalUse"
-                                tools:text="980,000원"
-                                />
-
-                            <!--<View-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="0.5dp"-->
-                                <!--android:background="@color/midGrey"-->
-                                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                                <!--/>-->
-
-                        </android.support.constraint.ConstraintLayout>
-
-                        <android.support.constraint.ConstraintLayout
-                            android:id="@+id/chart_farg_const_EstimateUse"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginEnd="8dp"
-                            app:layout_constraintStart_toEndOf="@id/chart_farg_const_totalUse"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            >
-
-                            <TextView
-                                android:id="@+id/chart_farg_txt_totalEstimate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:letterSpacing="0.15"
-                                android:text="예상"
-                                android:textColor="@color/lightBlack"
-                                android:textSize="11sp"
-                                android:textStyle="bold"
-                                app:layout_constraintEnd_toEndOf="parent"
-
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                />
-
-                            <TextView
-                                android:id="@+id/chart_frag_txt_Estimate_Money"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:letterSpacing="0.15"
-                                android:paddingBottom="4dp"
-                                android:paddingTop="2dp"
-                                android:text="0원"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginTop="2dp"
-                                android:textColor="@color/black"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                               app:layout_constraintTop_toBottomOf="@+id/chart_farg_txt_totalEstimate"
-                                tools:text="680,000원"
-                                />
-
-                            <!--<View-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="0.5dp"-->
-                                <!--android:background="@color/midGrey"-->
-                                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                                <!--/>-->
-
-                        </android.support.constraint.ConstraintLayout>
-
-
-                        <android.support.constraint.ConstraintLayout
-                            android:id="@+id/chart_farg_const_result"
+                            android:id="@+id/chart_frag_const_pie"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/chart_farg_const_EstimateUse"
+
+                            app:layout_constraintTop_toTopOf="parent"
                             >
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/chart_farg_txt_totalresult"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginBottom="4dp"-->
-                                <!--android:text="결과"-->
-                                <!--android:textColor="@color/lightBlack"-->
-                                <!--android:textSize="14sp"-->
-                                <!--android:textStyle="bold"-->
 
-                                <!--app:layout_constraintStart_toStartOf="parent"-->
-                                <!--app:layout_constraintTop_toTopOf="parent"-->
-                                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                                <!--/>-->
-
-                            <TextView
-                                android:id="@+id/chart_frag_txt_totalresult_Money"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="4dp"
-                                android:layout_marginTop="4dp"
-                                android:letterSpacing="0.15"
-                                android:paddingBottom="4dp"
-                                android:paddingTop="4dp"
-                                android:text="0원"
-                                android:textColor="@color/Red"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                            <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/chart_frag_piechart"
+                                android:layout_width="match_parent"
+                                android:layout_height="250dp"
+                                android:background="@color/rippleColor"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                tools:text="-680,000원"
+                                tools:ignore="UnusedAttribute"
                                 />
 
-                            <!--<View-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="0.5dp"-->
-                                <!--android:background="@color/midGrey"-->
-                                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                                <!--/>-->
+                            <View
+                                android:id="@+id/view_20"
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:background="@color/rippleColor"
+                                app:layout_constraintTop_toBottomOf="@+id/chart_frag_piechart"
+                                />
+
+
+                            <android.support.constraint.ConstraintLayout
+                                android:id="@+id/chart_farg_const_totalUse"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginStart="16dp"
+                                android:elevation="2dp"
+                                android:background="@drawable/white_ripple_rec"
+                                app:layout_constraintEnd_toStartOf="@+id/chart_farg_const_EstimateUse"
+                                app:layout_constraintHorizontal_weight="1"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/view_20"
+                                >
+
+                                <TextView
+                                    android:id="@+id/chart_farg_txt_totalUse"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:letterSpacing="0.15"
+                                    android:text="이번달"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/chart_frag_txt_total_Money"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:layout_marginTop="2dp"
+                                    android:letterSpacing="0.15"
+                                    android:paddingBottom="4dp"
+
+                                    android:text="0원"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/chart_farg_txt_totalUse"
+                                    tools:text="980,000원"
+                                    />
+
+
+                            </android.support.constraint.ConstraintLayout>
+
+                            <android.support.constraint.ConstraintLayout
+                                android:id="@+id/chart_farg_const_EstimateUse"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="8dp"
+                                android:elevation="2dp"
+                                android:background="@drawable/white_ripple_rec"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_weight="1"
+                                app:layout_constraintStart_toEndOf="@+id/chart_farg_const_totalUse"
+                                app:layout_constraintTop_toTopOf="@+id/view_20"
+                                >
+
+                                <TextView
+                                    android:id="@+id/chart_farg_txt_totalEstimate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:letterSpacing="0.15"
+                                    android:text="예상"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/chart_frag_txt_Estimate_Money"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_marginBottom="4dp"
+                                    android:layout_marginTop="2dp"
+                                    android:letterSpacing="0.15"
+                                    android:paddingBottom="4dp"
+                                    android:text="0원"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/chart_farg_txt_totalEstimate"
+                                    tools:text="680,000원"
+                                    />
+
+
+                            </android.support.constraint.ConstraintLayout>
+
+
 
                         </android.support.constraint.ConstraintLayout>
 
 
                     </android.support.constraint.ConstraintLayout>
 
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/chart_farg_const_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:elevation="2dp"
+                        android:background="@drawable/white_ripple_rec"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/chart_frag_const_all"
+                        >
+
+                        <TextView
+                            android:id="@+id/chart_frag_txt_totalresult_Money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:letterSpacing="0.15"
+                            android:text="0원"
+                            android:textColor="@color/green"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="24dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="-680,000원"
+                            />
+
+                        <View
+                            android:id="@+id/view_gra"
+                            android:layout_width="8dp"
+                            android:layout_height="250dp"
+                            android:layout_marginStart="24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:background="@drawable/gradient_line"
+                            />
+
+                        <ImageView
+                            android:id="@+id/chart_frag_img_dis"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/circle_img_btn"
+                            android:elevation="5dp"
+                            app:layout_constraintBottom_toTopOf="@id/chart_frag_img_sad"
+                            app:layout_constraintStart_toStartOf="@+id/view_gra"
+                            app:layout_constraintEnd_toEndOf="@+id/view_gra"
+                            app:layout_constraintTop_toTopOf="@+id/view_gra"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/chart_frag_txt_percent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/chart_frag_img_dis"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:textColor="@color/darkGrey"
+                            android:gravity="center"
+                            tools:text="예상금액의 500.53%를 \n소비하셨습니다"
+                            />
+
+                        <ImageView
+                            android:id="@+id/chart_frag_img_currentimage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/icons8_disappointed_48"
+                            app:layout_constraintStart_toStartOf="@+id/chart_frag_txt_percent"
+                            app:layout_constraintEnd_toEndOf="@+id/chart_frag_txt_percent"
+                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_txt_percent"
+                            />
+
+                        <ImageView
+                            android:id="@+id/chart_frag_img_sad"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:elevation="5dp"
+                            android:background="@drawable/circle_img_btn"
+                            app:layout_constraintStart_toStartOf="@+id/view_gra"
+                            app:layout_constraintEnd_toEndOf="@+id/view_gra"
+                            app:layout_constraintBottom_toTopOf="@+id/chart_frag_img_happy"
+                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_img_dis"
+                            />
+
+                        <ImageView
+                            android:id="@+id/chart_frag_img_happy"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:elevation="5dp"
+                            android:background="@drawable/circle_img_btn"
+                            app:layout_constraintStart_toStartOf="@+id/view_gra"
+                            app:layout_constraintEnd_toEndOf="@+id/view_gra"
+                            app:layout_constraintBottom_toTopOf="@+id/chart_frag_img_nice"
+                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_img_sad"
+                            />
+
+                        <ImageView
+                            android:id="@+id/chart_frag_img_nice"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:elevation="5dp"
+                            android:background="@drawable/circle_img_btn"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/view_gra"
+                            app:layout_constraintEnd_toEndOf="@+id/view_gra"
+                            app:layout_constraintTop_toBottomOf="@+id/chart_frag_img_happy"
+                            />
+                    </android.support.constraint.ConstraintLayout>
 
                     <TextView
+                        android:id="@+id/chart_frag_txt_recent"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:textColor="@color/statusbar"
-                        android:text="최근 항목"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+
                         android:gravity="start|center_vertical"
-                        android:background="@color/white"
                         android:paddingStart="16dp"
+                        android:text="최근 항목"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:id="@+id/chart_frag_txt_recent"
-                        app:layout_constraintTop_toBottomOf="@+id/chart_frag_const_everyUsage"
+                        app:layout_constraintTop_toBottomOf="@+id/chart_farg_const_result"
                         />
 
                     <android.support.v7.widget.RecyclerView

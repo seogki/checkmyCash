@@ -62,16 +62,16 @@ class NormalRegisterViewHolder(val binding: ItemNormalRegisterRvBinding, private
         AlertDialog.Builder(context, R.style.MyDialogTheme)
                 .setTitle("데이터 삭제")
                 .setMessage("정말로 지우시겠습니까?")
-                .setPositiveButton("확인", { dialog, _ ->
+                .setPositiveButton("확인") { dialog, _ ->
                     dialog.dismiss()
                     binding.model?.id?.let { db?.deleteData(it) }
-                    onNormalRegisterDeleteListener.onCompleteDelete("done")
+                    onNormalRegisterDeleteListener.onCompleteDelete("done",adapterPosition)
                     binding.itemCateSubConst.visibility = View.GONE
                     isExpend = false
-                }).setNegativeButton("취소", { dialog, _ ->
+                }.setNegativeButton("취소") { dialog, _ ->
                     dialog.dismiss()
                     isExpend = true
-                })
+                }
                 .show()
 
     }

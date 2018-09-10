@@ -49,8 +49,9 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/lightBlack"
-                    android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_rv"
+                    android:textSize="12sp"
+                    tools:text="6주 합계"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_week_rv"
                     />
 
                 <TextView
@@ -62,8 +63,9 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:textColor="@color/statusbar"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_alltotal"
+                    android:textSize="20sp"
+                    tools:text="3,000,000원"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_week_txt_alltotal"
                     />
 
                 <TextView
@@ -76,8 +78,9 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/lightBlack"
-                    android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_alltotal_money"
+                    android:textSize="12sp"
+                    tools:text="모스트 합계"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_week_txt_alltotal_money"
                     />
 
                 <TextView
@@ -89,8 +92,9 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:textColor="@color/statusbar"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_mosttotal"
+                    android:textSize="20sp"
+                    tools:text="07 05 ~ 08 23"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_week_txt_mosttotal"
                     />
 
                 <TextView
@@ -102,8 +106,9 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:textColor="@color/statusbar"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_week_txt_mosttotal_month"
+                    android:textSize="20sp"
+                    tools:text="70,000원"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_week_txt_mosttotal_month"
                     />
 
             </android.support.constraint.ConstraintLayout>

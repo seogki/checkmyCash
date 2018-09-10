@@ -418,7 +418,6 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                             } else {
                                 mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
                             }
-
                         }
                     }
 

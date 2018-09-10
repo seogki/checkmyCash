@@ -3,6 +3,7 @@ package cashcheck.skh.com.availablecash.Compare.tab
 
 import android.database.Cursor
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -108,7 +109,7 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
 
     private fun setRvData() {
         val thread = ComparePieThread(ArrayList(), pieMap1, pieMap2, this)
-        thread.start()
+        thread.run()
     }
 
     override fun getItem(arr: ArrayList<ComparePieModel>) {
@@ -173,11 +174,10 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
 
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
-
+        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)

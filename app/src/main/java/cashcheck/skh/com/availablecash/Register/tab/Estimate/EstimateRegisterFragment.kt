@@ -63,9 +63,10 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         return binding.root
     }
 
-    override fun onCompleteDelete(done: String?) {
-        if (done == "done")
+    override fun onCompleteDelete(done: String?, position: Int) {
+        if (done == "done") {
             getDbData()
+        }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -92,7 +93,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
     private fun getDbData() {
         try {
-            val task = QueryTask()
+            val task = QueryTask(this)
             task.execute()
             map = task.get()
 
@@ -207,7 +208,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.isRotationEnabled = false
         chart.setTouchEnabled(false)
         chart.setUsePercentValues(true)
-        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
+        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.rippleColor))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
         chart.setHoleColor(Color.argb(0, 0, 0, 0))
@@ -222,10 +223,10 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         }
         chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -269,14 +270,14 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
 
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setMessage("등록 되었습니다.")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             dialog.dismiss()
                             binding.estimateEditCate.text.clear()
                             binding.estimateEditMoney.text.clear()
                             binding.estimateEditDays.text.clear()
                             getDbData()
                             binding.estimateBtnRegi.isEnabled = true
-                        }).setNegativeButton(null, null)
+                        }.setNegativeButton(null, null)
                         .show()
             } catch (e: Exception) {
                 alertDialog(context!!, "다시 시도해주시기 바랍니다.")
@@ -293,39 +294,41 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         getDbData()
     }
 
-    inner class QueryTask : AsyncTask<Void, Void, HashMap<String, Float>>() {
-        override fun doInBackground(vararg params: Void?): HashMap<String, Float> {
-            map = HashMap()
-            val database = db.readableDatabase
-            totalUsage = 0F
-            mItems = ArrayList()
-            var cursor: Cursor? = null
-            try {
-                cursor = database.rawQuery("SELECT * FROM ${Const.DbEstimateName} ORDER BY date DESC", null)
-                while (cursor.moveToNext()) {
-                    val num = cursor.getString(0)
-                    val date = cursor.getString(1)
-                    val cate = cursor.getString(2)
-                    val money = cursor.getString(3)
-                    val days = cursor.getString(4)
+    companion object {
+        class QueryTask(private val estimateRegisterFragment: EstimateRegisterFragment) : AsyncTask<Void, Void, HashMap<String, Float>>() {
+            override fun doInBackground(vararg params: Void?): HashMap<String, Float> {
+                estimateRegisterFragment.map = HashMap()
+                val database = estimateRegisterFragment.db.readableDatabase
+                estimateRegisterFragment.totalUsage = 0F
+                estimateRegisterFragment.mItems = ArrayList()
+                var cursor: Cursor? = null
+                try {
+                    cursor = database.rawQuery("SELECT * FROM ${Const.DbEstimateName} ORDER BY date DESC", null)
+                    while (cursor.moveToNext()) {
+                        val num = cursor.getString(0)
+                        val date = cursor.getString(1)
+                        val cate = cursor.getString(2)
+                        val money = cursor.getString(3)
+                        val days = cursor.getString(4)
 
-                    mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString(), days))
+                        estimateRegisterFragment.mItems.add(EstimateRegisterModel(num, date, cate, money.toInt().times(days.toInt()).toString(), days))
 
-                    if (map.containsKey(cate)) {
-                        val data = map.getValue(cate).toInt().plus(money.toInt().times(days.toInt()))
-                        map.remove(cate)
-                        map[cate] = data.toFloat()
-                    } else {
-                        map[cate] = money.toInt().times(days.toInt()).toFloat()
+                        if (estimateRegisterFragment.map.containsKey(cate)) {
+                            val data = estimateRegisterFragment.map.getValue(cate).toInt().plus(money.toInt().times(days.toInt()))
+                            estimateRegisterFragment.map.remove(cate)
+                            estimateRegisterFragment.map[cate] = data.toFloat()
+                        } else {
+                            estimateRegisterFragment.map[cate] = money.toInt().times(days.toInt()).toFloat()
+                        }
                     }
+                } catch (e: Exception) {
+
+                } finally {
+                    cursor?.close()
                 }
-            } catch (e: Exception) {
 
-            } finally {
-                cursor?.close()
+                return estimateRegisterFragment.map
             }
-
-            return map
         }
     }
 

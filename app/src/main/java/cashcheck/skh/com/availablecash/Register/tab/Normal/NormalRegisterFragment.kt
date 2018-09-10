@@ -1,6 +1,7 @@
 package cashcheck.skh.com.availablecash.Register.tab.Normal
 
 
+import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.graphics.Typeface
@@ -53,9 +54,10 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         checkDiffAndRefresh()
     }
 
-    override fun onCompleteDelete(done: String?) {
-        if (done == "done")
+    override fun onCompleteDelete(done: String?, position: Int) {
+        if (done == "done") {
             checkDiffAndRefresh()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -84,14 +86,13 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
 
         Handler().postDelayed({
             binding.normalFragRv.adapter = normalRegisterAdapter
-        },10)
+        }, 10)
     }
-
 
 
     override fun onResume() {
         super.onResume()
-            checkDiffAndRefresh()
+        checkDiffAndRefresh()
     }
 
     private fun checkDiffAndRefresh() {
@@ -208,7 +209,7 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         chart.setTouchEnabled(false)
         chart.setHoleColor(Color.argb(0, 0, 0, 0))
         chart.setUsePercentValues(true)
-        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
+        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.rippleColor))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
         chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
@@ -223,10 +224,10 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -241,12 +242,13 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
     companion object {
         class QueryTask(private val normalRegisterFragment: NormalRegisterFragment) : AsyncTask<Void, Void, HashMap<String, Float>>() {
             override fun doInBackground(vararg params: Void?): HashMap<String, Float> {
+                var cursor: Cursor? = null
                 try {
                     val db = normalRegisterFragment.db.readableDatabase
                     normalRegisterFragment.map = HashMap()
                     normalRegisterFragment.mItems = ArrayList()
                     normalRegisterFragment.itemTreeMap = TreeMap()
-                    val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + normalRegisterFragment.dates + "%' ORDER BY date DESC", null)
+                    cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + normalRegisterFragment.dates + "%' ORDER BY date DESC", null)
                     while (cursor.moveToNext()) {
                         normalRegisterFragment.setHeaderAndData(NormalRegisterModel(cursor.getString(0), cursor.getString(1).substring(0, 8), cursor.getString(2), cursor.getString(3), cursor.getString(4)))
                         val cate = cursor.getString(2)
@@ -261,6 +263,8 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
                     }
                 } catch (e: Exception) {
 
+                } finally {
+                    cursor?.close()
                 }
 
                 return normalRegisterFragment.map

@@ -59,10 +59,13 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
         }
     }
 
-    override fun onCompleteDelete(done: String?) {
+    override fun onCompleteDelete(done: String?, position: Int) {
         if (done == "done") {
             setCalendar()
-            getTodayDB()
+            if (calendarTodayAdapter.itemCount > 1) {
+                calendarTodayAdapter.removeItemAt(position)
+            } else
+                getTodayDB()
         }
 
     }
@@ -175,8 +178,9 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
 
         Thread(Runnable {
             binding.fragCalendarRvToday.adapter = calendarTodayAdapter
+            activity?.runOnUiThread { getTodayDB() }
         }).run()
-        getTodayDB()
+
     }
 
     private fun setRv() {
@@ -229,11 +233,8 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
     }
 
 
-
-
-
     companion object {
-        class QueryTask(private val registerCalendarFragment: RegisterCalendarFragment,private val mItem: MutableList<CalendarModel>) : AsyncTask<Void, Void, MutableList<CalendarModel>>() {
+        class QueryTask(private val registerCalendarFragment: RegisterCalendarFragment, private val mItem: MutableList<CalendarModel>) : AsyncTask<Void, Void, MutableList<CalendarModel>>() {
             override fun doInBackground(vararg params: Void?): MutableList<CalendarModel> {
                 try {
 

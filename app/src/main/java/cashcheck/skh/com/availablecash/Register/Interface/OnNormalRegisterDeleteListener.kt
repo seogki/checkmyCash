@@ -5,6 +5,6 @@ package cashcheck.skh.com.availablecash.Register.Interface
  */
 interface OnNormalRegisterDeleteListener{
 
-    fun onCompleteDelete(done: String? = null)
+    fun onCompleteDelete(done: String? = null, position: Int)
 
 }

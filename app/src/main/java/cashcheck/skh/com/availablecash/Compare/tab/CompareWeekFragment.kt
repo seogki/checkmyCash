@@ -130,7 +130,7 @@ class CompareWeekFragment : BaseFragment(), CompareWeekListener {
                     , "가장 많은 소비를 한 주"
                     , "${replaceDate(mostItem?.first)} ~ ${replaceDate(mostItem?.last)}"
                     , "${UtilMethod.currencyFormat(mostUsage.toString())}원"
-                    , 18)
+                    , 12)
 
 
         } else {
@@ -158,8 +158,8 @@ class CompareWeekFragment : BaseFragment(), CompareWeekListener {
 
 
     private fun setTextOfTotal(allTotal: String, allMoney: String, mostTotal: String, mostMonth: String, mostMoney: String, font: Int) {
-        if (font == 18) {
-            binding.fragCompareWeekTxtAlltotal.textSize = 18F
+        if (font == 12) {
+            binding.fragCompareWeekTxtAlltotal.textSize = 12F
             binding.fragCompareWeekTxtAlltotal.typeface = Typeface.DEFAULT_BOLD
             binding.fragCompareWeekTxtAlltotal.setTextColor(ContextCompat.getColor(context!!, R.color.lightBlack))
         } else {

@@ -34,8 +34,8 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/frag_compare_month_txt_alltotal"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_month_rv"
+                    app:layout_constraintBottom_toTopOf="@+id/frag_compare_month_txt_alltotal"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_rv"
                     />
 
 
@@ -64,7 +64,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/lightBlack"
                     android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_month_txt_empty"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_empty"
                     />
 
                 <TextView
@@ -77,7 +77,7 @@
                     android:gravity="center"
                     android:textColor="@color/statusbar"
                     android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_month_txt_alltotal"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal"
                     />
 
                 <TextView
@@ -91,7 +91,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/lightBlack"
                     android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_month_txt_alltotal_money"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal_money"
                     />
 
                 <TextView
@@ -104,7 +104,7 @@
                     android:gravity="center"
                     android:textColor="@color/statusbar"
                     android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_month_txt_mosttotal"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal"
                     />
 
                 <TextView
@@ -117,7 +117,7 @@
                     android:gravity="center"
                     android:textColor="@color/statusbar"
                     android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/frag_compare_month_txt_mosttotal_month"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal_month"
                     />
 
 

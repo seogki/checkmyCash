@@ -6,6 +6,8 @@ import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.databinding.DataBindingUtil
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -56,17 +58,18 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
     }
 
     private fun checkTable() {
-        if(!dbHelper.isColumnExists(Const.DbName, "card_id")){
+        if (!dbHelper.isColumnExists(Const.DbName, "card_id")) {
             dbHelper.checkTable(Const.DbName, "card_id")
         }
-        if(!dbHelper.isColumnExists(Const.DbName, "card_name")){
+        if (!dbHelper.isColumnExists(Const.DbName, "card_name")) {
             dbHelper.checkTable(Const.DbName, "card_name")
         }
     }
 
-    override fun onCompleteDelete(done: String?) {
+    override fun onCompleteDelete(done: String?, position: Int) {
         if (done == "done") {
             getRecentChart()
+            getTotalData()
         }
     }
 
@@ -137,6 +140,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
                 val percent = value.toFloat().div(totalUsage).times(100F)
                 DLog.e("percent : $percent")
                 yvalues.add(PieEntry(value.toFloat(), "$key ${DecimalFormat("0.0").format(percent)}%"))
+//                yvalues.add(PieEntry(value.toFloat(), "$key"))
 
                 DLog.e("total $totalUsage")
             }
@@ -148,11 +152,12 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
                 } else {
                     val percent = result.toList()[i].second.toFloat().div(totalUsage).times(100F)
                     yvalues.add(PieEntry(result.toList()[i].second.toFloat(), "${result.toList()[i].first} ${DecimalFormat("0.0").format(percent)}%"))
+//                    yvalues.add(PieEntry(result.toList()[i].second.toFloat(), result.toList()[i].first))
                 }
             }
             val percent = data.div(totalUsage).times(100F)
             yvalues.add(PieEntry(data, "그외 ${DecimalFormat("0.0").format(percent)}%"))
-
+//            yvalues.add(PieEntry(data, "그외"))
         }
 
 
@@ -162,43 +167,47 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
 
 
-        dataSet.sliceSpace = 1F
+
         dataSet.selectionShift = 5F
         dataSet.valueTextSize = 9f
-        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
+//        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+//        dataSet.valueLinePart1OffsetPercentage = 100f
+//        dataSet.valueLinePart1Length = 0.3f
+//        dataSet.valueLinePart2Length = 0.1f
+        chart.setDrawEntryLabels(false)
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomMainPercentFormatter()
         chart.isRotationEnabled = false
-        chart.setDrawEntryLabels(false)
+        chart.setExtraOffsets(10F, 10F, 0F, 10F)
         chart.setTouchEnabled(false)
-//        chart.isDrawHoleEnabled = false
+        chart.isDrawHoleEnabled = false
+        chart.setHoleColor(Color.argb(0, 0, 0, 0))
         chart.setUsePercentValues(true)
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
-        chart.setExtraOffsets(5F, 5F, 5F, 5F)
-        chart.setHoleColor(Color.argb(0, 0, 0, 0))
         val colors = mutableListOf<Int>()
 
-        colors.add(ContextCompat.getColor(context!!, R.color.lightRed))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightOrange))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightYellow))
-        colors.add(ContextCompat.getColor(context!!, R.color.lightestYellow))
+        colors.add(ContextCompat.getColor(context!!, R.color.black))
+        colors.add(ContextCompat.getColor(context!!, R.color.darkGrey))
+        colors.add(ContextCompat.getColor(context!!, R.color.midGrey))
+        colors.add(ContextCompat.getColor(context!!, R.color.grey))
 
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)
-
+//        chart.legend.isEnabled = false
         val l = chart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+        l.orientation = Legend.LegendOrientation.VERTICAL
         l.isWordWrapEnabled = true
         l.setDrawInside(false)
-        l.textColor = ContextCompat.getColor(context!!, R.color.black)
+        l.textSize = 14F
+        l.textColor = ContextCompat.getColor(context!!, R.color.white)
         l.xEntrySpace = 4f
         l.yEntrySpace = 4f
-
+        l.typeface = Typeface.DEFAULT_BOLD
         chart.data = data
         chart.description.isEnabled = false
         chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
@@ -206,22 +215,63 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         getResultUsage()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getResultUsage() {
         resultUsage = estimateUsage.minus(totalUsage.toInt())
         val moneys = UtilMethod.currencyFormat(resultUsage.toString())
-        DLog.e("usage : $resultUsage")
+        val twoHundred = estimateUsage.times(2)
+        val oneHundred = estimateUsage.div(2)
+        val percent = totalUsage.div(estimateUsage).times(100)
+        val result = DecimalFormat("0.0").format(percent)
+        DLog.e("percent : ${DecimalFormat("0.0").format(percent)}")
+
+        if(percent < 100){
+            binding.chartFragTxtPercent.text = "예상금액의 $result%를\n소비하셨습니다"
+        } else {
+            binding.chartFragTxtPercent.text = "예상금액의 $result%를\n소비하셨습니다"
+        }
+
+        if (totalUsage > twoHundred) {
+            binding.chartFragImgDis.visibility = View.VISIBLE
+            binding.chartFragImgSad.visibility = View.INVISIBLE
+            binding.chartFragImgHappy.visibility = View.INVISIBLE
+            binding.chartFragImgNice.visibility = View.INVISIBLE
+            binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_disappointed_48)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.black), PorterDuff.Mode.SRC_ATOP)
+
+        } else if (totalUsage <= twoHundred && totalUsage > estimateUsage) {
+            binding.chartFragImgDis.visibility = View.INVISIBLE
+            binding.chartFragImgSad.visibility = View.VISIBLE
+            binding.chartFragImgHappy.visibility = View.INVISIBLE
+            binding.chartFragImgNice.visibility = View.INVISIBLE
+            binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_sad_48)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.Red), PorterDuff.Mode.SRC_ATOP)
+        } else if (totalUsage <= estimateUsage && totalUsage > oneHundred) {
+            binding.chartFragImgDis.visibility = View.INVISIBLE
+            binding.chartFragImgSad.visibility = View.INVISIBLE
+            binding.chartFragImgHappy.visibility = View.VISIBLE
+            binding.chartFragImgNice.visibility = View.INVISIBLE
+            binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_happy_48)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.green), PorterDuff.Mode.SRC_ATOP)
+
+        } else {
+            binding.chartFragImgDis.visibility = View.INVISIBLE
+            binding.chartFragImgSad.visibility = View.INVISIBLE
+            binding.chartFragImgHappy.visibility = View.INVISIBLE
+            binding.chartFragImgNice.visibility = View.VISIBLE
+            binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_smiling_48)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.OrangeYellow), PorterDuff.Mode.SRC_ATOP)
+        }
+
         when {
             resultUsage < 0 -> {
-                binding.chartFragTxtTotalresultMoney.text = moneys + "원... 분발하세요!"
-                binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Red))
+                binding.chartFragTxtTotalresultMoney.text = moneys + "원"
             }
             resultUsage > 0 -> {
-                binding.chartFragTxtTotalresultMoney.text = moneys + "원! 잘하셨습니다!"
-                binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.Neon))
+                binding.chartFragTxtTotalresultMoney.text = moneys + "원"
             }
             else -> {
                 binding.chartFragTxtTotalresultMoney.text = moneys + "원"
-                binding.chartFragTxtTotalresultMoney.setTextColor(ContextCompat.getColor(context!!, R.color.darkGrey))
             }
         }
     }
@@ -236,6 +286,11 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             getResultUsage()
         }
         getRecentChart()
+
+        getTotalData()
+    }
+
+    private fun getTotalData() {
         val db = dbHelper.readableDatabase
         if (db != null) {
             var cursor: Cursor? = null

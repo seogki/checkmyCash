@@ -30,6 +30,7 @@
     <color name="lightRedRipple">#CC0000</color>
     <color name="lightOrangeRipple">#B25C00</color>
     <color name="green">#01B112</color>
+    <color name="imageGreen">#01E317</color>
     <color name="blue">#2D18E8</color>
     <color name="danhong">#F23920</color>
     <color name="jaju">#660099</color>
@@ -39,21 +40,11 @@
 
 
     <!--파이차트색-->
-    <color name="pie1">#B20000</color>
-    <color name="pie2">#CC0000</color>
-    <color name="pie3">#E40000</color>
-    <color name="pie4">#FE0000</color>
-    <color name="pie5">#FF1919</color>
-    <color name="pie6">#FF3333</color>
-    <color name="pie7">#FF6565</color>
-    <color name="pie8">#FF9999</color>
-    <color name="pie9">#FFB1B1</color>
-    <color name="pie10">#FFCBCB</color>
-    <color name="pie11">#FFE5E5</color>
-    <!--<color name="pie12">#FF4B4B</color>-->
-    <!--<color name="pie13">#FF6565</color>-->
-    <!--<color name="pie14">#FF7F7F</color>-->
-    <!--<color name="pie15">#FF9999</color>-->
+    <color name="pie1">#E4002B</color>
+    <color name="pie2">#FF335F</color>
+    <color name="pie3">#FF99AC</color>
+    <color name="pie4">#FFE5EA</color>
+
 
     <color name="titleColor">#CC0000</color>
     <color name="btn">#131A53</color>

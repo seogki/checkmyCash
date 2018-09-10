@@ -154,7 +154,7 @@ class ModifyRegisterActivity : AppCompatActivity(), View.OnClickListener, TextVi
             R.id.cal_txt_dot -> {
                 if (binding.calTxtTitle.text.toString().isNotEmpty()) {
                     binding.calTxtTitle.append(".")
-                    binding.calTxtResultBtm.append("1")
+                    binding.calTxtResultBtm.append(".")
                 }
             }
             R.id.cal_txt_cancel -> {
