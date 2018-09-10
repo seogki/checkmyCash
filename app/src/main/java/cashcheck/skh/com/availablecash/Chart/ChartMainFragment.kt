@@ -167,7 +167,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
 
 
-
+        dataSet.sliceSpace = 0F
         dataSet.selectionShift = 5F
         dataSet.valueTextSize = 9f
 //        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
@@ -187,11 +187,14 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
         val colors = mutableListOf<Int>()
-
-        colors.add(ContextCompat.getColor(context!!, R.color.black))
-        colors.add(ContextCompat.getColor(context!!, R.color.darkGrey))
-        colors.add(ContextCompat.getColor(context!!, R.color.midGrey))
-        colors.add(ContextCompat.getColor(context!!, R.color.grey))
+        colors.add(Color.parseColor("#ffa31a"))
+        colors.add(Color.parseColor("#ffc266"))
+        colors.add(Color.parseColor("#ffe0b3"))
+        colors.add(Color.parseColor("#fff5e6"))
+//        colors.add(ContextCompat.getColor(context!!, R.color.black))
+//        colors.add(ContextCompat.getColor(context!!, R.color.darkGrey))
+//        colors.add(ContextCompat.getColor(context!!, R.color.midGrey))
+//        colors.add(ContextCompat.getColor(context!!, R.color.grey))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -225,22 +228,45 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         val result = DecimalFormat("0.0").format(percent)
         DLog.e("percent : ${DecimalFormat("0.0").format(percent)}")
 
-        binding.chartFragTxtPercent.text = "$result% 를"
-
 
         if (totalUsage > twoHundred) {
+
+            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.black))
+            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+
             binding.chartFragImgDis.visibility = View.VISIBLE
             binding.chartFragImgSad.visibility = View.INVISIBLE
             binding.chartFragImgHappy.visibility = View.INVISIBLE
             binding.chartFragImgNice.visibility = View.INVISIBLE
+
+
+            binding.chartFragTxtDis.typeface = Typeface.DEFAULT_BOLD
+            binding.chartFragTxtSad.typeface = Typeface.DEFAULT
+            binding.chartFragTxtHappy.typeface = Typeface.DEFAULT
+            binding.chartFragTxtNice.typeface = Typeface.DEFAULT
+
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_disappointed_48)
             binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.black), PorterDuff.Mode.SRC_ATOP)
 
         } else if (totalUsage <= twoHundred && totalUsage > estimateUsage) {
+
+            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.GuardsmanRed))
+            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+
             binding.chartFragImgDis.visibility = View.INVISIBLE
             binding.chartFragImgSad.visibility = View.VISIBLE
             binding.chartFragImgHappy.visibility = View.INVISIBLE
             binding.chartFragImgNice.visibility = View.INVISIBLE
+
+            binding.chartFragTxtDis.typeface = Typeface.DEFAULT
+            binding.chartFragTxtSad.typeface = Typeface.DEFAULT_BOLD
+            binding.chartFragTxtHappy.typeface = Typeface.DEFAULT
+            binding.chartFragTxtNice.typeface = Typeface.DEFAULT
+
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_sad_48)
             binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.GuardsmanRed), PorterDuff.Mode.SRC_ATOP)
         } else if (totalUsage <= estimateUsage && totalUsage > oneHundred) {
@@ -248,6 +274,19 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragImgSad.visibility = View.INVISIBLE
             binding.chartFragImgHappy.visibility = View.VISIBLE
             binding.chartFragImgNice.visibility = View.INVISIBLE
+
+
+
+            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.green))
+            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+
+            binding.chartFragTxtDis.typeface = Typeface.DEFAULT
+            binding.chartFragTxtSad.typeface = Typeface.DEFAULT
+            binding.chartFragTxtHappy.typeface = Typeface.DEFAULT_BOLD
+            binding.chartFragTxtNice.typeface = Typeface.DEFAULT
+
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_happy_48)
             binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.green), PorterDuff.Mode.SRC_ATOP)
 
@@ -256,6 +295,18 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragImgSad.visibility = View.INVISIBLE
             binding.chartFragImgHappy.visibility = View.INVISIBLE
             binding.chartFragImgNice.visibility = View.VISIBLE
+
+            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.OrangeYellow))
+
+            binding.chartFragTxtDis.typeface = Typeface.DEFAULT
+            binding.chartFragTxtSad.typeface = Typeface.DEFAULT
+            binding.chartFragTxtHappy.typeface = Typeface.DEFAULT
+            binding.chartFragTxtNice.typeface = Typeface.DEFAULT_BOLD
+
+
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_smiling_48)
             binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.OrangeYellow), PorterDuff.Mode.SRC_ATOP)
         }
@@ -270,6 +321,20 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             else -> {
                 binding.chartFragTxtTotalresultMoney.text = moneys + "원"
             }
+        }
+
+
+        if(estimateUsage == 0){
+            binding.chartFragImgCurrentimage.setImageDrawable(null)
+            binding.chartFragTxtPercent.text = "예상금액을 설정해보세요"
+            binding.chartFragTxtPercentTop.text =""
+            binding.chartFragTxtPercentBelow.text = ""
+//            binding.chartFragTxtPercentNext.text = ""
+        } else {
+            binding.chartFragTxtPercentTop.text ="예상금액보다"
+            binding.chartFragTxtPercentBelow.text = "소비하셨습니다"
+            binding.chartFragTxtPercent.text = "$result%"
+//            binding.chartFragTxtPercentNext.text = " 를"
         }
     }
 

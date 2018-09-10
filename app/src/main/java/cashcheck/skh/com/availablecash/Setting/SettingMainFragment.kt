@@ -53,7 +53,7 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("데이터 삭제")
                         .setMessage("정말로 지우시겠습니까?")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             dialog.dismiss()
                             try {
                                 if ((context!!.getSystemService(ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()) {
@@ -65,23 +65,23 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                                 Toast.makeText(context!!, "오류가 발생했습니다. 설정에가서 직접 지워주세요! \n설정 -> 어플리케이션 -> 앱 -> 저장공간 -> 데이터 삭제", Toast.LENGTH_LONG).show()
                             }
 
-                        }).setNegativeButton("취소", { dialog, _ ->
+                        }.setNegativeButton("취소") { dialog, _ ->
                             dialog.dismiss()
 
-                        })
+                        }
                         .show()
             }
             R.id.setting_frag_btn_ask_developer -> {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("문의하기")
                         .setMessage("앱의 문제 또는 개선해하야할 부분을 남겨주세요!")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             startMyAppPlayStore()
                             dialog.dismiss()
 
-                        }).setNegativeButton("취소", { dialog, _ ->
+                        }.setNegativeButton("취소") { dialog, _ ->
                             dialog.dismiss()
-                        })
+                        }
                         .show()
 
             }
@@ -89,13 +89,13 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("파일 저장")
                         .setMessage("데이터를 엑셀파일로 저장하시겠습니까?")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             setTedPermission(true)
                             dialog.dismiss()
 
-                        }).setNegativeButton("취소", { dialog, _ ->
+                        }.setNegativeButton("취소") { dialog, _ ->
                             dialog.dismiss()
-                        })
+                        }
                         .show()
 
 
@@ -104,26 +104,26 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("데이터 저장")
                         .setMessage("엑셀파일을 데이터로 저장하시겠습니까?")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             setTedPermission(false)
                             dialog.dismiss()
 
-                        }).setNegativeButton("취소", { dialog, _ ->
+                        }.setNegativeButton("취소") { dialog, _ ->
                             dialog.dismiss()
-                        })
+                        }
                         .show()
             }
             R.id.setting_frag_btn_get_msg -> {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setTitle("메시지 내역")
                         .setMessage("메시지 내역을 저장하시겠습니까?\n현재 가능한 은행\n * 신한은행\n * 시티BC, 해외승인 USD")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             setMessagePermission()
                             dialog.dismiss()
 
-                        }).setNegativeButton("취소", { dialog, _ ->
+                        }.setNegativeButton("취소") { dialog, _ ->
                             dialog.dismiss()
-                        })
+                        }
                         .show()
 
             }
@@ -148,13 +148,16 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
     }
 
     private fun getMessageFromAndroid() {
-        val task = QueryTask()
+        val task = QueryTask(this)
         task.execute()
         mItem = task.get()
-        checkcardIdFromDB(mItem)
+        val result = mItem.sortedWith(compareByDescending<SettingMsgModel> { it.date }).asReversed()
+        DLog.e("mitem list : ${result.toList()}")
+
+        checkcardIdFromDB(result)
     }
 
-    private fun checkcardIdFromDB(mItem: MutableList<SettingMsgModel>) {
+    private fun checkcardIdFromDB(mItem: List<SettingMsgModel>) {
         val db = dbHelper.readableDatabase
         var howMany = 0
         var isThere = false
@@ -181,7 +184,6 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                             isThere = false
                         }
                     }
-                    DLog.e("isThere = $isThere")
                     if (!isThere) {
                         howMany += 1
                         dbHelper.insertData(item.date!!, item.cate!!, item.money!!, UtilMethod.getWeekofDay(item.date), item.cardid, item.cardName)
@@ -192,17 +194,17 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
                     AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                             .setTitle("메시지 내역")
                             .setMessage("등록할 항목이 존재하지 않습니다")
-                            .setPositiveButton("확인", { dialog, _ ->
+                            .setPositiveButton("확인") { dialog, _ ->
                                 dialog.dismiss()
-                            }).setNegativeButton(null, null)
+                            }.setNegativeButton(null, null)
                             .show()
                 } else {
                     AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                             .setTitle("메시지 내역")
                             .setMessage("$howMany 항목이 등록되었습니다.")
-                            .setPositiveButton("확인", { dialog, _ ->
+                            .setPositiveButton("확인") { dialog, _ ->
                                 dialog.dismiss()
-                            }).setNegativeButton(null, null)
+                            }.setNegativeButton(null, null)
                             .show()
                 }
             } catch (e: Exception) {
@@ -274,10 +276,10 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
             override fun onCompleted(dbName: String?) {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setMessage("데이터가 저장되었습니다.")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             dialog.dismiss()
 
-                        }).setNegativeButton(null, null)
+                        }.setNegativeButton(null, null)
                         .show()
             }
 
@@ -301,130 +303,133 @@ class SettingMainFragment : BaseFragment(), View.OnClickListener, ExceltoDBListe
             override fun onCompleted(filePath: String?) {
                 AlertDialog.Builder(context!!, R.style.MyDialogTheme)
                         .setMessage("내파일 -> 내장메모리안에 파일이 저장되었습니다.")
-                        .setPositiveButton("확인", { dialog, _ ->
+                        .setPositiveButton("확인") { dialog, _ ->
                             dialog.dismiss()
 
-                        }).setNegativeButton(null, null)
+                        }.setNegativeButton(null, null)
                         .show()
             }
 
         })
     }
-    inner class QueryTask : AsyncTask<Void, Void, MutableList<SettingMsgModel>>() {
-        override fun doInBackground(vararg params: Void?): MutableList<SettingMsgModel> {
 
-            mItem = mutableListOf()
-            val uriSMSURI = Uri.parse("content://sms/inbox")
-            val cur = activity!!.contentResolver.query(uriSMSURI, null, null, null, null)
-
-            while (cur != null && cur.moveToNext()) {
-                val body = cur.getString(cur.getColumnIndexOrThrow("body"))
-                val date = cur.getString(cur.getColumnIndex("date"))
-                val id = cur.getString(cur.getColumnIndex("_id"))
-                val msgArr = body.split(" ")
-                if (msgArr[0].contains("씨티BC(7478)")) {
-                    val dateFormat = UtilMethod.millisToDate(date.toLong())
-                    if (msgArr[0].contains("해외승인")) {
-//                        val first = msgArr[0].replace("\n", "")
-                        val second = msgArr[1].replace("\n", "")
-                        val third = msgArr[2].replace("\n", "")
-                        val won = second.substring(0, 5).toDouble().times(1108.80).toInt().toString()
-                        val cate = third.substring(5)
-                        DLog.e("cate $cate : $won : $dateFormat size : USD")
-                        mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)해외승인"))
-                    } else {
-
-                        if (msgArr.size == 2) {
-                            val first = msgArr[0].replace("\n", "").split("원")
-                            val second = msgArr[1].replace("\n", "")
-                            val won = first[0].substringAfter("님").replace(",", "")
-                            val cate = second.substring(5)
-                            DLog.e("cate $cate : $won : $dateFormat size : 2")
-                            mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
-
-                        } else if (msgArr.size == 3) {
-                            val first = msgArr[0].replace("\n", "").split("원")
+    companion object {
+        class QueryTask(private val settingMainFragment: SettingMainFragment) : AsyncTask<Void, Void, MutableList<SettingMsgModel>>() {
+            override fun doInBackground(vararg params: Void?): MutableList<SettingMsgModel> {
+    
+                settingMainFragment.mItem = mutableListOf()
+                val uriSMSURI = Uri.parse("content://sms/inbox")
+                val cur = settingMainFragment.activity!!.contentResolver.query(uriSMSURI, null, null, null, null)
+    
+                while (cur != null && cur.moveToNext()) {
+                    val body = cur.getString(cur.getColumnIndexOrThrow("body"))
+                    val date = cur.getString(cur.getColumnIndex("date"))
+                    val id = cur.getString(cur.getColumnIndex("_id"))
+                    val msgArr = body.split(" ")
+                    if (msgArr[0].contains("씨티BC(7478)")) {
+                        val dateFormat = UtilMethod.millisToDate(date.toLong())
+                        if (msgArr[0].contains("해외승인")) {
+    //                        val first = msgArr[0].replace("\n", "")
                             val second = msgArr[1].replace("\n", "")
                             val third = msgArr[2].replace("\n", "")
-                            val won = first[0].substringAfter("님").replace(",", "")
-                            val cate = second.substring(5) + third
-                            DLog.e("cate $cate : $won : $dateFormat size : 3")
-                            mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
-                        }
-
-
-                    }
-                }
-                if (msgArr[0].contains("신한카드(044)")) {
-                    val money = msgArr[3].split("원")[0].replace(",".toRegex(), "")
-                    val first = msgArr[0]
-                    var five = msgArr[5]
-                    var six = msgArr[6]
-                    val dateFormat = UtilMethod.millisToDate(date.toLong())
-                    if (msgArr.size == 7) {
-                        DLog.e("set $id , $money, $five, $dateFormat, $first")
-                        if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
-                            five = five.substring(0, five.length - 1)
-                            mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                            val won = second.substring(0, 5).toDouble().times(1108.80).toInt().toString()
+                            val cate = third.substring(5)
+                            DLog.e("cate $cate : $won : $dateFormat size : USD")
+                            settingMainFragment.mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)해외승인"))
                         } else {
-                            mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
-                        }
-
-                    } else if (msgArr.size == 8) {
-
-                        if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
-                            five = five.substring(0, five.length - 1)
-                        }
-
-                        DLog.e("set $id , $money, $five + $six, $dateFormat, $first")
-                        if (six.length <= 1) {
-                            if (six.contains("-") || six.contains("(")) {
-                                mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
-                            } else {
-                                mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+    
+                            if (msgArr.size == 2) {
+                                val first = msgArr[0].replace("\n", "").split("원")
+                                val second = msgArr[1].replace("\n", "")
+                                val won = first[0].substringAfter("님").replace(",", "")
+                                val cate = second.substring(5)
+                                DLog.e("cate $cate : $won : $dateFormat size : 2")
+                                settingMainFragment.mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
+    
+                            } else if (msgArr.size == 3) {
+                                val first = msgArr[0].replace("\n", "").split("원")
+                                val second = msgArr[1].replace("\n", "")
+                                val third = msgArr[2].replace("\n", "")
+                                val won = first[0].substringAfter("님").replace(",", "")
+                                val cate = second.substring(5) + third
+                                DLog.e("cate $cate : $won : $dateFormat size : 3")
+                                settingMainFragment.mItem.add(SettingMsgModel(id, won, cate, dateFormat, "씨티BC(7478)"))
                             }
-                        } else {
-                            if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
-                                six = six.substring(0, six.length - 1)
-                                mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
-                            } else {
-                                mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
-                            }
-
-                        }
-                    } else if (msgArr.size == 9) {
-                        var seven = msgArr[7]
-                        DLog.e("set $id , $money, $five + $six + $seven, $dateFormat, $first")
-                        if (six.length <= 1) {
-                            if (six.contains("-") || six.contains("(")) {
-                                six = ""
-                            }
-                        } else {
-                            if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
-                                six = six.substring(0, six.length - 1)
-                            }
-                        }
-                        if (seven.length <= 1) {
-                            if (seven.contains("-") || seven.contains("(")) {
-                                seven = ""
-                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                            } else {
-                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                            }
-                        } else {
-                            if (seven.substring(seven.length - 1).contains("-") || seven.substring(seven.length - 1).contains("(")) {
-                                seven = seven.substring(0, seven.length - 1)
-                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                            } else {
-                                mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
-                            }
+    
+    
                         }
                     }
+                    if (msgArr[0].contains("신한카드(044)")) {
+                        val money = msgArr[3].split("원")[0].replace(",".toRegex(), "")
+                        val first = msgArr[0]
+                        var five = msgArr[5]
+                        var six = msgArr[6]
+                        val dateFormat = UtilMethod.millisToDate(date.toLong())
+                        if (msgArr.size == 7) {
+                            DLog.e("set $id , $money, $five, $dateFormat, $first")
+                            if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
+                                five = five.substring(0, five.length - 1)
+                                settingMainFragment.mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                            } else {
+                                settingMainFragment.mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                            }
+    
+                        } else if (msgArr.size == 8) {
+    
+                            if (five.substring(five.length - 1).contains("-") || five.substring(five.length - 1).contains("(")) {
+                                five = five.substring(0, five.length - 1)
+                            }
 
+                            DLog.e("set $id , $money, $five + $six, $dateFormat, $first")
+                            if (six.length <= 1) {
+                                if (six.contains("-") || six.contains("(")) {
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five, dateFormat, first))
+                                } else {
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+                                }
+                            } else {
+                                if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
+                                    six = six.substring(0, six.length - 1)
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+                                } else {
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six, dateFormat, first))
+                                }
+    
+                            }
+                        } else if (msgArr.size == 9) {
+                            var seven = msgArr[7]
+                            DLog.e("set $id , $money, $five + $six + $seven, $dateFormat, $first")
+                            if (six.length <= 1) {
+                                if (six.contains("-") || six.contains("(")) {
+                                    six = ""
+                                }
+                            } else {
+                                if (six.substring(six.length - 1).contains("-") || six.substring(six.length - 1).contains("(")) {
+                                    six = six.substring(0, six.length - 1)
+                                }
+                            }
+                            if (seven.length <= 1) {
+                                if (seven.contains("-") || seven.contains("(")) {
+                                    seven = ""
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                                } else {
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                                }
+                            } else {
+                                if (seven.substring(seven.length - 1).contains("-") || seven.substring(seven.length - 1).contains("(")) {
+                                    seven = seven.substring(0, seven.length - 1)
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                                } else {
+                                    settingMainFragment.mItem.add(SettingMsgModel(id, money, five + six + seven, dateFormat, first))
+                                }
+                            }
+                        }
+    
+                    }
                 }
+                cur?.close()
+                return settingMainFragment.mItem
             }
-            cur?.close()
-            return mItem
         }
     }
 }// Required empty public constructor

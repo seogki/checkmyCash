@@ -16,7 +16,7 @@ import cashcheck.skh.com.availablecash.Register.Modify.ModifyRegisterActivity
 import cashcheck.skh.com.availablecash.Register.model.EstimateRegisterModel
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DBHelper
-import cashcheck.skh.com.availablecash.databinding.ItemEstimateBinding
+import cashcheck.skh.com.availablecash.databinding.ItemChartmainBinding
 
 /**
  * Created by Seogki on 2018. 8. 20..
@@ -34,13 +34,13 @@ class RecentChartAdapter(context: Context, arraylist: MutableList<EstimateRegist
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemEstimateBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_estimate, parent, false)
+        val binding: ItemChartmainBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_chartmain, parent, false)
 
         return RecentChartViewHolder(binding, onNormalRegisterDeleteListener)
     }
 
 
-    inner class RecentChartViewHolder(val binding: ItemEstimateBinding, private var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class RecentChartViewHolder(val binding: ItemChartmainBinding, private var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
 
         private var isExpend: Boolean = false
