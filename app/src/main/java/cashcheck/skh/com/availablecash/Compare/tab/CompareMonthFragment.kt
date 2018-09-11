@@ -197,24 +197,28 @@ class CompareMonthFragment : BaseFragment() {
                 compareMonthFragment.mItems = ArrayList()
                 var cursor: Cursor? = null
                 try {
+                    val now = UtilMethod.getCurrentDate()
                     for (i in 0 until compareMonthFragment.monthArray.size) {
                         compareMonthFragment.monthUsage = 0
-    
+
                         val db = compareMonthFragment.dbHelper.readableDatabase
-    
                         cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + compareMonthFragment.monthArray[i] + "%' ORDER BY date DESC", null)
                         while (cursor.moveToNext()) {
                             val money = cursor.getString(0)
                             compareMonthFragment.monthUsage += money.toInt()
                         }
-                        compareMonthFragment.mItems.add(CompareMonthModel("", compareMonthFragment.monthArray[i], compareMonthFragment.monthUsage.toString()))
+                        if (now == compareMonthFragment.monthArray[i]) {
+                            compareMonthFragment.mItems.add(CompareMonthModel("", compareMonthFragment.monthArray[i], compareMonthFragment.monthUsage.toString(), "now"))
+                        } else {
+                            compareMonthFragment.mItems.add(CompareMonthModel("", compareMonthFragment.monthArray[i], compareMonthFragment.monthUsage.toString()))
+                        }
                     }
                 } catch (e: Exception) {
-    
+
                 } finally {
                     cursor?.close()
                 }
-    
+
                 return compareMonthFragment.mItems
             }
         }

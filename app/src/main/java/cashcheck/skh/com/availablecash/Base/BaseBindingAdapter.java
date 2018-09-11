@@ -102,37 +102,45 @@ public class BaseBindingAdapter {
 
     @BindingAdapter("setDate")
     public static void setDate(final TextView textView, final String date) {
-        String month = "";
-        String days = "";
-        if (date.length() == 4) {
-            month = date.substring(0, 2);
-            days = date.substring(2, 4);
-            textView.setText(month + "-" + days);
-        } else if (date.length() == 3) {
-            month = date.substring(0, 1);
-            days = date.substring(1, 3);
-            textView.setText(month + "-" + days);
-        } else {
-            textView.setText("");
+        String month;
+        String days;
+        switch (date.length()) {
+            case 4:
+                month = date.substring(0, 2);
+                days = date.substring(2, 4);
+                textView.setText(month + "-" + days);
+                break;
+            case 3:
+                month = date.substring(0, 1);
+                days = date.substring(1, 3);
+                textView.setText(month + "-" + days);
+                break;
+            default:
+                textView.setText("");
+                break;
         }
 
     }
 
     @BindingAdapter("setMonth")
     public static void setMonth(final TextView textView, final String date) {
-        String month = "";
-        String days = "";
+//        String month = "";
+        String days;
         String result = date.replace("-", "").replace(" ", "");
-        if (result.length() == 4) {
-            month = result.substring(0, 2);
-            days = result.substring(2, 4);
-            textView.setText("20" + month + "년 " + days + "월");
-        } else if (result.length() == 3) {
-            month = result.substring(0, 1);
-            days = result.substring(1, 3);
-            textView.setText("20" + month + "년 " + days + "월");
-        } else {
-            textView.setText("");
+        switch (result.length()) {
+            case 4:
+//            month = result.substring(0, 2);
+                days = result.substring(2, 4);
+                textView.setText(days + "월");
+                break;
+            case 3:
+//            month = result.substring(0, 1);
+                days = result.substring(1, 3);
+                textView.setText(days + "월");
+                break;
+            default:
+                textView.setText("");
+                break;
         }
 
     }
@@ -188,7 +196,7 @@ public class BaseBindingAdapter {
                 String result = UtilMethod.currencyFormat(data);
                 textView.setText(result + "원");
             } else {
-                if (money.isEmpty() || money.length() == 0) {
+                if (money.isEmpty()) {
                     textView.setText("");
                 }
                 String result = UtilMethod.currencyFormat(money);
@@ -215,7 +223,7 @@ public class BaseBindingAdapter {
                 String result = UtilMethod.currencyFormat(data);
                 textView.setText(result);
             } else {
-                if (money.isEmpty() || money.length() == 0) {
+                if (money.isEmpty()) {
                     textView.setText("");
                 }
                 String result = UtilMethod.currencyFormat(money);

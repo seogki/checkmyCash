@@ -199,19 +199,28 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
     private fun checkMoneyFromDate() {
 
         val db = db.readableDatabase
-        for (dates in mItem) {
-            // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-            val cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + dates.date + "%' ORDER BY date DESC", null)
-            var money = 0
-            while (cursor.moveToNext()) {
+        var cursor: Cursor? = null
+        try {
+            for (dates in mItem) {
+                // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
+                cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date LIKE '%" + dates.date + "%' ORDER BY date DESC", null)
+                var money = 0
+                while (cursor.moveToNext()) {
 
-                money += cursor.getString(0).toInt()
-                dates.money = money.toString()
+                    money += cursor.getString(0).toInt()
+                    dates.money = money.toString()
 
+                }
             }
+
+            setRvData()
+        } catch (e: Exception){
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
         }
 
-        setRvData()
+
     }
 
 

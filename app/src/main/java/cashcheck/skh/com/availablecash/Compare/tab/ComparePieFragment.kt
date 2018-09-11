@@ -3,7 +3,6 @@ package cashcheck.skh.com.availablecash.Compare.tab
 
 import android.database.Cursor
 import android.databinding.DataBindingUtil
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -29,6 +28,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import java.util.*
 
 
 /**
@@ -104,7 +104,7 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
         val year = result.substring(0, 2)
         val month = result.substring(2, 4)
 
-        textView.text = "20" + year + "년 " + month + "월"
+        textView.text = "20${year}년 ${month}월"
     }
 
     private fun setRvData() {
@@ -174,10 +174,10 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
 
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)
@@ -188,11 +188,16 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
         chart.holeRadius = 0F
         chart.isDrawHoleEnabled = false
         chart.description.isEnabled = false
-        chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
-        chart.invalidate()
+        activity?.runOnUiThread {
+            chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
+            chart.invalidate()
+        }
     }
 
     private fun getPieDataFromDB(isFirst: Boolean) {
+//        val task = QueryTask(this, isFirst)
+//        task.execute()
+
         val db = dbHelper.readableDatabase
         val data: String
         var cursor: Cursor? = null
@@ -206,8 +211,6 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
                     pieMap2 = HashMap()
                     data = secondData
                 }
-//                val result = data.substring(0, 5)
-                // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
                 cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + data + "%' ORDER BY date DESC", null)
                 while (cursor.moveToNext()) {
                     val cate = cursor.getString(2)
@@ -289,5 +292,37 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
             cursor?.close()
         }
     }
+
+//    companion object {
+//        class QueryTask(private val comparePieFragment: ComparePieFragment, val isFirst: Boolean) : AsyncTask<Void, Void, Void>() {
+//            override fun doInBackground(vararg params: Void?): Void? {
+//                val db = comparePieFragment.dbHelper.readableDatabase
+//                val data: String
+//                var cursor: Cursor? = null
+//                try {
+//                    if (db != null) {
+//                        if (isFirst) {
+//                            comparePieFragment.pieMap1 = HashMap()
+//                            data = comparePieFragment.firstData
+//                        } else {
+//                            comparePieFragment.pieMap2 = HashMap()
+//                            data = comparePieFragment.secondData
+//                        }
+//                        cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date LIKE '%" + data + "%' ORDER BY date DESC", null)
+//                        while (cursor.moveToNext()) {
+//                            val cate = cursor.getString(2)
+//                            val money = cursor.getString(3)
+//                            comparePieFragment.addDateToFromCursor(cate, money, isFirst)
+//                        }
+//                    }
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                } finally {
+//                    cursor?.close()
+//                }
+//                return null
+//            }
+//        }
+//    }
 
 }// Required empty public constructor

@@ -35,7 +35,7 @@ public class KeyboardUtils implements ViewTreeObserver.OnGlobalLayoutListener {
     @Nullable
     private SoftKeyboardToggleListener mCallback;
     private View mRootView;
-    private float mScreenDensity = 1;
+    private float mScreenDensity;
     @NonNull
     private static HashMap<SoftKeyboardToggleListener, KeyboardUtils> sListenerMap = new HashMap<>();
 
@@ -68,7 +68,7 @@ public class KeyboardUtils implements ViewTreeObserver.OnGlobalLayoutListener {
         mRootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 
-    private KeyboardUtils(@NonNull Activity act, SoftKeyboardToggleListener listener) {
+    private KeyboardUtils(@NonNull Activity act, @Nullable SoftKeyboardToggleListener listener) {
         mCallback = listener;
 
         mRootView = ((ViewGroup) act.findViewById(android.R.id.content)).getChildAt(0);

@@ -55,7 +55,6 @@ public class UtilMethod {
     }
 
     public static String millisToDate(long currentTime) {
-        String finalDate;
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(currentTime);
         SimpleDateFormat df = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);

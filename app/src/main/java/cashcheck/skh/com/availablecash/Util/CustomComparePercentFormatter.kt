@@ -15,11 +15,7 @@ class CustomComparePercentFormatter : IValueFormatter, IAxisValueFormatter {
     private var mFormat: DecimalFormat = DecimalFormat("###,###,##0.0")
 
 
-    /**
-     * Allow a custom decimalformat
-     *
-     * @param format
-     */
+
     // IValueFormatter
     override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {
         if (value < 5) {

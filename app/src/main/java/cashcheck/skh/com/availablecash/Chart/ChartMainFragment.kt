@@ -187,14 +187,14 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
         val colors = mutableListOf<Int>()
-        colors.add(Color.parseColor("#ffa31a"))
-        colors.add(Color.parseColor("#ffc266"))
-        colors.add(Color.parseColor("#ffe0b3"))
-        colors.add(Color.parseColor("#fff5e6"))
-//        colors.add(ContextCompat.getColor(context!!, R.color.black))
-//        colors.add(ContextCompat.getColor(context!!, R.color.darkGrey))
-//        colors.add(ContextCompat.getColor(context!!, R.color.midGrey))
-//        colors.add(ContextCompat.getColor(context!!, R.color.grey))
+//        colors.add(Color.parseColor("#ffa31a"))
+//        colors.add(Color.parseColor("#ffc266"))
+//        colors.add(Color.parseColor("#ffe0b3"))
+//        colors.add(Color.parseColor("#fff5e6"))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -326,15 +326,30 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
         if(estimateUsage == 0){
             binding.chartFragImgCurrentimage.setImageDrawable(null)
-            binding.chartFragTxtPercent.text = "예상금액을 설정해보세요"
+            binding.chartFragTxtPercent.text = "예상금액을\n설정해보세요"
             binding.chartFragTxtPercentTop.text =""
             binding.chartFragTxtPercentBelow.text = ""
-//            binding.chartFragTxtPercentNext.text = ""
+
+            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
+
+            binding.chartFragImgDis.visibility = View.INVISIBLE
+            binding.chartFragImgSad.visibility = View.INVISIBLE
+            binding.chartFragImgHappy.visibility = View.INVISIBLE
+            binding.chartFragImgNice.visibility = View.INVISIBLE
+
+            binding.chartFragTxtDis.typeface = Typeface.DEFAULT
+            binding.chartFragTxtSad.typeface = Typeface.DEFAULT
+            binding.chartFragTxtHappy.typeface = Typeface.DEFAULT
+            binding.chartFragTxtNice.typeface = Typeface.DEFAULT
+
         } else {
-            binding.chartFragTxtPercentTop.text ="예상금액보다"
+            binding.chartFragTxtPercentTop.text ="예상금액의"
             binding.chartFragTxtPercentBelow.text = "소비하셨습니다"
             binding.chartFragTxtPercent.text = "$result%"
-//            binding.chartFragTxtPercentNext.text = " 를"
+
         }
     }
 

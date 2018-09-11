@@ -9,9 +9,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler
 /**
  * Created by Seogki on 2018. 8. 7..
  */
-class CustomDateFormatter(xValues: MutableList<String>) : IValueFormatter, IAxisValueFormatter {
-
-    private var xValues = xValues
+class CustomDateFormatter(private var xValues: MutableList<String>) : IValueFormatter, IAxisValueFormatter {
 
     //     IValueFormatter
     override fun getFormattedValue(value: Float, entry: Entry, dataSetIndex: Int, viewPortHandler: ViewPortHandler): String {

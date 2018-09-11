@@ -37,9 +37,6 @@
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     app:layout_constraintTop_toTopOf="parent"
                     >
                     <com.github.mikephil.charting.charts.PieChart
@@ -87,7 +84,6 @@
                         android:id="@+id/compare_frag_spinner_1"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
-                        android:layout_marginStart="8dp"
                         android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar_left"
                         app:layout_constraintEnd_toStartOf="@id/compare_frag_spinner_2"
                         app:layout_constraintStart_toStartOf="parent"
@@ -127,8 +123,7 @@
                         android:id="@+id/compare_frag_spinner_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
+
                         android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar_right"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/compare_frag_spinner_1"

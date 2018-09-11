@@ -99,15 +99,15 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener, CompareLineLis
         DLog.e("yvalues : $yValues")
 
         val dateSet = LineDataSet(yValues, "금액")
-
-        dateSet.color = ContextCompat.getColor(context!!, R.color.statusbar)
-        dateSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
+        dateSet.setDrawValues(false)
+        dateSet.color = ContextCompat.getColor(context!!, R.color.orange1)
+        dateSet.valueTextColor = ContextCompat.getColor(context!!, R.color.white)
         dateSet.valueTextSize = 8F
-        dateSet.lineWidth = 1.5F
+        dateSet.lineWidth = 2F
         dateSet.valueFormatter = CustomNoWonFormatter()
-        dateSet.setDrawFilled(true)
+        dateSet.setDrawFilled(false)
         dateSet.axisDependency = YAxis.AxisDependency.LEFT
-        dateSet.fillColor = ContextCompat.getColor(context!!, R.color.rippleColor)
+        dateSet.fillColor = ContextCompat.getColor(context!!, R.color.orange3)
         dateSet.mode = LineDataSet.Mode.CUBIC_BEZIER
 
 
@@ -116,17 +116,19 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener, CompareLineLis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textSize = 7F
         xAxis.granularity = 1F
-        xAxis.setDrawGridLines(true)
         xAxis.valueFormatter = CustomDateFormatter(xValues)
 
 
+
         val yRightAxis = chart.axisRight
-        yRightAxis.isEnabled = false
+        yRightAxis.isEnabled = true
         val yLeftAxis = chart.axisLeft
 
-        yLeftAxis.setDrawGridLines(true)
+        yLeftAxis.setDrawGridLines(false)
+        xAxis.setDrawGridLines(false)
 
         val data = LineData(dateSet)
+
         chart.data = data
         chart.legend.isWordWrapEnabled = true
         chart.description.isEnabled = false
@@ -139,7 +141,6 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener, CompareLineLis
     private fun getDataFromDB() {
         val db = dbHelper.readableDatabase
         lineMap = HashMap()
-//        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date BETWEEN '" + cat1 + " 00:00:00" + "' AND '" + cat2 + " 23:59:59" + "' ORDER BY date DESC", null)
         val cursor = db.rawQuery("SELECT * FROM ${Const.DbName} WHERE date BETWEEN '" + cat1 + "' AND '" + cat2 + "' ORDER BY date DESC", null)
         while (cursor.moveToNext()) {
             val date = cursor.getString(1).replace("-".toRegex(), "").replace(" ", "").substring(2, 6)

@@ -2,6 +2,7 @@ package cashcheck.skh.com.availablecash.Compare.Adapter
 
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -36,6 +37,9 @@ class CompareMonthAdapter(context: Context, arraylist: MutableList<CompareMonthM
 
         fun bind(model: CompareMonthModel?) {
             binding.model = model
+            if (model?.now == "now") {
+                binding.itemRvMonthTitle.setTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
+            }
             binding.executePendingBindings()
         }
     }

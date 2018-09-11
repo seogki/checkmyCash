@@ -8,7 +8,7 @@ import java.text.DecimalFormat
 /**
  * Created by Seogki on 2018. 8. 7..
  */
-class CustomNoWonFormatter() : IValueFormatter {
+class CustomNoWonFormatter : IValueFormatter {
 
     private var mFormat: DecimalFormat = DecimalFormat("###,###,###")
 

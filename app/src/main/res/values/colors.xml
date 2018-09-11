@@ -58,7 +58,10 @@
     <color name="rippleReverse">#00CCCC</color>
     <color name="statusReverse">#009898</color>
 
-
+    <color name="orange1">#ffa31a</color>
+    <color name="orange2">#ffc266</color>
+    <color name="orange3">#ffe0b3</color>
+    <color name="orange4">#fff5e6</color>
 
     <!--기존 #E040FB , #FF4081-->
 </resources>

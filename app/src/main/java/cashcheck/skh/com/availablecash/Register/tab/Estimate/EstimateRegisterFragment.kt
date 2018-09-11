@@ -208,7 +208,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.isRotationEnabled = false
         chart.setTouchEnabled(false)
         chart.setUsePercentValues(true)
-        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.rippleColor))
+        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
         chart.setHoleColor(Color.argb(0, 0, 0, 0))
@@ -223,10 +223,10 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         }
         chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -276,6 +276,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                             binding.estimateEditMoney.text.clear()
                             binding.estimateEditDays.text.clear()
                             getDbData()
+                            closeKeyboard()
                             binding.estimateBtnRegi.isEnabled = true
                         }.setNegativeButton(null, null)
                         .show()

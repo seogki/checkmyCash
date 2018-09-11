@@ -149,8 +149,6 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
     }
 
     private fun setViewTypeData() {
-        DLog.e("data : $itemTreeMap")
-
         val normalThread = NormalRegisterThread(context!!, mItems, itemTreeMap, this)
         normalThread.start()
     }
@@ -209,7 +207,7 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         chart.setTouchEnabled(false)
         chart.setHoleColor(Color.argb(0, 0, 0, 0))
         chart.setUsePercentValues(true)
-        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.rippleColor))
+        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
         chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
@@ -224,10 +222,10 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
+        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
 
         dataSet.colors = colors
         dataSet.label = ""

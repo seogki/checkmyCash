@@ -15,6 +15,8 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         >
 
         <android.support.v4.widget.NestedScrollView
@@ -35,10 +37,8 @@
                     android:layout_height="300dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/white_bg_top_corner_only_v2"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
+                    android:background="@color/white"
+
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="UnusedAttribute"
                     />
@@ -47,8 +47,6 @@
                     android:id="@+id/estimate_frag_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +59,6 @@
                     android:text="데이터가 존재하지 않습니다"
                     android:gravity="center"
                     android:textSize="16sp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
                     android:textColor="@color/darkGrey"
                     app:layout_constraintBottom_toTopOf="@id/estimate_txt_setCategory"
                     app:layout_constraintStart_toStartOf="parent"

@@ -25,8 +25,6 @@
                     android:id="@+id/frag_compare_month_txt_empty"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
                     android:gravity="center"
                     android:text="데이터가 존재하지 않습니다"
                     android:textColor="@color/darkGrey"
@@ -40,14 +38,10 @@
 
 
                 <android.support.v7.widget.RecyclerView
-
                     android:id="@+id/frag_compare_month_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/white_bg_btm_corner_only_smallv2"
+                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +57,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/lightBlack"
-                    android:textSize="18sp"
+                    android:textSize="12sp"
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_empty"
                     />
 
@@ -76,7 +70,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:textColor="@color/statusbar"
-                    android:textSize="14sp"
+                    android:textSize="20sp"
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal"
                     />
 
@@ -90,7 +84,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/lightBlack"
-                    android:textSize="18sp"
+                    android:textSize="12sp"
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal_money"
                     />
 
@@ -103,7 +97,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:textColor="@color/statusbar"
-                    android:textSize="14sp"
+                    android:textSize="20sp"
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal"
                     />
 
@@ -116,7 +110,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:textColor="@color/statusbar"
-                    android:textSize="14sp"
+                    android:textSize="20sp"
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal_month"
                     />
 

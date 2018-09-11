@@ -67,7 +67,7 @@ class DialogDBHelper(c: Context, name: String, factory: SQLiteDatabase.CursorFac
         var result = ""
 
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName}", null);
+        val cursor = db.rawQuery("SELECT * FROM ${Const.DbName}", null)
         while (cursor.moveToNext()) {
             result += cursor.getString(0) +
                     "  날짜: " + cursor.getString(1) +
@@ -77,7 +77,7 @@ class DialogDBHelper(c: Context, name: String, factory: SQLiteDatabase.CursorFac
                     "\n"
         }
 
-        return result;
+        return result
     }
 
     fun reset() {
