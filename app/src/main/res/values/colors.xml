@@ -37,7 +37,7 @@
     <color name="pink">#C71585</color>
     <color name="lightestYellow">#FFEB9A</color>
     <color name="lightBlack">#4C4C4C</color>
-
+    <color name="brown">#6D4C41</color>
 
     <!--파이차트색-->
     <color name="pie1">#E4002B</color>
@@ -63,5 +63,8 @@
     <color name="orange3">#ffe0b3</color>
     <color name="orange4">#fff5e6</color>
 
+    <color name="ripple2">#FF3333</color>
+    <color name="ripple3">#FF7F7F</color>
+    <color name="ripple4">#FFCBCB</color>
     <!--기존 #E040FB , #FF4081-->
 </resources>

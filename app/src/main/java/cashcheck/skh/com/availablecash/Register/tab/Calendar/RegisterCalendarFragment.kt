@@ -125,11 +125,13 @@ class RegisterCalendarFragment : BaseFragment(), BaseRecyclerViewAdapter.OnItemC
             }
             if (todayItem.size < 1) {
                 binding.fragCalendarConstHeader.visibility = View.INVISIBLE
+                binding.rvTodayViewBelow.visibility = View.INVISIBLE
                 calendarTodayAdapter.clearItems()
             } else {
                 setHeaderText(totalMoney, dayofWeek, result)
                 setTodayData()
                 binding.fragCalendarConstHeader.visibility = View.VISIBLE
+                binding.rvTodayViewBelow.visibility = View.VISIBLE
             }
 
 

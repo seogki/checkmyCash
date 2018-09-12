@@ -20,6 +20,34 @@
                 android:layout_height="match_parent"
                 >
 
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/frag_compare_month_const_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rippleColor"
+                    android:elevation="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <TextView
+                        android:id="@+id/frag_compare_month_txt_percent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:gravity="center"
+                        android:text="저번달의 43.4%를 사용하셨습니다"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+
+                </android.support.constraint.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/frag_compare_month_txt_empty"
@@ -29,6 +57,7 @@
                     android:text="데이터가 존재하지 않습니다"
                     android:textColor="@color/darkGrey"
                     android:textSize="16sp"
+                    tools:visibility="invisible"
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,75 +73,71 @@
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_const_percent"
                     />
 
                 <TextView
                     android:id="@+id/frag_compare_month_txt_alltotal"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/lightBlack"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_empty"
+                    android:padding="8dp"
+                    android:elevation="5dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/green_ripple_rec"
+                    tools:text="2018년 합계: 3,000,000원"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_rv"
                     />
 
-                <TextView
-                    android:id="@+id/frag_compare_month_txt_alltotal_money"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:textColor="@color/statusbar"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal"
-                    />
+
 
                 <TextView
                     android:id="@+id/frag_compare_month_txt_mosttotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+
                     android:textColor="@color/lightBlack"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal_money"
+                    android:textSize="14sp"
+                    tools:text="가장 많이 소비한 달"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_alltotal"
                     />
 
                 <TextView
                     android:id="@+id/frag_compare_month_txt_mosttotal_month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="2dp"
+                    android:padding="4dp"
                     android:gravity="center"
+                    android:elevation="5dp"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="bold"
                     android:textColor="@color/statusbar"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
+                    tools:text="8월"
                     app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal"
                     />
 
-                <TextView
-                    android:id="@+id/frag_compare_month_txt_mosttotal_money"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:textColor="@color/statusbar"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal_month"
-                    />
+                <!--<TextView-->
+                    <!--android:id="@+id/frag_compare_month_txt_mosttotal_money"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginEnd="16dp"-->
+                    <!--android:layout_marginStart="16dp"-->
+                    <!--android:layout_marginTop="2dp"-->
+                    <!--android:gravity="center"-->
+                    <!--tools:text="3,000,000원"-->
+                    <!--android:textColor="@color/statusbar"-->
+                    <!--android:textSize="20sp"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/frag_compare_month_txt_mosttotal_month"-->
+                    <!--/>-->
 
 
             </android.support.constraint.ConstraintLayout>

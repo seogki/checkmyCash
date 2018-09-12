@@ -17,8 +17,10 @@ import cashcheck.skh.com.availablecash.Compare.model.CompareMonthModel
 import cashcheck.skh.com.availablecash.R
 import cashcheck.skh.com.availablecash.Util.Const
 import cashcheck.skh.com.availablecash.Util.DBHelper
+import cashcheck.skh.com.availablecash.Util.DLog
 import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentCompareMonthBinding
+import java.text.DecimalFormat
 
 
 /**
@@ -118,12 +120,18 @@ class CompareMonthFragment : BaseFragment() {
                 tempItem = mItems
                 getTotalAndMostUsage(mItems)
                 onAddItem()
+                getPercent(mItems)
             }
+
             if (mItems.size > 0) {
+                binding.fragCompareMonthTxtAlltotal.visibility = View.VISIBLE
                 binding.fragCompareMonthTxtEmpty.visibility = View.GONE
             } else {
+                binding.fragCompareMonthTxtAlltotal.visibility = View.INVISIBLE
                 binding.fragCompareMonthTxtEmpty.visibility = View.VISIBLE
+
             }
+
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -152,10 +160,8 @@ class CompareMonthFragment : BaseFragment() {
             setTotalAndMostUsage(tempModel, mostUsage, totalUsage)
         } else {
             setTextView(""
-                    , ""
                     , "",
-                    ""
-                    , "")
+                    "")
         }
 
     }
@@ -165,23 +171,19 @@ class CompareMonthFragment : BaseFragment() {
         if (month?.substring(0, 1) == "0") {
             month = month.substring(1, 2)
         }
-        setTextView("20${tempModel?.months?.substring(0, 2)}년 합계"
-                , "${UtilMethod.currencyFormat(totalUsage.toString())}원"
+        setTextView("20${tempModel?.months?.substring(0, 2)}년 합계: ${UtilMethod.currencyFormat(totalUsage.toString())}원"
                 , "가장 많은 소비를 한 달",
-                "${month}월"
-                , "${UtilMethod.currencyFormat(mostUsage.toString())}원")
+                "${month}월\n${UtilMethod.currencyFormat(mostUsage.toString())}원")
 
         if (!isCreated)
             isCreated = true
     }
 
-    private fun setTextView(allYear: String, allMoney: String, mostMonth: String, month: String, mostMoney: String) {
+    private fun setTextView(allYear: String, mostMonth: String, month: String) {
 
         binding.fragCompareMonthTxtAlltotal.text = allYear
-        binding.fragCompareMonthTxtAlltotalMoney.text = allMoney
         binding.fragCompareMonthTxtMosttotal.text = mostMonth
         binding.fragCompareMonthTxtMosttotalMonth.text = month
-        binding.fragCompareMonthTxtMosttotalMoney.text = mostMoney
 
     }
 
@@ -220,6 +222,35 @@ class CompareMonthFragment : BaseFragment() {
                 }
 
                 return compareMonthFragment.mItems
+            }
+        }
+    }
+
+    private fun getPercent(mItems: MutableList<CompareMonthModel>) {
+        for (i in 0 until mItems.size) {
+            if (mItems[i].now == "now") {
+                if (i != 0) {
+                    val before = mItems[i - 1].total
+                    val now = mItems[i].total
+                    DLog.e("mitem ${mItems[i]} : mitem2 ${mItems[i - 1]}")
+
+                    if (before == "0") {
+                        binding.fragCompareMonthTxtPercent.text = "저번달의 데이터가 없습니다"
+                        break
+                    } else if (now == "0") {
+                        binding.fragCompareMonthTxtPercent.text = "이번달의 데이터가 없습니다"
+                        break
+                    } else {
+
+                        val result = now.toFloat().div(before.toFloat()).times(100)
+                        DLog.e("result $result")
+                        binding.fragCompareMonthTxtPercent.text = "저번달의 ${DecimalFormat("0.0").format(result)}%를 사용하셨습니다"
+                        break
+                    }
+                } else {
+                    binding.fragCompareMonthTxtPercent.text = "아직 데이터가 존재하지 않습니다"
+                    break
+                }
             }
         }
     }
