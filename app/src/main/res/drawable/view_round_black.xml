@@ -7,7 +7,7 @@
             <!-- set the shadow color here -->
             <stroke
                 android:width="3dp"
-                android:color="@color/statusbar" />
+                android:color="@color/rippleColor" />
 
             <!-- setting the thickness of shadow (positive value will give shadow on that side) -->
 

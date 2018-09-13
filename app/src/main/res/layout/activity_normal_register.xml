@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey"
+        android:fitsSystemWindows="true"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -44,7 +45,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/titleColor"
+                    android:background="@color/white"
                     >
 
                     <TextView
@@ -53,9 +54,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="저축할래요?"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -79,18 +79,15 @@
                     <ImageView
                         android:id="@+id/normal_atv_btn_done"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_marginEnd="16dp"
                         android:onClick="@{onClickListener::onClick}"
                         android:paddingBottom="5dp"
                         android:paddingEnd="8dp"
                         android:paddingStart="8dp"
                         android:paddingTop="5dp"
+                        android:background="@drawable/btn_ripple_colored_statusbar"
                         android:src="@drawable/baseline_add_black_24dp"
-                        android:text="등록"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -137,6 +134,7 @@
                         android:gravity="center"
                         android:text="날짜"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:textSize="16sp"
 
                         app:layout_constraintStart_toStartOf="parent"
@@ -169,11 +167,11 @@
                         android:layout_marginTop="1dp"
                         android:background="@color/white"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:gravity="center"
                         android:text="분류"
 
                         android:textSize="16sp"
-
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/normal_atv_txt_date"
                         />
@@ -202,6 +200,7 @@
                         android:layout_marginTop="1dp"
                         android:background="@color/white"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:gravity="center"
                         android:text="가격"
                         android:textSize="16sp"
@@ -258,7 +257,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/adView"
+                        app:layout_constraintTop_toBottomOf="@+id/adView"
                         >
 
 
@@ -298,7 +297,7 @@
                             android:padding="8dp"
                             android:textColor="@color/rippleColor"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@id/cal_txt_title"
+                            app:layout_constraintBottom_toBottomOf="@+id/cal_txt_title"
                             tools:text="50000"
                             />
 
@@ -311,7 +310,7 @@
                             app:layout_constraintHorizontal_chainStyle="spread_inside"
                             app:layout_constraintHorizontal_weight="3"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/cal_txt_title"
+                            app:layout_constraintTop_toBottomOf="@+id/cal_txt_title"
                             />
 
                         <TextView

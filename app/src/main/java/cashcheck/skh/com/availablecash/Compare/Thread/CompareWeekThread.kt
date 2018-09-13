@@ -23,7 +23,8 @@ class CompareWeekThread(private val dbHelper: DBHelper, private var weekUsage: I
 
             for (i in 0 until item.size) {
                 weekUsage = 0
-                cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date BETWEEN '" + item[i].first + " 00:00:00" + "' AND '" + item[i].last + " 23:59:59" + "' ORDER BY date DESC", null)
+//                "SELECT * from TABLE_NAME Where COLUMN_NAME >='"+from_date+ "' AND <= '"+to_date+ "'";
+                cursor = db.rawQuery("SELECT money FROM ${Const.DbName} WHERE date >= '" + item[i].first + "' AND date <='" + item[i].last + "' ORDER BY date DESC", null)
                 while (cursor.moveToNext()) {
                     weekUsage += cursor.getString(0).toInt()
 

@@ -158,8 +158,10 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
     }
 
     override fun getmItems(mItems: ArrayList<ListItem>) {
-        normalRegisterAdapter.clearItems()
-        normalRegisterAdapter.addItems(mItems)
+        activity?.runOnUiThread {
+            normalRegisterAdapter.clearItems()
+            normalRegisterAdapter.addItems(mItems)
+        }
     }
 
     private fun setPieChart() {
@@ -201,6 +203,8 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         dataSet.valueLinePart1OffsetPercentage = 100f
         dataSet.valueLinePart1Length = 0.3f
         dataSet.valueLinePart2Length = 0.1f
+        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.white)
+        dataSet.valueTypeface = Typeface.DEFAULT_BOLD
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
         chart.isRotationEnabled = false
@@ -210,7 +214,7 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setEntryLabelTextSize(9F)
         chart.holeRadius = 70f
-        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
+        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
         if (monthTotal != 0F) {
             chart.centerText = UtilMethod.currencyFormat(monthTotal.toInt().toString()) + "원"
@@ -222,10 +226,11 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         chart.legend.isWordWrapEnabled = true
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
+
+        colors.add(ContextCompat.getColor(context!!, R.color.purple1))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple2))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple3))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple4))
 
         dataSet.colors = colors
         dataSet.label = ""

@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-
+        android:background="@color/white"
         >
 
         <android.support.v4.widget.NestedScrollView
@@ -45,7 +45,7 @@
                         android:id="@+id/compare_frag_spinner_1"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
-                        android:background="@color/rippleColor"
+                        android:background="@color/purple1"
                         app:layout_constraintEnd_toStartOf="@+id/compare_frag_spinner_2"
                         app:layout_constraintStart_toStartOf="parent"
                         >
@@ -59,7 +59,7 @@
                             android:layout_marginStart="4dp"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:popupBackground="@color/rippleColor"
+                            android:popupBackground="@color/purple1"
                             android:spinnerMode="dropdown"
                             android:textAlignment="center"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -85,7 +85,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
 
-                        android:background="@color/rippleColor"
+                        android:background="@color/purple1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/compare_frag_spinner_1"
                         app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +100,7 @@
                             android:layout_marginStart="4dp"
                             android:background="@android:color/transparent"
                             android:gravity="center"
-                            android:popupBackground="@color/rippleColor"
+                            android:popupBackground="@color/purple1"
                             android:spinnerMode="dropdown"
                             android:textAlignment="center"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -127,7 +127,6 @@
                     android:id="@+id/compare_frag_const_linechart"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/compare_frag_const_const"
@@ -234,7 +233,6 @@
                     android:id="@+id/compare_frag_piechart_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/compare_frag_pie_header"

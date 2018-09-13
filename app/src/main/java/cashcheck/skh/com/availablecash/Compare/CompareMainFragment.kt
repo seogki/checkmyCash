@@ -3,11 +3,9 @@ package cashcheck.skh.com.availablecash.Compare
 
 import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
@@ -42,8 +40,8 @@ class CompareMainFragment : BaseFragment(), View.OnClickListener {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compare_main, container, false)
         binding.onClickListener = this
-        binding.compareFragImgLeft.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
-        binding.compareFragImgRight.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
+//        binding.compareFragImgLeft.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
+//        binding.compareFragImgRight.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
         date = UtilMethod.getCurrentDate()
         year = UtilMethod.getCurrentYear()
         val result = UtilMethod.getCurrentDate().replace("-", "")

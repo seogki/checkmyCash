@@ -100,14 +100,14 @@ class CompareLineFragment : BaseFragment(), View.OnClickListener, CompareLineLis
 
         val dateSet = LineDataSet(yValues, "금액")
         dateSet.setDrawValues(false)
-        dateSet.color = ContextCompat.getColor(context!!, R.color.orange1)
-        dateSet.valueTextColor = ContextCompat.getColor(context!!, R.color.white)
+        dateSet.color = ContextCompat.getColor(context!!, R.color.statusbar)
+        dateSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
         dateSet.valueTextSize = 8F
         dateSet.lineWidth = 2F
         dateSet.valueFormatter = CustomNoWonFormatter()
-        dateSet.setDrawFilled(false)
+        dateSet.setDrawFilled(true)
         dateSet.axisDependency = YAxis.AxisDependency.LEFT
-        dateSet.fillColor = ContextCompat.getColor(context!!, R.color.orange3)
+        dateSet.fillColor = ContextCompat.getColor(context!!, R.color.rippleColor)
         dateSet.mode = LineDataSet.Mode.CUBIC_BEZIER
 
 

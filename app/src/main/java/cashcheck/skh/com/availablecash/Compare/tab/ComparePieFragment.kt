@@ -174,10 +174,11 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
 
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple1))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple2))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple3))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple4))
+
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)

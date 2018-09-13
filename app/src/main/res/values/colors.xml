@@ -38,22 +38,27 @@
     <color name="lightestYellow">#FFEB9A</color>
     <color name="lightBlack">#4C4C4C</color>
     <color name="brown">#6D4C41</color>
-
+    <color name="darkerGrey">#3F3F3F</color>
     <!--파이차트색-->
     <color name="pie1">#E4002B</color>
     <color name="pie2">#FF335F</color>
     <color name="pie3">#FF99AC</color>
     <color name="pie4">#FFE5EA</color>
 
+    <color name="green1">#017D0C</color>
+    <color name="green2">#01B112</color>
+    <color name="green3">#01E317</color>
+    <color name="green4">#1AFE30</color>
+    <color name="green5">#4CFE5D</color>
 
     <color name="titleColor">#CC0000</color>
     <color name="btn">#131A53</color>
     <color name="titleReverse">#FF1744</color>
-    <color name="statusbar">#980000</color>
+    <color name="statusbar">#AA00FF</color>
     <color name="radioBtn">#8E1F2E</color>
     <color name="belowtitle">#202E92</color>
     <color name="textColor">#fff</color>
-    <color name="rippleColor">#CC0000</color>
+    <color name="rippleColor">#D500F9</color>
     <color name="editBoxColor">#AA00FF</color>
     <color name="rippleReverse">#00CCCC</color>
     <color name="statusReverse">#009898</color>
@@ -66,5 +71,11 @@
     <color name="ripple2">#FF3333</color>
     <color name="ripple3">#FF7F7F</color>
     <color name="ripple4">#FFCBCB</color>
+
+
+    <color name="purple1">#AA00FF</color>
+    <color name="purple2">#D500F9</color>
+    <color name="purple3">#E040FB</color>
+    <color name="purple4">#EA80FC</color>
     <!--기존 #E040FB , #FF4081-->
 </resources>

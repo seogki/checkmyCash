@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey"
+        android:fitsSystemWindows="true"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -45,7 +46,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/titleColor"
+                    android:background="@color/white"
                     >
 
                     <TextView
@@ -54,9 +55,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="수정할래요?"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="날짜"
-                    android:textColor="@color/black"
+                    android:textColor="@color/rippleColor"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -156,7 +156,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="분류"
-                    android:textColor="@color/black"
+                    android:textColor="@color/rippleColor"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_date"
@@ -188,7 +188,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="가격"
-                    android:textColor="@color/black"
+                    android:textColor="@color/rippleColor"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_cat"
@@ -234,7 +234,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:text="횟수"
-                    android:textColor="@color/black"
+                    android:textColor="@color/rippleColor"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/normal_atv_txt_money"

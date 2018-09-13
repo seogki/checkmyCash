@@ -20,7 +20,7 @@ import cashcheck.skh.com.availablecash.databinding.ItemNormalRegisterRvHeaderBin
 /**
  * Created by Seogki on 2018. 6. 5..
  */
-open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListItem>) : BaseRecyclerViewAdapter<ListItem, RecyclerView.ViewHolder>(context, arrayList) {
+open class  NormalRegisterAdapter(context: Context, arrayList: MutableList<ListItem>) : BaseRecyclerViewAdapter<ListItem, RecyclerView.ViewHolder>(context, arrayList) {
 
     private var mitem = arrayList
     lateinit var onNormalRegisterDeleteListener: OnNormalRegisterDeleteListener
@@ -31,7 +31,6 @@ open class NormalRegisterAdapter(context: Context, arrayList: MutableList<ListIt
             val data = mitem[holder.adapterPosition] as EventItem
             if (holder is NormalRegisterViewHolder) {
                 holder.bind(data.event)
-
             }
 
         } else if (type == ListItem.TYPE_HEADER) {

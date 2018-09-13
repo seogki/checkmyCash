@@ -41,7 +41,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/titleColor"
+                    android:background="@color/white"
                     >
 
                     <TextView
@@ -50,12 +50,11 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="비교"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
                         android:padding="8dp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/compare_frag_img_left"
+                        app:layout_constraintStart_toEndOf="@+id/compare_frag_img_left"
                         app:layout_constraintTop_toTopOf="parent"
                         />
 
@@ -65,8 +64,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="등록"
-                        android:textStyle="bold"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/black"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +80,7 @@
                         android:src="@drawable/baseline_keyboard_arrow_right_black_24"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/chart_frag_txt_titlebar"
+                        app:layout_constraintStart_toEndOf="@+id/chart_frag_txt_titlebar"
                         android:background="@drawable/btn_ripple_colored_statusbar"
                         android:padding="8dp"
                         />
@@ -118,11 +116,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar"
                 android:layout_centerHorizontal="true"
-                android:background="@color/rippleColor"
+                android:background="@color/white"
                 app:tabGravity="fill"
                 app:tabTextColor="@color/darkGrey"
-                app:tabSelectedTextColor="@color/white"
-                app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/rippleColor"
+                app:tabIndicatorColor="@color/rippleColor"
                 app:tabMode="fixed"
                 app:tabPaddingEnd="0dp"
                 app:tabPaddingStart="0dp"

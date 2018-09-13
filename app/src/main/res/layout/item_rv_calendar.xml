@@ -50,7 +50,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:textColor="@color/statusbar"
+            android:textColor="@color/titleColor"
             android:textSize="9sp"
             app:checkMoneyWithoutWon="@{model.money}"
             app:layout_constraintEnd_toEndOf="parent"

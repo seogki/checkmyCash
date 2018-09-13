@@ -191,10 +191,10 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 //        colors.add(Color.parseColor("#ffc266"))
 //        colors.add(Color.parseColor("#ffe0b3"))
 //        colors.add(Color.parseColor("#fff5e6"))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple1))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple2))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple3))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple4))
 
         dataSet.colors = colors
         dataSet.label = ""
@@ -207,7 +207,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         l.isWordWrapEnabled = true
         l.setDrawInside(false)
         l.textSize = 14F
-        l.textColor = ContextCompat.getColor(context!!, R.color.white)
+        l.textColor = ContextCompat.getColor(context!!, R.color.darkGrey)
         l.xEntrySpace = 4f
         l.yEntrySpace = 4f
         l.typeface = Typeface.DEFAULT_BOLD
@@ -231,7 +231,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
         if (totalUsage > twoHundred) {
 
-            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.black))
+            binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.purple1))
             binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
             binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
             binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
@@ -248,12 +248,12 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragTxtNice.typeface = Typeface.DEFAULT
 
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_disappointed_48)
-            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.black), PorterDuff.Mode.SRC_ATOP)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.purple1), PorterDuff.Mode.SRC_ATOP)
 
         } else if (totalUsage <= twoHundred && totalUsage > estimateUsage) {
 
             binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
-            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.GuardsmanRed))
+            binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.purple2))
             binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
             binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
 
@@ -268,7 +268,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragTxtNice.typeface = Typeface.DEFAULT
 
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_sad_48)
-            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.GuardsmanRed), PorterDuff.Mode.SRC_ATOP)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.purple2), PorterDuff.Mode.SRC_ATOP)
         } else if (totalUsage <= estimateUsage && totalUsage > oneHundred) {
             binding.chartFragImgDis.visibility = View.INVISIBLE
             binding.chartFragImgSad.visibility = View.INVISIBLE
@@ -279,7 +279,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
             binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
             binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
-            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.green))
+            binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.purple3))
             binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
 
             binding.chartFragTxtDis.typeface = Typeface.DEFAULT
@@ -288,7 +288,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragTxtNice.typeface = Typeface.DEFAULT
 
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_happy_48)
-            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.green), PorterDuff.Mode.SRC_ATOP)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.purple3), PorterDuff.Mode.SRC_ATOP)
 
         } else {
             binding.chartFragImgDis.visibility = View.INVISIBLE
@@ -299,7 +299,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
             binding.chartFragTxtDis.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
             binding.chartFragTxtSad.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
             binding.chartFragTxtHappy.setTextColor(ContextCompat.getColor(context!!,R.color.darkGrey))
-            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.OrangeYellow))
+            binding.chartFragTxtNice.setTextColor(ContextCompat.getColor(context!!,R.color.purple4))
 
             binding.chartFragTxtDis.typeface = Typeface.DEFAULT
             binding.chartFragTxtSad.typeface = Typeface.DEFAULT
@@ -308,7 +308,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
 
 
             binding.chartFragImgCurrentimage.setImageResource(R.drawable.icons8_smiling_48)
-            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.OrangeYellow), PorterDuff.Mode.SRC_ATOP)
+            binding.chartFragImgCurrentimage.drawable?.setColorFilter(ContextCompat.getColor(context!!, R.color.purple4), PorterDuff.Mode.SRC_ATOP)
         }
 
         when {

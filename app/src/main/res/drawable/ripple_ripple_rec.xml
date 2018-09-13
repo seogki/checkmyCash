@@ -5,8 +5,8 @@
     <item>
         <shape>
             <solid android:color="@color/rippleColor" />
-            <corners android:radius="10dp" />
-            <stroke android:color="@color/midGrey" android:width="0.5dp"/>
+            <corners android:radius="20dp" />
+            <!--<stroke android:color="@color/midGrey" android:width="0.5dp"/>-->
         </shape>
     </item>
 

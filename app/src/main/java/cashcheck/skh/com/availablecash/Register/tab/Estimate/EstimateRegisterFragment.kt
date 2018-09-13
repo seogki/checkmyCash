@@ -214,7 +214,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.setHoleColor(Color.argb(0, 0, 0, 0))
         chart.setExtraOffsets(25F, 15F, 25F, 15F)
         chart.legend.isWordWrapEnabled = true
-        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.statusbar))
+        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.black))
         chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
         if (totalUsage != 0F) {
             chart.centerText = UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
@@ -223,10 +223,11 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         }
         chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.orange1))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange2))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange3))
-        colors.add(ContextCompat.getColor(context!!, R.color.orange4))
+
+        colors.add(ContextCompat.getColor(context!!, R.color.purple1))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple2))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple3))
+        colors.add(ContextCompat.getColor(context!!, R.color.purple4))
 
         dataSet.colors = colors
         dataSet.label = ""

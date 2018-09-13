@@ -1,12 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-    <!--<item name="colorAccent">@color/colorAccent</item>-->
-    <!--</style>-->
+
 
     <style name="CustomAppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
@@ -18,8 +12,21 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--<item name="android:background">@color/white</item>-->
         <item name="android:windowBackground">@color/grey</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
         <!--<item name="android:colorBackground">@color/white</item>-->
     </style>
+
+    <!--<style name="AppTheme.ActionBar.Transparent" parent="AppTheme">-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="windowActionBarOverlay">true</item>-->
+        <!--<item name="colorPrimary">@android:color/transparent</item>-->
+    <!--</style>-->
+
+    <!--<style name="AppTheme.ActionBar" parent="AppTheme">-->
+        <!--<item name="windowActionBarOverlay">false</item>-->
+        <!--<item name="colorPrimary">@color/rippleColor</item>-->
+    <!--</style>-->
 
     <style name="AppThemeDatePicker" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/textColor</item>
