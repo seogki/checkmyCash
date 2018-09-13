@@ -196,7 +196,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         }
         val dataSet = PieDataSet(yvalues, "")
 
-        dataSet.sliceSpace = 1F
+        dataSet.sliceSpace = 0F
         dataSet.selectionShift = 5F
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
@@ -204,6 +204,8 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         dataSet.valueLinePart1Length = 0.3f
         dataSet.valueLinePart2Length = 0.1f
         dataSet.isValueLineVariableLength = true
+        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
+        dataSet.valueTypeface = Typeface.DEFAULT_BOLD
         dataSet.valueFormatter = CustomPercentFormatter()
         chart.isRotationEnabled = false
         chart.setTouchEnabled(false)
@@ -224,10 +226,10 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         chart.setCenterTextSize(18F)
         val colors = mutableListOf<Int>()
 
-        colors.add(ContextCompat.getColor(context!!, R.color.purple1))
-        colors.add(ContextCompat.getColor(context!!, R.color.purple2))
-        colors.add(ContextCompat.getColor(context!!, R.color.purple3))
-        colors.add(ContextCompat.getColor(context!!, R.color.purple4))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
 
         dataSet.colors = colors
         dataSet.label = ""

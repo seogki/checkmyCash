@@ -54,11 +54,11 @@
     <color name="titleColor">#CC0000</color>
     <color name="btn">#131A53</color>
     <color name="titleReverse">#FF1744</color>
-    <color name="statusbar">#AA00FF</color>
+    <color name="statusbar">#8E1F2E</color>
     <color name="radioBtn">#8E1F2E</color>
     <color name="belowtitle">#202E92</color>
     <color name="textColor">#fff</color>
-    <color name="rippleColor">#D500F9</color>
+    <color name="rippleColor">#CC0000</color>
     <color name="editBoxColor">#AA00FF</color>
     <color name="rippleReverse">#00CCCC</color>
     <color name="statusReverse">#009898</color>

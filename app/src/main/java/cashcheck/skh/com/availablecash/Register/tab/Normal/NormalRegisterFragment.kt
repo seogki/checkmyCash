@@ -196,14 +196,14 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
 
         val dataSet = PieDataSet(yvalues, "")
 
-        dataSet.sliceSpace = 1F
+        dataSet.sliceSpace = 0F
         dataSet.selectionShift = 5F
         dataSet.valueTextSize = 9f
         dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
         dataSet.valueLinePart1OffsetPercentage = 100f
         dataSet.valueLinePart1Length = 0.3f
         dataSet.valueLinePart2Length = 0.1f
-        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.white)
+        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
         dataSet.valueTypeface = Typeface.DEFAULT_BOLD
         dataSet.isValueLineVariableLength = true
         dataSet.valueFormatter = CustomPercentFormatter()
@@ -227,10 +227,10 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
 
         val colors = mutableListOf<Int>()
 
-        colors.add(ContextCompat.getColor(context!!, R.color.purple1))
-        colors.add(ContextCompat.getColor(context!!, R.color.purple2))
-        colors.add(ContextCompat.getColor(context!!, R.color.purple3))
-        colors.add(ContextCompat.getColor(context!!, R.color.purple4))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
 
         dataSet.colors = colors
         dataSet.label = ""
