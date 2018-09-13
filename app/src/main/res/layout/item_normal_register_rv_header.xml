@@ -17,7 +17,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         tools:ignore="UnusedAttribute"
         >
 
@@ -33,7 +32,7 @@
             android:letterSpacing="0.05"
             android:paddingEnd="4dp"
             android:paddingStart="4dp"
-            android:textColor="@color/rippleColor"
+            android:textColor="@color/numb4"
             android:textSize="24sp"
             android:textStyle="bold"
             app:checkDay="@{model}"

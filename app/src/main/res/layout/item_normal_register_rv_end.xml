@@ -28,7 +28,6 @@
             android:id="@+id/item_cate_const_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/item_cate_const_1"
             >
@@ -171,24 +170,24 @@
 
         </android.support.constraint.ConstraintLayout>
 
-        <View
-            android:id="@+id/item_cate_elev"
-            android:layout_width="match_parent"
-            android:layout_height="0.01dp"
-            android:background="@drawable/white_bg_btm_corner_only_smallv2"
-            android:elevation="1.5dp"
-            app:layout_constraintTop_toBottomOf="@id/item_cate_const_2"
-            />
+        <!--<View-->
+            <!--android:id="@+id/item_cate_elev"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.01dp"-->
+            <!--android:background="@drawable/white_bg_btm_corner_only_smallv2"-->
+            <!--android:elevation="1.5dp"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/item_cate_const_2"-->
+            <!--/>-->
 
-        <View
-            android:id="@+id/item_cate_view_top"
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
+        <!--<View-->
+            <!--android:id="@+id/item_cate_view_top"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="8dp"-->
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_cate_elev"
-            />
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/item_cate_elev"-->
+            <!--/>-->
 
     </android.support.constraint.ConstraintLayout>
 

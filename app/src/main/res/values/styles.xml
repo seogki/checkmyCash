@@ -11,7 +11,7 @@
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--<item name="android:background">@color/white</item>-->
-        <item name="android:windowBackground">@color/grey</item>
+        <item name="android:windowBackground">@color/rippleReverse</item>
         <!--<item name="android:windowTranslucentStatus">true</item>-->
         <!--<item name="android:windowTranslucentNavigation">true</item>-->
         <!--<item name="android:colorBackground">@color/white</item>-->

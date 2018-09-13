@@ -39,11 +39,7 @@
     <color name="lightBlack">#4C4C4C</color>
     <color name="brown">#6D4C41</color>
     <color name="darkerGrey">#3F3F3F</color>
-    <!--파이차트색-->
-    <color name="pie1">#E4002B</color>
-    <color name="pie2">#FF335F</color>
-    <color name="pie3">#FF99AC</color>
-    <color name="pie4">#FFE5EA</color>
+
 
     <color name="green1">#017D0C</color>
     <color name="green2">#01B112</color>
@@ -54,14 +50,28 @@
     <color name="titleColor">#CC0000</color>
     <color name="btn">#131A53</color>
     <color name="titleReverse">#FF1744</color>
-    <color name="statusbar">#8E1F2E</color>
+    <!--<color name="statusbar">#20716a</color>-->
     <color name="radioBtn">#8E1F2E</color>
     <color name="belowtitle">#202E92</color>
     <color name="textColor">#fff</color>
-    <color name="rippleColor">#CC0000</color>
+    <!--<color name="rippleColor">#23a393</color>-->
     <color name="editBoxColor">#AA00FF</color>
-    <color name="rippleReverse">#00CCCC</color>
-    <color name="statusReverse">#009898</color>
+    <!--<color name="rippleReverse">#f4a9c7</color>-->
+    <color name="statusReverse">#389800</color>
+    <!--<color name="numb4">#fff78c</color>-->
+
+
+    <color name="bottomtab">#e0ffcd</color>
+    <color name="statusbar">#005874</color>
+    <color name="rippleColor">#1c819e</color>
+    <color name="rippleReverse">#e6e6d4</color>
+    <color name="numb4">#ffbe00</color>
+
+    <!--파이차트색-->
+    <color name="pie1">#abab6f</color>
+    <color name="pie2">#c5c59c</color>
+    <color name="pie3">#e6e6d4</color>
+    <color name="pie4">#ffffff</color>
 
     <color name="orange1">#ffa31a</color>
     <color name="orange2">#ffc266</color>
@@ -72,10 +82,14 @@
     <color name="ripple3">#FF7F7F</color>
     <color name="ripple4">#FFCBCB</color>
 
+    <color name="rippleReverse1"> #f4a9c7</color>
+    <color name="rippleReverse2">#bc5e00</color>
+    <color name="rippleReverse3">#eb7600</color>
+    <color name="rippleReverse4">#ff9327</color>
 
-    <color name="purple1">#AA00FF</color>
-    <color name="purple2">#D500F9</color>
-    <color name="purple3">#E040FB</color>
-    <color name="purple4">#EA80FC</color>
+    <color name="purple1">#bd1759</color>
+    <color name="purple2">#e42571</color>
+    <color name="purple3">#eb6097</color>
+    <color name="purple4">#f4a9c7</color>
     <!--기존 #E040FB , #FF4081-->
 </resources>

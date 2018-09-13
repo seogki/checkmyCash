@@ -19,7 +19,6 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
         android:fitsSystemWindows="true"
         >
 
@@ -45,7 +44,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
+                    android:background="@color/rippleColor"
                     >
 
                     <TextView
@@ -54,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="저축할래요?"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

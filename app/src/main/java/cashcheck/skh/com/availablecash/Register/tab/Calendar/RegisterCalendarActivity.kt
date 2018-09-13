@@ -39,9 +39,9 @@ class RegisterCalendarActivity : AppCompatActivity(), View.OnClickListener, Cate
         val i = intent
         binding.normalAtvEditDate.text = Editable.Factory.getInstance().newEditable(i.getStringExtra(Const.ItemClickCalendar))
         days = i.getStringExtra(Const.ItemClickCalendarDays)
-//        binding.chartActvImgBack.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
+        binding.chartActvImgBack.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         binding.normalAtvImgClear.drawable.setColorFilter(ContextCompat.getColor(this, R.color.midGrey), PorterDuff.Mode.SRC_ATOP)
-        binding.normalAtvBtnDone.drawable.setColorFilter(ContextCompat.getColor(this, R.color.black), PorterDuff.Mode.SRC_ATOP)
+        binding.normalAtvBtnDone.drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP)
         db = DBHelper(applicationContext, "${Const.DbName}.db", null, 1)
         val et = binding.normalAtvEditMoney
         adView = binding.adView

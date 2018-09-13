@@ -4,9 +4,9 @@
 
 
     <gradient
-        android:startColor="@color/pie1"
-        android:centerColor="@color/pie3"
-        android:endColor="@color/pie4"
+        android:startColor="@color/rippleColor"
+        android:centerColor="@color/rippleColor"
+        android:endColor="@color/rippleColor"
         android:angle="270"/>
 
     <corners android:radius="20dp"/>

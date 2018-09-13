@@ -37,7 +37,6 @@
                     android:layout_height="300dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@color/white"
 
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="UnusedAttribute"

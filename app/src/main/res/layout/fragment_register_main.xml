@@ -41,9 +41,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
-                    >
-
+                    android:background="@color/rippleColor">
                     <TextView
                         android:id="@+id/register_frag_txt_titlebar"
                         android:layout_width="wrap_content"
@@ -51,7 +49,7 @@
                         android:gravity="center"
                         android:text="등록"
 
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="14sp"
                         android:padding="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,7 +64,7 @@
                         android:gravity="center"
                         android:text="등록"
 
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="17sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -119,11 +117,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar"
                 android:layout_centerHorizontal="true"
-                android:background="@color/white"
+                android:background="@color/rippleColor"
                 app:tabGravity="fill"
-                app:tabTextColor="@color/darkGrey"
-                app:tabSelectedTextColor="@color/rippleColor"
-                app:tabIndicatorColor="@color/rippleColor"
+                app:tabTextColor="@color/statusbar"
+                app:tabSelectedTextColor="@color/white"
+                app:tabIndicatorColor="@color/white"
                 app:tabMode="fixed"
                 app:tabPaddingEnd="0dp"
                 app:tabPaddingStart="0dp"
