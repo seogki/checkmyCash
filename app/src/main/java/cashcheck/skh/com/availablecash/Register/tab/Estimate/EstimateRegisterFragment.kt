@@ -4,8 +4,7 @@ package cashcheck.skh.com.availablecash.Register.tab.Estimate
 import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.databinding.DataBindingUtil
-import android.graphics.Color
-import android.graphics.Typeface
+import android.graphics.PorterDuff
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -27,9 +26,6 @@ import cashcheck.skh.com.availablecash.Register.adapter.Estimate.EstimateRegiste
 import cashcheck.skh.com.availablecash.Register.model.EstimateRegisterModel
 import cashcheck.skh.com.availablecash.Util.*
 import cashcheck.skh.com.availablecash.databinding.FragmentEstimateRegisterBinding
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 import java.util.*
 
 
@@ -54,7 +50,9 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         binding.estimateEditCate.setOnEditorActionListener(this)
         binding.estimateEditMoney.setOnEditorActionListener(this)
         binding.estimateEditDays.setOnEditorActionListener(this)
-        binding.estimateFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
+
+        binding.estimateBtnRegi.drawable.setColorFilter(ContextCompat.getColor(context!!, R.color.white), PorterDuff.Mode.SRC_ATOP)
+//        binding.estimateFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         tempMap = HashMap()
         db = EstimateDBHelper(context!!.applicationContext, "${Const.DbEstimateName}.db", null, 1)
         setRv()
@@ -101,9 +99,9 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                 binding.estimateTxtEmpty.visibility = View.GONE
                 checkTempMap()
             } else {
-                setPieChart()
+                setTotal()
                 totalUsage = 0F
-                binding.estimateFragPiechart.centerText = ""
+//                binding.estimateFragPiechart.centerText = ""
                 saveTotalInSharedPreference()
                 estimateRegisterAdapter.clearItems()
                 binding.estimateTxtEmpty.visibility = View.VISIBLE
@@ -119,7 +117,8 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
     private fun checkTempMap() {
         if (tempMap != map) {
             tempMap = map
-            setPieChart()
+            setTotal()
+
         } else {
 
         }
@@ -159,6 +158,17 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         }).start()
     }
 
+    private fun setTotal() {
+
+        totalUsage = 0F
+        for ((_, value) in map) {
+            totalUsage = totalUsage.plus(value)
+        }
+        val result = "예상금액 합계 " + UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
+        binding.fragTxtPercent.text = result
+        setRvData()
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.estimate_btn_regi -> {
@@ -168,80 +178,80 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         }
     }
 
-    private fun setPieChart() {
-        val chart = binding.estimateFragPiechart
-        chart.setUsePercentValues(true)
-        val yvalues = mutableListOf<PieEntry>()
-        val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
-
-        for ((_, value) in result) {
-            totalUsage = totalUsage.plus(value)
-        }
-        saveTotalInSharedPreference()
-        if (result.size <= 4) {
-            for ((key, value) in result) {
-                yvalues.add(PieEntry(value, key))
-            }
-        } else {
-            var data = 0F
-            for (i in 0 until result.size) {
-                if (i >= 3) {
-                    data += result.toList()[i].second
-                } else {
-                    yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
-                }
-            }
-            yvalues.add(PieEntry(data, "그외"))
-
-        }
-        val dataSet = PieDataSet(yvalues, "")
-
-        dataSet.sliceSpace = 0F
-        dataSet.selectionShift = 5F
-        dataSet.valueTextSize = 9f
-        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-        dataSet.valueLinePart1OffsetPercentage = 100f
-        dataSet.valueLinePart1Length = 0.3f
-        dataSet.valueLinePart2Length = 0.1f
-        dataSet.isValueLineVariableLength = true
-        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
-        dataSet.valueTypeface = Typeface.DEFAULT_BOLD
-        dataSet.valueFormatter = CustomPercentFormatter()
-        chart.isRotationEnabled = false
-        chart.setTouchEnabled(false)
-        chart.setUsePercentValues(true)
-        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
-        chart.setEntryLabelTextSize(9F)
-        chart.holeRadius = 70f
-        chart.setHoleColor(Color.argb(0, 0, 0, 0))
-        chart.setExtraOffsets(25F, 15F, 25F, 15F)
-        chart.legend.isWordWrapEnabled = true
-        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.black))
-        chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
-        if (totalUsage != 0F) {
-            chart.centerText = UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
-        } else {
-            chart.centerText = ""
-        }
-        chart.setCenterTextSize(18F)
-        val colors = mutableListOf<Int>()
-
-        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
-
-        dataSet.colors = colors
-        dataSet.label = ""
-        val data = PieData(dataSet)
-
-        chart.legend.isEnabled = false
-
-        chart.data = data
-        chart.description.isEnabled = false
-        chart.invalidate()
-        setRvData()
-    }
+//    private fun setPieChart() {
+//        val chart = binding.estimateFragPiechart
+//        chart.setUsePercentValues(true)
+//        val yvalues = mutableListOf<PieEntry>()
+//        val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
+//
+//        for ((_, value) in result) {
+//            totalUsage = totalUsage.plus(value)
+//        }
+//        saveTotalInSharedPreference()
+//        if (result.size <= 4) {
+//            for ((key, value) in result) {
+//                yvalues.add(PieEntry(value, key))
+//            }
+//        } else {
+//            var data = 0F
+//            for (i in 0 until result.size) {
+//                if (i >= 3) {
+//                    data += result.toList()[i].second
+//                } else {
+//                    yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
+//                }
+//            }
+//            yvalues.add(PieEntry(data, "그외"))
+//
+//        }
+//        val dataSet = PieDataSet(yvalues, "")
+//
+//        dataSet.sliceSpace = 0F
+//        dataSet.selectionShift = 5F
+//        dataSet.valueTextSize = 9f
+//        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+//        dataSet.valueLinePart1OffsetPercentage = 100f
+//        dataSet.valueLinePart1Length = 0.3f
+//        dataSet.valueLinePart2Length = 0.1f
+//        dataSet.isValueLineVariableLength = true
+//        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
+//        dataSet.valueTypeface = Typeface.DEFAULT_BOLD
+//        dataSet.valueFormatter = CustomPercentFormatter()
+//        chart.isRotationEnabled = false
+//        chart.setTouchEnabled(false)
+//        chart.setUsePercentValues(true)
+//        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
+//        chart.setEntryLabelTextSize(9F)
+//        chart.holeRadius = 70f
+//        chart.setHoleColor(Color.argb(0, 0, 0, 0))
+//        chart.setExtraOffsets(25F, 15F, 25F, 15F)
+//        chart.legend.isWordWrapEnabled = true
+//        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.black))
+//        chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
+//        if (totalUsage != 0F) {
+//            chart.centerText = UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
+//        } else {
+//            chart.centerText = ""
+//        }
+//        chart.setCenterTextSize(18F)
+//        val colors = mutableListOf<Int>()
+//
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
+//
+//        dataSet.colors = colors
+//        dataSet.label = ""
+//        val data = PieData(dataSet)
+//
+//        chart.legend.isEnabled = false
+//
+//        chart.data = data
+//        chart.description.isEnabled = false
+//        chart.invalidate()
+//
+//    }
 
 
     private fun getEditText() {

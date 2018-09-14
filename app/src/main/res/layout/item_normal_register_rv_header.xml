@@ -22,18 +22,17 @@
 
         <TextView
             android:id="@+id/item_cate_txt_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="6dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
-            android:background="@drawable/view_round_black"
+            android:background="@drawable/circle_status_btn"
             android:gravity="center"
             android:letterSpacing="0.05"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:textColor="@color/numb4"
-            android:textSize="24sp"
+
+            android:textColor="@color/white"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:checkDay="@{model}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,9 +56,9 @@
             android:textStyle="bold"
 
             app:checkDays="@{model}"
-            app:layout_constraintBottom_toBottomOf="@id/item_cate_txt_time"
+            app:layout_constraintBottom_toBottomOf="@+id/item_cate_txt_time"
             app:layout_constraintStart_toEndOf="@+id/item_cate_txt_time"
-            app:layout_constraintTop_toTopOf="@id/item_cate_txt_time"
+            app:layout_constraintTop_toTopOf="@+id/item_cate_txt_time"
             tools:text="화요일"
 
             />

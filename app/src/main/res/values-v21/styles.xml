@@ -2,7 +2,7 @@
 <resources>
 
     <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
-        <item name="android:headerBackground">@color/titleColor</item>
+        <item name="android:headerBackground">@color/statusbar</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -31,27 +31,27 @@
 
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
         <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
-        <item name="android:textColorPrimaryInverse">@color/white
+        <item name="android:textColorPrimaryInverse">@color/rippleReverse
         </item> <!-- header date, month color && calendar text highlight color -->
-        <item name="android:textColorSecondaryInverse">@color/white
+        <item name="android:textColorSecondaryInverse">@color/rippleReverse
         </item> <!-- header year color -->
 
-        <item name="android:colorAccent">@color/titleColor</item> <!-- button color -->
+        <item name="android:colorAccent">@color/statusbar</item> <!-- button color -->
     </style>
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/rippleReverse</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
 
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/Red</item>
+        <item name="android:textColor">@color/statusbar</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/Red</item>
+        <item name="android:textColor">@color/statusbar</item>
     </style>
 
 

@@ -29,22 +29,22 @@
     <!--</style>-->
 
     <style name="AppThemeDatePicker" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorAccent">@color/textColor</item>
+        <item name="colorAccent">@color/black</item>
         <!--<item name="android:colorAccent">@color/textColor</item>-->
-        <item name="android:datePickerStyle">@color/titleColor</item>
+        <item name="android:datePickerStyle">@color/rippleColor</item>
     </style>
 
     <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/titleColor</item>
+        <item name="colorAccent">@color/rippleColor</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="colorPrimary">@color/titleColor</item>
-        <item name="android:headerBackground">@color/titleColor</item>
+        <item name="colorPrimary">@color/rippleColor</item>
+        <item name="android:headerBackground">@color/rippleColor</item>
         <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>
     </style>
 
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/rippleReverse</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <!--<item name="android:windowBackground">@color/white</item>-->
@@ -52,11 +52,11 @@
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/Red</item>
+        <item name="android:textColor">@color/statusbar</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/Red</item>
+        <item name="android:textColor">@color/statusbar</item>
     </style>
 
     <style name="text10Style">
@@ -67,7 +67,7 @@
 
     <style name="text16Style">
         <item name="android:textColor">@color/white</item>
-        <item name="android:padding">12dp</item>
+        <!--<item name="android:padding">12dp</item>-->
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -92,12 +92,12 @@
         <item name="android:layout_height">65dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/btn_ripple_colored_white</item>
+        <item name="android:background">@drawable/cal_buho_ripple</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="calculatorbuhoBtnStyle">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:layout_height">65dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:textStyle">bold</item>

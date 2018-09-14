@@ -31,16 +31,33 @@
                 android:layout_height="match_parent"
                 >
 
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/estimate_frag_piechart"
+                <TextView
+                    android:id="@+id/frag_txt_percent"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:text="저번주의 43.4%를 사용하셨습니다"
+                    android:textColor="@color/statusbar"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:elevation="5dp"
+                    android:background="@color/numb4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="UnusedAttribute"
                     />
+
+                <!--<com.github.mikephil.charting.charts.PieChart-->
+                    <!--android:id="@+id/estimate_frag_piechart"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="250dp"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--tools:visibility="gone"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--tools:ignore="UnusedAttribute"-->
+                    <!--/>-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/estimate_frag_rv"
@@ -49,7 +66,7 @@
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/estimate_frag_piechart"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_txt_percent"
                     tools:ignore="UnusedAttribute"
                     />
 
@@ -72,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="56dp"
                     android:letterSpacing="0.15"
                     android:textSize="11sp"
                     android:text="@string/estimate_sample"
@@ -93,7 +110,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:padding="8dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/darkGrey"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toStartOf="@+id/estimate_edit_money"
@@ -114,7 +131,7 @@
                     android:maxLines="1"
                     android:imeOptions="actionNext"
                     android:padding="8dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/darkGrey"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toStartOf="@+id/estimate_edit_days"
@@ -136,7 +153,7 @@
                     android:maxLength="3"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textColorHint="@color/darkGrey"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -144,18 +161,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/estimate_txt_setCategory"
                     />
 
-                <Button
+                <ImageView
                     android:id="@+id/estimate_btn_regi"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_width="120dp"
+                    android:layout_height="45dp"
+
+                    android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:background="@drawable/white_bg_btm_corner_only_smallv2_statusbar"
+                    android:padding="12dp"
+                    android:background="@drawable/status_ripple_rec"
                     android:onClick="@{onClickListener::onClick}"
+                    android:src="@drawable/icons8_checkmark_48"
                     android:text="저장"
-                    android:elevation="2dp"
+                    android:elevation="5dp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"

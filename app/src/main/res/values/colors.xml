@@ -68,10 +68,16 @@
     <color name="numb4">#ffbe00</color>
 
     <!--파이차트색-->
-    <color name="pie1">#abab6f</color>
-    <color name="pie2">#c5c59c</color>
-    <color name="pie3">#e6e6d4</color>
-    <color name="pie4">#ffffff</color>
+    <color name="pie1">#D2E5E5</color>
+    <color name="pie2">#D2D2E5</color>
+    <color name="pie3">#E5D2D2</color>
+    <color name="pie4">#E6E6D4</color>
+
+
+    <color name="ripplePie1">#AECFD0</color>
+    <color name="ripplePie2">#BFBFD9</color>
+    <color name="ripplePie3">#D9BFBF</color>
+    <color name="ripplePie4">#CFD0AE</color>
 
     <color name="orange1">#ffa31a</color>
     <color name="orange2">#ffc266</color>

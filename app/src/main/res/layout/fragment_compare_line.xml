@@ -34,17 +34,20 @@
                     android:id="@+id/compare_frag_line_const_const"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:background="@color/numb4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:clipToPadding="false"
+
                     >
 
                     <TextView
                         android:id="@+id/compare_frag_txt_set1"
                         style="@style/text16Style"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/statusbar"
+                        android:layout_height="40dp"
                         android:gravity="center"
                         android:onClick="@{onClickListener::onClick}"
                         android:text="분류 1"
@@ -59,8 +62,7 @@
                         android:id="@+id/compare_frag_txt_set2"
                         style="@style/text16Style"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/statusbar"
+                        android:layout_height="40dp"
                         android:gravity="center"
                         android:onClick="@{onClickListener::onClick}"
                         android:text="분류 2"

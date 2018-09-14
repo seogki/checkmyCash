@@ -3,13 +3,10 @@ package cashcheck.skh.com.availablecash.Register.tab.Normal
 
 import android.database.Cursor
 import android.databinding.DataBindingUtil
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -22,11 +19,11 @@ import cashcheck.skh.com.availablecash.Register.model.ListItem
 import cashcheck.skh.com.availablecash.Register.model.NormalRegisterModel
 import cashcheck.skh.com.availablecash.Register.tab.Normal.Listener.NormalThreadListener
 import cashcheck.skh.com.availablecash.Register.tab.Normal.Thread.NormalRegisterThread
-import cashcheck.skh.com.availablecash.Util.*
+import cashcheck.skh.com.availablecash.Util.Const
+import cashcheck.skh.com.availablecash.Util.DBHelper
+import cashcheck.skh.com.availablecash.Util.DLog
+import cashcheck.skh.com.availablecash.Util.UtilMethod
 import cashcheck.skh.com.availablecash.databinding.FragmentNormalRegisterBinding
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -64,7 +61,7 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_normal_register, container, false)
-        binding.normalFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
+//        binding.normalFragPiechart.setNoDataText("데이터가 존재하지 않습니다.")
         db = DBHelper(context!!.applicationContext, "${Const.DbName}.db", null, 1)
         tempMap = HashMap()
         itemTreeMap = TreeMap()
@@ -109,7 +106,7 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         if (map.size > 0) {
             binding.normalFragTxtEmpty.visibility = View.GONE
         } else {
-            binding.normalFragPiechart.centerText = ""
+//            binding.normalFragPiechart.centerText = ""
             binding.normalFragTxtEmpty.visibility = View.VISIBLE
         }
         if (tempMap != map) {
@@ -123,11 +120,20 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
             } else {
                 refresh()
             }
-            setPieChart()
+            setTotal()
+//            setPieChart()
 
         } else {
 
         }
+    }
+
+    private fun setTotal() {
+        monthTotal = 0F
+        for ((_, value) in map) {
+            monthTotal = monthTotal.plus(value)
+        }
+        binding.fragTxtPercent.text = "이번달 합계 ${UtilMethod.currencyFormat(monthTotal.toInt().toString())}원"
     }
 
     private fun setHeaderAndData(resultModel: NormalRegisterModel) {
@@ -164,83 +170,83 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         }
     }
 
-    private fun setPieChart() {
-
-        val chart = binding.normalFragPiechart
-        chart.setUsePercentValues(true)
-        monthTotal = 0F
-        val yvalues = mutableListOf<PieEntry>()
-        val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
-        for ((_, value) in result) {
-
-            monthTotal = monthTotal.plus(value)
-
-        }
-        if (result.size <= 4) {
-            for ((key, value) in result) {
-                yvalues.add(PieEntry(value, key))
-            }
-        } else {
-            var data = 0F
-            for (i in 0 until result.size) {
-                if (i >= 3) {
-                    data += result.toList()[i].second
-                } else {
-                    yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
-                }
-            }
-            yvalues.add(PieEntry(data, "그외"))
-
-        }
-
-
-        val dataSet = PieDataSet(yvalues, "")
-
-        dataSet.sliceSpace = 0F
-        dataSet.selectionShift = 5F
-        dataSet.valueTextSize = 9f
-        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
-        dataSet.valueLinePart1OffsetPercentage = 100f
-        dataSet.valueLinePart1Length = 0.3f
-        dataSet.valueLinePart2Length = 0.1f
-        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
-        dataSet.valueTypeface = Typeface.DEFAULT_BOLD
-        dataSet.isValueLineVariableLength = true
-        dataSet.valueFormatter = CustomPercentFormatter()
-        chart.isRotationEnabled = false
-        chart.setTouchEnabled(false)
-        chart.setHoleColor(Color.argb(0, 0, 0, 0))
-        chart.setUsePercentValues(true)
-        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
-        chart.setEntryLabelTextSize(9F)
-        chart.holeRadius = 70f
-        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.black))
-        chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
-        if (monthTotal != 0F) {
-            chart.centerText = UtilMethod.currencyFormat(monthTotal.toInt().toString()) + "원"
-        } else {
-            chart.centerText = ""
-        }
-        chart.setCenterTextSize(18F)
-        chart.setExtraOffsets(25F, 15F, 25F, 15F)
-        chart.legend.isWordWrapEnabled = true
-
-        val colors = mutableListOf<Int>()
-
-        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
-
-        dataSet.colors = colors
-        dataSet.label = ""
-        val data = PieData(dataSet)
-
-        chart.legend.isEnabled = false
-        chart.data = data
-        chart.description.isEnabled = false
-        chart.invalidate()
-    }
+//    private fun setPieChart() {
+//
+//        val chart = binding.normalFragPiechart
+//        chart.setUsePercentValues(true)
+//        monthTotal = 0F
+//        val yvalues = mutableListOf<PieEntry>()
+//        val result = map.toList().sortedByDescending { (_, value) -> value }.toMap()
+//        for ((_, value) in result) {
+//
+//            monthTotal = monthTotal.plus(value)
+//
+//        }
+//        if (result.size <= 4) {
+//            for ((key, value) in result) {
+//                yvalues.add(PieEntry(value, key))
+//            }
+//        } else {
+//            var data = 0F
+//            for (i in 0 until result.size) {
+//                if (i >= 3) {
+//                    data += result.toList()[i].second
+//                } else {
+//                    yvalues.add(PieEntry(result.toList()[i].second, result.toList()[i].first))
+//                }
+//            }
+//            yvalues.add(PieEntry(data, "그외"))
+//
+//        }
+//
+//
+//        val dataSet = PieDataSet(yvalues, "")
+//
+//        dataSet.sliceSpace = 0F
+//        dataSet.selectionShift = 5F
+//        dataSet.valueTextSize = 9f
+//        dataSet.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+//        dataSet.valueLinePart1OffsetPercentage = 100f
+//        dataSet.valueLinePart1Length = 0.3f
+//        dataSet.valueLinePart2Length = 0.1f
+//        dataSet.valueTextColor = ContextCompat.getColor(context!!, R.color.black)
+//        dataSet.valueTypeface = Typeface.DEFAULT_BOLD
+//        dataSet.isValueLineVariableLength = true
+//        dataSet.valueFormatter = CustomPercentFormatter()
+//        chart.isRotationEnabled = false
+//        chart.setTouchEnabled(false)
+//        chart.setHoleColor(Color.argb(0, 0, 0, 0))
+//        chart.setUsePercentValues(true)
+//        chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.black))
+//        chart.setEntryLabelTextSize(9F)
+//        chart.holeRadius = 70f
+//        chart.setCenterTextColor(ContextCompat.getColor(context!!, R.color.black))
+//        chart.setCenterTextTypeface(Typeface.DEFAULT_BOLD)
+//        if (monthTotal != 0F) {
+//            chart.centerText = UtilMethod.currencyFormat(monthTotal.toInt().toString()) + "원"
+//        } else {
+//            chart.centerText = ""
+//        }
+//        chart.setCenterTextSize(18F)
+//        chart.setExtraOffsets(25F, 15F, 25F, 15F)
+//        chart.legend.isWordWrapEnabled = true
+//
+//        val colors = mutableListOf<Int>()
+//
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
+//        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
+//
+//        dataSet.colors = colors
+//        dataSet.label = ""
+//        val data = PieData(dataSet)
+//
+//        chart.legend.isEnabled = false
+//        chart.data = data
+//        chart.description.isEnabled = false
+//        chart.invalidate()
+//    }
 
     companion object {
         class QueryTask(private val normalRegisterFragment: NormalRegisterFragment) : AsyncTask<Void, Void, HashMap<String, Float>>() {

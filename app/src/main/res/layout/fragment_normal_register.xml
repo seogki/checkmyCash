@@ -32,17 +32,33 @@
                 android:layout_height="match_parent"
                 >
 
-
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/normal_frag_piechart"
+                <TextView
+                    android:id="@+id/frag_txt_percent"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:text="저번주의 43.4%를 사용하셨습니다"
+                    android:textColor="@color/statusbar"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:elevation="5dp"
+                    android:background="@color/numb4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="UnusedAttribute"
                     />
+
+
+                <!--<com.github.mikephil.charting.charts.PieChart-->
+                    <!--android:id="@+id/normal_frag_piechart"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="300dp"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintTop_toTopOf="parent"-->
+                    <!--tools:ignore="UnusedAttribute"-->
+                    <!--/>-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/normal_frag_rv"
@@ -51,7 +67,7 @@
                     android:descendantFocusability="blocksDescendants"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/normal_frag_piechart"
+                    app:layout_constraintTop_toBottomOf="@+id/frag_txt_percent"
                     tools:ignore="UnusedAttribute"
                     />
 

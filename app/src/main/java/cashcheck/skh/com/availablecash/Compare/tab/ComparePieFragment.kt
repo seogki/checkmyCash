@@ -176,22 +176,23 @@ class ComparePieFragment : BaseFragment(), AdapterView.OnItemSelectedListener, C
 
 
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(context!!, R.color.pie1))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie2))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie3))
-        colors.add(ContextCompat.getColor(context!!, R.color.pie4))
+        colors.add(ContextCompat.getColor(context!!, R.color.ripplePie1))
+        colors.add(ContextCompat.getColor(context!!, R.color.ripplePie2))
+        colors.add(ContextCompat.getColor(context!!, R.color.ripplePie3))
+        colors.add(ContextCompat.getColor(context!!, R.color.ripplePie4))
 
         dataSet.colors = colors
         dataSet.label = ""
         val data = PieData(dataSet)
 
-        chart.legend.isEnabled = false
+
         chart.legend.isWordWrapEnabled = true
         chart.data = data
         chart.holeRadius = 0F
         chart.isDrawHoleEnabled = false
         chart.description.isEnabled = false
         activity?.runOnUiThread {
+            chart.legend.isEnabled = false
             chart.animateXY(Const.ChartAnimation, Const.ChartAnimation)
             chart.invalidate()
         }

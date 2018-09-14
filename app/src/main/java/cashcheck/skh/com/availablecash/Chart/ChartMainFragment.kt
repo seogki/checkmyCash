@@ -207,7 +207,7 @@ class ChartMainFragment : BaseFragment(), OnNormalRegisterDeleteListener {
         l.isWordWrapEnabled = true
         l.setDrawInside(false)
         l.textSize = 14F
-        l.textColor = ContextCompat.getColor(context!!, R.color.darkGrey)
+        l.textColor = ContextCompat.getColor(context!!, R.color.white)
         l.xEntrySpace = 4f
         l.yEntrySpace = 4f
         l.typeface = Typeface.DEFAULT_BOLD

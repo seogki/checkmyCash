@@ -12,7 +12,7 @@
     <item>
         <shape android:shape="rectangle">
 
-            <solid android:color="@color/rippleColor"/>
+            <solid android:color="@color/numb4"/>
 
         </shape>
 
