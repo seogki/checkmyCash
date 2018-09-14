@@ -105,8 +105,8 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
 
         if (map.size > 0) {
             binding.normalFragTxtEmpty.visibility = View.GONE
+
         } else {
-//            binding.normalFragPiechart.centerText = ""
             binding.normalFragTxtEmpty.visibility = View.VISIBLE
         }
         if (tempMap != map) {
@@ -133,7 +133,10 @@ class NormalRegisterFragment : BaseFragment(), OnNormalRegisterDeleteListener, N
         for ((_, value) in map) {
             monthTotal = monthTotal.plus(value)
         }
-        binding.fragTxtPercent.text = "이번달 합계 ${UtilMethod.currencyFormat(monthTotal.toInt().toString())}원"
+        if(monthTotal == 0F)
+            binding.fragTxtPercent.text = "아직 데이터가 존재하지 않습니다"
+         else
+            binding.fragTxtPercent.text = "이번달 합계 ${UtilMethod.currencyFormat(monthTotal.toInt().toString())}원"
     }
 
     private fun setHeaderAndData(resultModel: NormalRegisterModel) {

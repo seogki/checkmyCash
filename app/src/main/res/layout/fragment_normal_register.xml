@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:gravity="center"
-                    android:text="저번주의 43.4%를 사용하셨습니다"
+                    android:text="아직 데이터가 존재하지 않습니다"
                     android:textColor="@color/statusbar"
                     android:textSize="14sp"
                     android:textStyle="bold"

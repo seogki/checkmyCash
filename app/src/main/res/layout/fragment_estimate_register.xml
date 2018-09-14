@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp"
                     android:gravity="center"
-                    android:text="저번주의 43.4%를 사용하셨습니다"
+                    android:text="아직 데이터가 존재하지 않습니다"
                     android:textColor="@color/statusbar"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="56dp"
+                    android:layout_marginTop="24dp"
                     android:letterSpacing="0.15"
                     android:textSize="11sp"
                     android:text="@string/estimate_sample"
@@ -163,10 +163,9 @@
 
                 <ImageView
                     android:id="@+id/estimate_btn_regi"
-                    android:layout_width="120dp"
-                    android:layout_height="45dp"
-
-                    android:layout_marginTop="16dp"
+                    android:layout_width="240dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="72dp"
                     android:gravity="center"
                     android:padding="12dp"
                     android:background="@drawable/status_ripple_rec"

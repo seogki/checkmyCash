@@ -100,8 +100,6 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
                 checkTempMap()
             } else {
                 setTotal()
-                totalUsage = 0F
-//                binding.estimateFragPiechart.centerText = ""
                 saveTotalInSharedPreference()
                 estimateRegisterAdapter.clearItems()
                 binding.estimateTxtEmpty.visibility = View.VISIBLE
@@ -118,7 +116,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         if (tempMap != map) {
             tempMap = map
             setTotal()
-
+            saveTotalInSharedPreference()
         } else {
 
         }
@@ -164,7 +162,11 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         for ((_, value) in map) {
             totalUsage = totalUsage.plus(value)
         }
-        val result = "예상금액 합계 " + UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
+        val result: String = if(totalUsage == 0F){
+            "아직 데이터가 존재하지 않습니다"
+        } else {
+            "예상금액 합계 " + UtilMethod.currencyFormat(totalUsage.toInt().toString()) + "원"
+        }
         binding.fragTxtPercent.text = result
         setRvData()
     }
@@ -173,7 +175,7 @@ class EstimateRegisterFragment : BaseFragment(), View.OnClickListener, OnNormalR
         when (v?.id) {
             R.id.estimate_btn_regi -> {
                 binding.estimateBtnRegi.isEnabled = false
-                savePreference()
+                saveTotalInSharedPreference()
             }
         }
     }
